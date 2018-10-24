@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SahlApp</string>
+    <string name="search">Search</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="phonenumber">Enter Your Contact Number</string>
+    <string name="save">Save</string>
+    <string name="address">Enter Your Address \"optional\"</string>
+    <string name="logout">Log out</string>
+    <string name="email">Enter your Email \"optional\"</string>
+    <string name="region">Please choose your region</string>
+</resources>
