@@ -8,7 +8,7 @@ public interface RegionView {
  void setAdapter(ArrayList<String> list, MaterialBetterSpinner spinner);
  void showProgressBar();
  void showFlag(int img);
- void showSnackBar();
+ void showSnackBar(String s);
  void hideProgressBar();
 void navigateToNewestAds();
 

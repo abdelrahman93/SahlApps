@@ -46,8 +46,15 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
         btnsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(RegionActivity.this, MainActivity.class);
-                startActivity(i);
+                //Validation to Search button to check choose all region spinners
+                if(!countrySpinner.getText().toString().equals("")&&!citySpinner.getText().toString().equals("")&&!districtSpinner.getText().toString().equals("")){
+                    Intent i = new Intent(RegionActivity.this, MainActivity.class);
+                    startActivity(i);
+                }
+                else{
+                    showSnackBar("Please choose valid region");
+                }
+
 
             }
         });
@@ -57,12 +64,16 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
         mPresenter.AddAdapterPresenterCity("", citySpinner);
         mPresenter.AddAdapterPresenterDistrict("", districtSpinner);
 
-//on click spinners
+//on click spinners , set adapter depend on choosen country
         countrySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 country = adapterView.getItemAtPosition(position).toString();
                 mPresenter.AddAdapterPresenterCity(country, citySpinner);
+
+                //reset district,city  spinners to default
+                citySpinner.setText("");
+                districtSpinner.setText("");
             }
         });
 
@@ -72,10 +83,10 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
                 String city = adapterView.getItemAtPosition(i).toString();
-
                 mPresenter.AddAdapterPresenterDistrict(city, districtSpinner);
+                //reset district spinner to default
+                districtSpinner.setText("");
 
 
             }
@@ -119,9 +130,9 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
     }
 
     @Override
-    public void showSnackBar() {
+    public void showSnackBar(String s) {
         View parentLayout = findViewById(android.R.id.content);
-        Snackbar.make(parentLayout, "Please Select Country", Snackbar.LENGTH_LONG)
+        Snackbar.make(parentLayout, s, Snackbar.LENGTH_LONG)
                 .setAction("CLOSE", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
