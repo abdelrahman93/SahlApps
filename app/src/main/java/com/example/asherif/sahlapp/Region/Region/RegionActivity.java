@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.MainActivity;
@@ -20,14 +21,25 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class RegionActivity extends BaseActivity<RegionPresenter> implements RegionView {
-    private MaterialBetterSpinner countrySpinner;
-    private MaterialBetterSpinner citySpinner;
-    private MaterialBetterSpinner districtSpinner;
+
+    @BindView(R.id.sp_country)
+     MaterialBetterSpinner countrySpinner;
+    @BindView(R.id.sp_city)
+     MaterialBetterSpinner citySpinner;
+    @BindView(R.id.sp_district)
+     MaterialBetterSpinner districtSpinner;
+    @BindView(R.id.btnsearch)
+     Button btnsearch;
+    @BindView(R.id.tregion)
+     TextView t_region;
+    @BindView(R.id.countrylogo)
+     ImageView countryImage;
     private String country = "";
-    private Button btnsearch;
-    private TextView t_region;
-    private ImageView countryImage;
 
     @NonNull
     @Override
@@ -40,25 +52,26 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region);
+        ButterKnife.bind(this);
 
         init();
+
         //When click to Search button go to main activity with choosen region
-        btnsearch.setOnClickListener(new View.OnClickListener() {
+        /*btnsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Validation to Search button to check choose all region spinners
-                if(!countrySpinner.getText().toString().equals("")&&!citySpinner.getText().toString().equals("")&&!districtSpinner.getText().toString().equals("")){
+                if (!countrySpinner.getText().toString().equals("") && !citySpinner.getText().toString().equals("") && !districtSpinner.getText().toString().equals("")) {
                     Intent i = new Intent(RegionActivity.this, MainActivity.class);
                     startActivity(i);
-                }
-                else{
+                } else {
                     showSnackBar("Please choose valid region");
                 }
 
 
             }
         });
-
+*/
         //Set Country Data to country spinner
         setAdapter(mPresenter.addCountryData(), countrySpinner);
         mPresenter.AddAdapterPresenterCity("", citySpinner);
@@ -97,15 +110,7 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
 
     //Initialization
     public void init() {
-        countrySpinner = findViewById(R.id.sp_country);
-        citySpinner = findViewById(R.id.sp_city);
-        districtSpinner = findViewById(R.id.sp_district);
-        btnsearch = findViewById(R.id.btnsearch);
-        countryImage = findViewById(R.id.countrylogo);
-        t_region = findViewById(R.id.tregion);
         mPresenter.RegionData();
-
-
     }
 
     //init the adapter in general
@@ -142,7 +147,16 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
                 .show();
     }
-
+    @OnClick(R.id.btnsearch)
+    void searchButton(View view) {
+        //Validation to Search button to check choose all region spinners
+        if (!countrySpinner.getText().toString().equals("") && !citySpinner.getText().toString().equals("") && !districtSpinner.getText().toString().equals("")) {
+            Intent i = new Intent(RegionActivity.this, MainActivity.class);
+            startActivity(i);
+        } else {
+            showSnackBar("Please choose valid region");
+        }
+    }
     @Override
     public void hideProgressBar() {
 
