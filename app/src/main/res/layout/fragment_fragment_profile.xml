@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".Region.Main.fragment_profile">
+    tools:context=".Region.Main.profile.fragment_profile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,11 +21,13 @@
             android:background="@drawable/gradientbackground"
             android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="150dp"
+                android:id="@+id/ivprofilepicture"
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/accountcircle" />
 
             <EditText
