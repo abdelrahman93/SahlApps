@@ -12,12 +12,18 @@ import android.widget.Toolbar;
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.profile.fragment_profile;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 //updated version 2nd edition feshar
 //updated version 3rd edition Abdelrahman
 
 public class MainActivity extends AppCompatActivity implements MainView {
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+
+    @BindView((R.id.pager))
+    ViewPager viewPager;
+    @BindView(R.id.tabs)
+     TabLayout tabLayout;
     private ViewPagerAdapter adapter;
     private Toolbar toolbar;
 
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         //hide soft keyboard at the beginning
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -43,16 +50,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
         TabTittle();
 
 
-
     }
 
     private void init() {
-        viewPager = findViewById(R.id.pager);
-        tabLayout = findViewById(R.id.tabs);
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
     }
-    //tab tittle
+    //tab tittle`
 
     private void TabTittle() {
         tabLayout.setupWithViewPager(viewPager);

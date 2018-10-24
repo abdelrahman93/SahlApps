@@ -25,55 +25,49 @@ import com.example.asherif.sahlapp.R;
 import java.io.IOException;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 import static android.app.Activity.RESULT_OK;
 
 
 public class fragment_profile extends Fragment implements profileview {
-    private ImageView imageView;
-    public static final int PICK_IMAGE = 1;
+    @BindView(R.id.ivprofilepicture)
+    ImageView imageView;
     ProfilePresenter presenter;
-public  fragment_profile(){
+    private Unbinder unbinder;
 
-}
+    public fragment_profile() {
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-    View view= inflater.inflate(R.layout.fragment_fragment_profile, container, false);
-        imageView= view.findViewById(R.id.ivprofilepicture);
-        presenter=new ProfilePresenter(this);
+        View view = inflater.inflate(R.layout.fragment_fragment_profile, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        presenter = new ProfilePresenter(this);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(ActivityCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                {
-                    requestPermissions(
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            2000);
-                }
-                else {
-                    presenter.startGallery();
-                }
-            }
-            
-        });
-        return  view;
 
-}
+        return view;
+
+    }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
-            if(requestCode == 1000){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1000) {
                 Uri returnUri = data.getData();
                 Bitmap bitmapImage = null;
                 try {
@@ -83,13 +77,14 @@ public  fragment_profile(){
                 }
                 setimageprofile(bitmapImage);
 
-            }}
+            }
+        }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final InputMethodManager imm = (InputMethodManager)(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager) (getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
         }
@@ -107,8 +102,23 @@ public  fragment_profile(){
 
     }
 
+    //setting the Image after uploading it from the Gallery
     @Override
     public void setimageprofile(Bitmap bitmapImage) {
         imageView.setImageBitmap(bitmapImage);
+    }
+
+
+    //click listener for Image View
+    @OnClick(R.id.ivprofilepicture)
+    public void ImageClick() {
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    2000);
+        } else {
+            presenter.startGallery();
+        }
     }
 }
