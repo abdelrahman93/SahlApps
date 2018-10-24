@@ -12,7 +12,7 @@ import android.widget.Toolbar;
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.profile.fragment_profile;
 
-//updated version 2nd edition
+//updated version 2nd edition feshar
 
 public class MainActivity extends AppCompatActivity implements MainView {
     private ViewPager viewPager;
