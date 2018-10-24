@@ -21,6 +21,12 @@ import android.widget.ImageView;
 
 
 import com.example.asherif.sahlapp.R;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -112,13 +118,45 @@ public class fragment_profile extends Fragment implements profileview {
     //click listener for Image View
     @OnClick(R.id.ivprofilepicture)
     public void ImageClick() {
-        if (ActivityCompat.checkSelfPermission(getActivity(),
+      /*  if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     2000);
         } else {
             presenter.startGallery();
-        }
+        }*/
+
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        // permission is granted, open the Gallery
+                        presenter.startGallery();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        // check for permanent denial of permission
+                        if (response.isPermanentlyDenied()) {
+                            // navigate user to app settings
+                            requestPermissions(
+                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                    2000);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

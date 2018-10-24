@@ -2,11 +2,17 @@ package com.example.asherif.sahlapp.Region.Main;
 
 import android.graphics.Color;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.asherif.sahlapp.R;
@@ -24,8 +30,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
     ViewPager viewPager;
     @BindView(R.id.tabs)
      TabLayout tabLayout;
+    @BindView(R.id.activity_main)
+     DrawerLayout dl;
+    private ActionBarDrawerToggle t;
+    @BindView(R.id.nv)
+     NavigationView nv;
     private ViewPagerAdapter adapter;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,30 @@ public class MainActivity extends AppCompatActivity implements MainView {
         //initialize the components
         init();
 
+        dl.addDrawerListener(t);
+        t.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch(id)
+                {
+                    case R.id.cars:
+                        Toast.makeText(MainActivity.this, "cars",Toast.LENGTH_SHORT).show();
+                    case R.id.buildings:
+                        Toast.makeText(MainActivity.this, "buildings",Toast.LENGTH_SHORT).show();
+                    case R.id.hospitals:
+                        Toast.makeText(MainActivity.this, "Hospitals",Toast.LENGTH_SHORT).show();
+                    default:
+                        return true;
+                }
+            }
+        });
+
+
         // Add Fragments to adapter one by one
         NavigateToProfile();
         NavigateToMyADS();
@@ -51,9 +85,18 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if(t.onOptionsItemSelected(item))
+            return true;
+
+        return super.onOptionsItemSelected(item);
+    }
     private void init() {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        t = new ActionBarDrawerToggle(this, dl,R.string.navigation_drawer_open ,R.string.closeDrawer);
+
 
     }
     //tab tittle`
