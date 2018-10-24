@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
     }
+    //tab tittle
 
     private void TabTittle() {
         tabLayout.setupWithViewPager(viewPager);
