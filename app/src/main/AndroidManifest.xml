@@ -17,12 +17,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".Region.Region.RegionActivity" />
         <activity android:name=".Region.Main.MainActivity" />
         <activity android:name=".Region.Login.LoginActivity"/>
         <activity android:name=".Region.Login.VerificationActivity" />
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".Region.profile.ProfileActivity"></activity>
     </application>
 
 </manifest>

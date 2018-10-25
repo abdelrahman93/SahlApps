@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">سهل</string>
+    <string name="search">ابحث</string>
+    <string name="hello_blank_fragment">اهلا وسهلا</string>
+    <string name="phonenumber">رقم الهاتف</string>
+    <string name="save">حفظ</string>
+    <string name="address">العنوان</string>
+    <string name="logout">خروج</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="region">المنطقه</string>
+    <string name="navigation_drawer_open">فتح</string>
+    <string name="navigation_drawer_close">غلق</string>
+    <string name="openDrawer">فتح</string>
+    <string name="closeDrawer">غلق</string>
+    <string name="newestads">احدث الاعلانات</string>
+    <string name="favorites">الاعلانات المفضله</string>
+    <string name="myads">اعلانتي</string>
+    <string name="Hospitals">مستشفيات</string>
+    <string name="buildings">العقارات</string>
+    <string name="cars">السيارات</string>
+    <string name="profile">حسابي</string>
+    <string name="privacy_policy">التعليمات</string>
+</resources>

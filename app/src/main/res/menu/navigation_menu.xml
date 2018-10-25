@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+    <item
+        android:id="@+id/cars"
+        android:icon="@drawable/cars"
+        android:title="@string/cars" />
+    </group>
+    <group
+        android:id="@+id/menu_middle"
+        android:checkableBehavior="single">
+    <item
+        android:id="@+id/buildings"
+        android:icon="@drawable/building"
+        android:title="@string/buildings" />
+</group>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="single">
+    <item
+        android:id="@+id/hospitals"
+        android:icon="@drawable/hospital"
+        android:title="@string/Hospitals" />
+    </group>
+</menu>

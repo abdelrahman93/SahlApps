@@ -1,4 +1,4 @@
-package com.example.asherif.sahlapp.Region.Main.profile;
+package com.example.asherif.sahlapp.Region.profile;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
