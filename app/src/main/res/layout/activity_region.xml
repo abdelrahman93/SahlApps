@@ -68,10 +68,11 @@
         android:text="@string/search"
         android:textColor="#ffff"
         android:layout_marginTop="30dp"
+        android:background="@drawable/button_style_ogin"
         android:textSize="20dp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_style_ogin"
+
         />
 
 
