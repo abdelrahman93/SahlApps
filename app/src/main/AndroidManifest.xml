@@ -20,11 +20,13 @@
         </activity>
         <activity android:name=".Region.Region.RegionActivity" />
         <activity android:name=".Region.Main.MainActivity" />
-        <activity android:name=".Region.CreateAdvertisment.Create_Advertisment_Activity"></activity>
+        <activity android:name=".Region.CreateAdvertisment.Create_Advertisment_Activity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".Region.profile.ProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -15,11 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.CreateAdvertisment.Create_Advertisment_Activity;
-import com.example.asherif.sahlapp.Region.Main.profile.fragment_profile;
+import com.example.asherif.sahlapp.Region.profile.ProfileActivity;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 
         // Add Fragments to adapter one by one
-        NavigateToProfile();
+       // NavigateToProfile();
         NavigateToMyADS();
         NavigateToFavorites();
         NavigateToNewestADS();
@@ -111,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
             case R.id.createadd:
                 NavigateToCreateAdvertisment();
                 break;
+            case R.id.profile:
+                NavigteToProfile();
+
         }
         if(t.onOptionsItemSelected(item))
             return true;
@@ -130,10 +132,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FF0000"));
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#ffffff"));
-        tabLayout.getTabAt(0).setIcon(R.drawable.person);
-        tabLayout.getTabAt(2).setIcon(R.drawable.favorites);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ads);
-        tabLayout.getTabAt(3).setIcon(R.drawable.trending1);
+      //  tabLayout.getTabAt(0).setIcon(R.drawable.person);
+        tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ads);
+        tabLayout.getTabAt(2).setIcon(R.drawable.trending1);
 
         //change toolbar tittle depending on the fragment type
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -141,23 +143,23 @@ public class MainActivity extends AppCompatActivity implements MainView {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
 
-                    case 0:
+             /*       case 0:
                         viewPager.setCurrentItem(0);
                         getSupportActionBar().setTitle(profile);
+                        break;*/
+
+                    case 0:
+                        viewPager.setCurrentItem(0);
+                        getSupportActionBar().setTitle(myads);
                         break;
 
                     case 1:
                         viewPager.setCurrentItem(1);
-                        getSupportActionBar().setTitle(myads);
+                        getSupportActionBar().setTitle(favorite);
                         break;
 
                     case 2:
                         viewPager.setCurrentItem(2);
-                        getSupportActionBar().setTitle(favorite);
-                        break;
-
-                    case 3:
-                        viewPager.setCurrentItem(3);
                         getSupportActionBar().setTitle(newestads);
                         break;
 
@@ -182,11 +184,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     }
 
-    @Override
+  /*  @Override
     public void NavigateToProfile() {
-        adapter.addFragment(new fragment_profile(), profile);
+      //  adapter.addFragment(new fragment_profile(), profile);
 
-    }
+    }*/
 
     @Override
     public void NavigateToMyADS() {
@@ -210,6 +212,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void NavigateToCreateAdvertisment() {
         Intent CreateADS=new Intent(MainActivity.this,Create_Advertisment_Activity.class);
         startActivity(CreateADS);
+        finish();
+    }
+
+    @Override
+    public void NavigteToProfile() {
+        Intent profile=new Intent(MainActivity.this,ProfileActivity.class);
+        startActivity(profile);
         finish();
     }
 
