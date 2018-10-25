@@ -23,6 +23,7 @@
         <activity android:name=".Region.Main.MainActivity" />
         <activity android:name=".Region.Login.LoginActivity"/>
         <activity android:name=".Region.Login.VerificationActivity" />
+        <activity android:name=".Region.CreateAdvertisment.Create_Advertisment_Activity" />
 
         <meta-data
             android:name="preloaded_fonts"
