@@ -13,7 +13,7 @@
         android:fontFamily="@font/amaranth_bold"
         android:gravity="center_horizontal"
         android:layout_marginTop="60dp"
-        android:text="No Saved Items"
+        android:text="@string/No_Saved_Items"
         android:textSize="20sp"/>
 
     <ImageView
