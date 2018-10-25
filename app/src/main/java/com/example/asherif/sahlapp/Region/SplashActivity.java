@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.asherif.sahlapp.R;
+import com.example.asherif.sahlapp.Region.Login.LoginActivity;
+import com.example.asherif.sahlapp.Region.Login.LoginView;
 import com.example.asherif.sahlapp.Region.Region.RegionActivity;
 
 import java.util.Timer;
@@ -49,7 +51,8 @@ public class SplashActivity extends AppCompatActivity{
                 }else{
                     //closing the timer
                     timer.cancel();
-                    Intent intent =new Intent(SplashActivity.this,RegionActivity.class);
+                    Intent intent =new Intent(SplashActivity.this,LoginActivity
+                            .class);
                     startActivity(intent);
                     // close this activity
                     finish();

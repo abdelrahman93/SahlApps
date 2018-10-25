@@ -147,6 +147,8 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
                 .show();
     }
+
+    //When click to Search button
     @OnClick(R.id.btnsearch)
     void searchButton(View view) {
         //Validation to Search button to check choose all region spinners
@@ -154,7 +156,8 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
             Intent i = new Intent(RegionActivity.this, MainActivity.class);
             startActivity(i);
         } else {
-            showSnackBar("Please choose valid region");
+            //set msg of snackbar for error region
+            showSnackBar(getString(R.string.error_region_msg));
         }
     }
     @Override

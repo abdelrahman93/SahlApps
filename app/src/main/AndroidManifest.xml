@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Region.SplashActivity">
@@ -17,10 +17,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".Region.Region.RegionActivity" />
         <activity android:name=".Region.Main.MainActivity" />
-        <activity android:name=".Region.CreateAdvertisment.Create_Advertisment_Activity" />
+        <activity android:name=".Region.Login.LoginActivity"/>
+        <activity android:name=".Region.Login.VerificationActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
