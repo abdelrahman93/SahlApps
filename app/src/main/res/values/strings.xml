@@ -6,9 +6,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="phonenumber">Enter Your Contact Number</string>
     <string name="save">Save</string>
-    <string name="address">Enter Your Address \"optional\"</string>
+    <string name="address"> Your Address "</string>
     <string name="logout">Log out</string>
-    <string name="email">Enter your Email \"optional\"</string>
+    <string name="email"> your Email "</string>
     <string name="region">Please choose your region</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -42,4 +42,11 @@
     <string name="cars">Cars</string>
     <string name="buildings">Buildings</string>
     <string name="Hospitals">Hospitals</string>
+    <string name="myads">My ADS</string>
+    <string name="profile">PROFILE</string>
+    <string name="favorites">SAVED</string>
+    <string name="newestads">NEWEST ADS</string>
+    <string name="create_add">Create Add</string>
+    <string name="favoritetext">You Don\'t Have any saved items</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.example.asherif.sahlapp.Region.Main;
 
+import android.content.Intent;
 import android.graphics.Color;
 
 import android.support.annotation.NonNull;
@@ -10,14 +11,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.asherif.sahlapp.R;
+import com.example.asherif.sahlapp.Region.CreateAdvertisment.Create_Advertisment_Activity;
 import com.example.asherif.sahlapp.Region.Main.profile.fragment_profile;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @BindView(R.id.nv)
      NavigationView nv;
     private ViewPagerAdapter adapter;
+    @BindString(R.string.myads) String myads;
+    @BindString(R.string.favorites) String favorite;
+    @BindString(R.string.profile) String profile;
+    @BindString(R.string.newestads) String newestads;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +70,17 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 {
                     case R.id.cars:
                         Toast.makeText(MainActivity.this, "cars",Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.buildings:
                         Toast.makeText(MainActivity.this, "buildings",Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.hospitals:
                         Toast.makeText(MainActivity.this, "Hospitals",Toast.LENGTH_SHORT).show();
+                        break;
                     default:
                         return true;
                 }
+                return true;
             }
         });
 
@@ -85,9 +97,21 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.option_menu,menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        int id = item.getItemId();
+        switch (id){
+            case R.id.createadd:
+                NavigateToCreateAdvertisment();
+                break;
+        }
         if(t.onOptionsItemSelected(item))
             return true;
 
@@ -119,22 +143,22 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
                     case 0:
                         viewPager.setCurrentItem(0);
-                        getSupportActionBar().setTitle("Profile");
+                        getSupportActionBar().setTitle(profile);
                         break;
 
                     case 1:
                         viewPager.setCurrentItem(1);
-                        getSupportActionBar().setTitle("My ADS");
+                        getSupportActionBar().setTitle(myads);
                         break;
 
                     case 2:
                         viewPager.setCurrentItem(2);
-                        getSupportActionBar().setTitle("Favorites");
+                        getSupportActionBar().setTitle(favorite);
                         break;
 
                     case 3:
                         viewPager.setCurrentItem(3);
-                        getSupportActionBar().setTitle("Newest ADS");
+                        getSupportActionBar().setTitle(newestads);
                         break;
 
                 }
@@ -160,26 +184,33 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void NavigateToProfile() {
-        adapter.addFragment(new fragment_profile(), "PROFILE");
+        adapter.addFragment(new fragment_profile(), profile);
 
     }
 
     @Override
     public void NavigateToMyADS() {
-        adapter.addFragment(new fragment_myADS(), "MY ADS");
+        adapter.addFragment(new fragment_myADS(), myads);
 
     }
 
     @Override
     public void NavigateToFavorites() {
-        adapter.addFragment(new fragment_favorites(), "FAVORITES");
+        adapter.addFragment(new fragment_favorites(), favorite);
 
     }
 
     @Override
     public void NavigateToNewestADS() {
-        adapter.addFragment(new Fragment_NewestADS(), "NEWEST ADS");
+        adapter.addFragment(new Fragment_NewestADS(), newestads);
 
+    }
+
+    @Override
+    public void NavigateToCreateAdvertisment() {
+        Intent CreateADS=new Intent(MainActivity.this,Create_Advertisment_Activity.class);
+        startActivity(CreateADS);
+        finish();
     }
 
 }

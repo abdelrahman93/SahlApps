@@ -5,5 +5,6 @@ public interface MainView {
     void NavigateToMyADS();
     void NavigateToFavorites();
     void NavigateToNewestADS();
+    void NavigateToCreateAdvertisment();
 
 }
