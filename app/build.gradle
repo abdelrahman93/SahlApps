@@ -34,4 +34,9 @@ dependencies {
     implementation 'com.karumi:dexter:4.2.0'
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    //Country
+    implementation 'io.michaelrocks:libphonenumber-android:8.8.5'
+    implementation 'com.github.GoodieBag:Pinview:v1.3'
+    implementation 'com.github.joielechong:countrycodepicker:2.1.8'
+
 }

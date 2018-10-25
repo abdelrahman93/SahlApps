@@ -37,7 +37,7 @@
             android:id="@+id/sp_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Country"
+            android:hint="@string/Country"
             app:met_floatingLabel="normal"
 
              />
@@ -45,14 +45,14 @@
             android:id="@+id/sp_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="City"
+            android:hint="@string/City"
             android:textColorHint="#05ab9a"
             app:met_floatingLabel="normal" />
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/sp_district"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="District"
+            android:hint="@string/District"
             android:textColorHint="#05ab9a"
             app:met_floatingLabel="normal" />
 
@@ -71,7 +71,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/buttonstyle"
+        android:background="@drawable/button_style_ogin"
         />
 
 
