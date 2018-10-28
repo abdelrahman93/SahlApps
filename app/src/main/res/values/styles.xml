@@ -8,6 +8,11 @@
         <item name="colorAccent">#1a000000</item>
     </style>
 
+
+
+    <style name="AppTheme.NavigationView">
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>
 <!--
 <resources>

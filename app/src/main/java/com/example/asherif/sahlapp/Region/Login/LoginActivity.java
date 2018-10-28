@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.rilixtech.CountryCodePicker;
+
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,6 +33,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     @BindView(R.id.visitor_tv)
     TextView IamVistor;
     LoginActivityPresenter presenter;
+    @BindString(R.string.i_am_visitor) String mystring;
 
     // private PhoneAuthModel phoneAuthModel;
 
@@ -52,7 +55,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
 
     private void init() {
         //Set underline to visitor text
-        String mystring = new String(getString(R.string.i_am_visitor));
+
         SpannableString content = new SpannableString(mystring);
         content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
         IamVistor.setText(content);

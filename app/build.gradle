@@ -13,7 +13,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+          //  proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
     implementation 'com.android.support:design:27.1.1'
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
+    //library to make the image circular
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     // Dexter runtime permissions
     implementation 'com.karumi:dexter:4.2.0'
@@ -38,5 +39,6 @@ dependencies {
     implementation 'io.michaelrocks:libphonenumber-android:8.8.5'
     implementation 'com.github.GoodieBag:Pinview:v1.3'
     implementation 'com.github.joielechong:countrycodepicker:2.1.8'
-
+    //library for splash
+    implementation 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
 }

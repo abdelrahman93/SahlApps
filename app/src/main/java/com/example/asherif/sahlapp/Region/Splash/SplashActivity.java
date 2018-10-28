@@ -1,18 +1,14 @@
-package com.example.asherif.sahlapp.Region;
+package com.example.asherif.sahlapp.Region.Splash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Login.LoginActivity;
-import com.example.asherif.sahlapp.Region.Login.LoginView;
-import com.example.asherif.sahlapp.Region.Region.RegionActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;

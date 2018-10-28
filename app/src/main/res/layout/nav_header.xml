@@ -21,7 +21,7 @@
         android:layout_gravity="center_horizontal"
         android:textSize="20sp"
         android:paddingTop="20dp"
-        android:text="CATEGORY"
+        android:text="@string/CATEGORIES"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </LinearLayout>

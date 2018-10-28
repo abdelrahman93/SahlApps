@@ -3,25 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".Region.Main.Fragment_NewestADS">
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-android:layout_marginLeft="60dp"
-        android:layout_gravity="center"
-        android:src="@drawable/baseline_trending_up_24" />
+
+
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp"
         android:fontFamily="@font/amaranth_bold"
-        android:gravity="center_horizontal"
+        android:drawableLeft="@drawable/baseline_trending_up_24"
         android:text="@string/notrending"
         android:textSize="20sp" />
-
 
 
 </LinearLayout>

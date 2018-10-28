@@ -23,6 +23,7 @@ import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.example.asherif.sahlapp.Region.base.BasePresenter;
 import com.goodiebag.pinview.Pinview;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -40,6 +41,7 @@ public class VerificationActivity extends BaseActivity implements VerificationVi
     Pinview pin;
     @BindView(R.id.pgloadingVerification)
     ProgressBar progressBar;
+    @BindString(R.string.resend) String mystring;
 
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -83,7 +85,6 @@ public class VerificationActivity extends BaseActivity implements VerificationVi
 
         pin = new Pinview(this);
 
-        String mystring = new String("Resend");
         SpannableString content = new SpannableString(mystring);
         content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
         resend.setText(content);

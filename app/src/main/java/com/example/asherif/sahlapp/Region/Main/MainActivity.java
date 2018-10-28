@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.TextAppearanceSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 switch(id)
                 {
                     case R.id.cars:
+
                         Toast.makeText(MainActivity.this, "cars",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.buildings:
@@ -123,6 +126,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         t = new ActionBarDrawerToggle(this, dl,R.string.navigation_drawer_open ,R.string.closeDrawer);
 
+        /*Menu menu = nv.getMenu();
+        MenuItem tools= menu.findItem(R.id.menu_top);
+        SpannableString s = new SpannableString(tools.getTitle());
+        s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44), 0, s.length(), 0);
+        tools.setTitle(s);*/
+      //  nv.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) MainActivity.this);
 
     }
     //tab tittle`

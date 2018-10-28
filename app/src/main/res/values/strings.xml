@@ -61,9 +61,12 @@
     <string name="newestads">NEWEST ADS</string>
     <string name="create_add">Create Add</string>
     <string name="favoritetext">You Don\'t Have any saved items</string>
+    <string name="sign_in">Sign In</string>
     <string name="adstext">You Didn\'t sell anything until now</string>
     <string name="no_ads_found">No ADS Found</string>
     <string name="No_Saved_Items">No Saved Items</string>
-    <string name="notrending">No newest ADS Right Now</string>
+    <string name="notrending">No ADS up to date</string>
+    <string name="name">Name</string>
+    <string name="CATEGORIES">CATEGORIES</string>
 
 </resources>

@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:text="ابو نواف"
+                android:text="@string/name"
                 android:drawableStart="@drawable/edit"
                 android:textColor="#f1ecec"
                 android:textSize="21sp"

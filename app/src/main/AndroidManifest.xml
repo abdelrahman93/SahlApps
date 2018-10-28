@@ -11,17 +11,16 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Region.SplashActivity">
+        <activity android:name=".Region.Splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".Region.Region.RegionActivity" />
         <activity android:name=".Region.Main.MainActivity" />
-        <activity android:name=".Region.Login.LoginActivity"/>
+        <activity android:name=".Region.Login.LoginActivity" />
         <activity android:name=".Region.Login.VerificationActivity" />
         <activity android:name=".Region.CreateAdvertisment.Create_Advertisment_Activity" />
 
@@ -29,7 +28,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".Region.profile.ProfileActivity"></activity>
+        <activity android:name=".Region.profile.ProfileActivity" />
     </application>
 
 </manifest>
