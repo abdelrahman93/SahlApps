@@ -24,10 +24,10 @@ public class SplashActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        imglogo =findViewById(R.id.imgLogo);
-        imglogo.startAnimation(AnimationUtils.loadAnimation(SplashActivity.this, R.anim.splash_animation));
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
-        progressBar.setProgress(0);
+      //  imglogo =findViewById(R.id.imgLogo);
+        //imglogo.startAnimation(AnimationUtils.loadAnimation(SplashActivity.this, R.anim.splash_animation));
+        //progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        //progressBar.setProgress(0);
 
         final long period = 30;
         timer=new Timer();
@@ -42,7 +42,7 @@ public class SplashActivity extends AppCompatActivity{
                             //  textView.setText(String.valueOf(i)+"%");
                         }
                     });
-                    progressBar.setProgress(i);
+          //          progressBar.setProgress(i);
                     i++;
                 }else{
                     //closing the timer

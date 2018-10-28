@@ -9,5 +9,6 @@ public interface MainView {
     void NavigteToProfile();
     void  ChangeTabSelectedColor();
     void TabTittle();
+    void checkVisitor();
 
 }

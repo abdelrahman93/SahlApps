@@ -2,6 +2,7 @@ package com.example.asherif.sahlapp.Region.Login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
@@ -11,7 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.asherif.sahlapp.R;
+import com.example.asherif.sahlapp.Region.Main.MainActivity;
 import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.rilixtech.CountryCodePicker;
 
@@ -35,6 +39,10 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     LoginActivityPresenter presenter;
     @BindString(R.string.i_am_visitor) String mystring;
 
+    //Shared Preferences to set flag visitor
+    SharedPreferences sharedpreferences ;
+    SharedPreferences.Editor editor ;
+
     // private PhoneAuthModel phoneAuthModel;
 
     @NonNull
@@ -54,8 +62,9 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     }
 
     private void init() {
+         sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+         editor = sharedpreferences.edit();
         //Set underline to visitor text
-
         SpannableString content = new SpannableString(mystring);
         content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
         IamVistor.setText(content);
@@ -106,6 +115,8 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     //When click to Login button
     @OnClick(R.id.btn_Login)
     void Loginbtn(View view){
+        editor.putString("visitor_key", "false");
+        editor.commit();
         Intent Verificationintent = new Intent(LoginActivity.this, VerificationActivity.class);
         startActivity(Verificationintent);
         finish();
@@ -129,7 +140,21 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
             }
         });*/
 
+    //When click to I am a visitor
+    @OnClick(R.id.visitor_tv)
+    void clickVisitorText(View v){
+         sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+
+         editor = sharedpreferences.edit();
+
+        editor.putString("visitor_key", "true");
+        editor.commit();
+        Intent i =new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
+    }
+
 
 
 
