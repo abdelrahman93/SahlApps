@@ -12,6 +12,8 @@
 
     <style name="AppTheme.NavigationView">
         <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">"Roboto-Black italic"</item>
+<item name="android:textStyle">italic</item>
     </style>
 </resources>
 <!--

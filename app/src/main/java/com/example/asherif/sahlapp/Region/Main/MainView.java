@@ -7,5 +7,7 @@ public interface MainView {
     void NavigateToNewestADS();
     void NavigateToCreateAdvertisment();
     void NavigteToProfile();
+    void  ChangeTabSelectedColor();
+    void TabTittle();
 
 }

@@ -10,5 +10,11 @@
     <color name="back">#ff5d2b</color>
     <color name="Wheat2">#fff</color>
     <color name="back2">#075056</color>
+    <color name="icon_light_inactive">#ce870e</color>
+    <color name="brightwhite">#fffff8</color>
+
+    <color name="icon_light">#727272</color>
+
+
 
 </resources>

@@ -1,12 +1,18 @@
 package com.example.asherif.sahlapp.Region.Main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -50,6 +56,8 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @BindString(R.string.favorites) String favorite;
     @BindString(R.string.profile) String profile;
     @BindString(R.string.newestads) String newestads;
+    private ColorStateList colors;
+
 
 
     @NonNull
@@ -109,6 +117,9 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
         //customize Tabs Tittles ,texts and icons
         TabTittle();
+        ChangeTabSelectedColor();
+
+
 
 
     }
@@ -147,17 +158,24 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
       //  nv.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) MainActivity.this);
 
     }
-    //tab tittle`
 
-    private void TabTittle() {
+    //Display The Tab Tittle and Icons
+    @Override
+    public void TabTittle() {
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FF0000"));
+
+
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#fffff8"));
+
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
-        tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#ffffff"));
-      //  tabLayout.getTabAt(0).setIcon(R.drawable.person);
+
+
+        tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
         tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
         tabLayout.getTabAt(0).setIcon(R.drawable.ads);
         tabLayout.getTabAt(2).setIcon(R.drawable.trending1);
+        getSupportActionBar().setTitle(myads);
+
 
         //change toolbar tittle depending on the fragment type
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -190,14 +208,15 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+           //     tab.getIcon().setColorFilter(Color.parseColor("#727272"), PorterDuff.Mode.SRC_ATOP);
 
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
+
 
 
       /*  for (int i = 0; i < tabLayout.getTabCount(); i++) {
@@ -206,11 +225,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     }
 
-  /*  @Override
-    public void NavigateToProfile() {
-      //  adapter.addFragment(new fragment_profile(), profile);
 
-    }*/
 
     @Override
     public void NavigateToMyADS() {
@@ -242,6 +257,30 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
         Intent profile=new Intent(MainActivity.this,ProfileActivity.class);
         startActivity(profile);
         finish();
+    }
+
+    @Override
+    public void ChangeTabSelectedColor() {
+        //switch text colors from normal color to selected color
+        tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#fffff8"));
+       //switch icon colors from normal color to selected color
+        if (Build.VERSION.SDK_INT >= 23) {
+            colors = getResources().getColorStateList(R.color.tab_icon, getTheme());
+        }
+        else {
+            colors = getResources().getColorStateList(R.color.tab_icon);
+        }
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            Drawable icon = tab.getIcon();
+
+            if (icon != null) {
+                icon = DrawableCompat.wrap(icon);
+                DrawableCompat.setTintList(icon, colors);
+            }
+        }
+
     }
 
 }

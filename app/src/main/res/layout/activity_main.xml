@@ -43,6 +43,7 @@
         app:headerLayout="@layout/nav_header"
         app:itemTextColor="#ffff"
         app:itemTextAppearance="@style/AppTheme.NavigationView"
+
         app:itemIconTint="#ffff"
         app:menu="@menu/navigation_menu">
 
