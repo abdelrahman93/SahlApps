@@ -10,14 +10,22 @@ public class MainActivityPresenter extends BasePresenter {
     private File file;
     private FileContent fileContent;
     private User user;
+    MainView view;
 
     ApiInterface apiService;
 
-    public MainActivityPresenter(MainActivity mainActivity, File file, FileContent fileContent, User user) {
+    public MainActivityPresenter(MainView view, File file, FileContent fileContent, User user) {
+        this.view = view;
+        this.file = file;
+        this.fileContent = fileContent;
+        this.user = user;
     }
 
     void MainActivity() {
 
+    }
+    public void checkVisitor(){
+        view.checkVisitor();
     }
 
 

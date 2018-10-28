@@ -7,5 +7,6 @@ public interface MainView {
     void NavigateToNewestADS();
     void NavigateToCreateAdvertisment();
     void NavigteToProfile();
+    void checkVisitor();
 
 }

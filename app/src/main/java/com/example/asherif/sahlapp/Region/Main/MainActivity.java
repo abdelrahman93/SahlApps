@@ -2,6 +2,7 @@ package com.example.asherif.sahlapp.Region.Main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import android.support.annotation.NonNull;
@@ -14,13 +15,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.CreateAdvertisment.Create_Advertisment_Activity;
+import com.example.asherif.sahlapp.Region.Login.LoginActivity;
 import com.example.asherif.sahlapp.Region.Network.Model.File;
 import com.example.asherif.sahlapp.Region.Network.Model.FileContent;
 import com.example.asherif.sahlapp.Region.Network.Model.User;
@@ -39,23 +44,31 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @BindView((R.id.pager))
     ViewPager viewPager;
     @BindView(R.id.tabs)
-     TabLayout tabLayout;
+    TabLayout tabLayout;
     @BindView(R.id.activity_main)
-     DrawerLayout dl;
+    DrawerLayout dl;
     private ActionBarDrawerToggle t;
     @BindView(R.id.nv)
-     NavigationView nv;
+    NavigationView nv;
     private ViewPagerAdapter adapter;
-    @BindString(R.string.myads) String myads;
-    @BindString(R.string.favorites) String favorite;
-    @BindString(R.string.profile) String profile;
-    @BindString(R.string.newestads) String newestads;
+    @BindString(R.string.myads)
+    String myads;
+    @BindString(R.string.favorites)
+    String favorite;
+    @BindString(R.string.profile)
+    String profile;
+    @BindString(R.string.newestads)
+    String newestads;
+    //Get Shared Preferences visitor flag;
+    SharedPreferences prefs;
+    String flag;
+    MainActivityPresenter presenter;
 
 
     @NonNull
     @Override
     protected MainActivityPresenter createPresenter(@NonNull Context context) {
-        return new MainActivityPresenter (this, new File(), new FileContent(), new User());
+        return presenter =new MainActivityPresenter(this, new File(), new FileContent(), new User());
 
     }
 
@@ -67,7 +80,6 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
         //hide soft keyboard at the beginning
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         //initialize the components
         init();
 
@@ -75,22 +87,20 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
         t.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch(id)
-                {
+                switch (id) {
                     case R.id.cars:
 
-                        Toast.makeText(MainActivity.this, "cars",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "cars", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.buildings:
-                        Toast.makeText(MainActivity.this, "buildings",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "buildings", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.hospitals:
-                        Toast.makeText(MainActivity.this, "Hospitals",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Hospitals", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         return true;
@@ -100,29 +110,25 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
         });
 
 
-        // Add Fragments to adapter one by one
-       // NavigateToProfile();
-        NavigateToMyADS();
-        NavigateToFavorites();
-        NavigateToNewestADS();
-        viewPager.setAdapter(adapter);
-
-        //customize Tabs Tittles ,texts and icons
-        TabTittle();
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.option_menu,menu);
+        getMenuInflater().inflate(R.menu.option_menu, menu);
+        //in case of visitor hide create icon
+        if (flag != null) {
+            if (flag.equals("true")) {
+                MenuItem createAd = menu.findItem(R.id.createadd);
+                createAd.setVisible(false);
+            }
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.createadd:
                 NavigateToCreateAdvertisment();
                 break;
@@ -130,21 +136,27 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
                 NavigteToProfile();
 
         }
-        if(t.onOptionsItemSelected(item))
+        if (t.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
     }
+
     private void init() {
+
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        t = new ActionBarDrawerToggle(this, dl,R.string.navigation_drawer_open ,R.string.closeDrawer);
+        t = new ActionBarDrawerToggle(this, dl, R.string.navigation_drawer_open, R.string.closeDrawer);
+        prefs = getSharedPreferences("MyPREFERENCES", MODE_PRIVATE);
+        flag = prefs.getString("visitor_key", null);
+
+        presenter.checkVisitor();
 
         /*Menu menu = nv.getMenu();
         MenuItem tools= menu.findItem(R.id.menu_top);
         SpannableString s = new SpannableString(tools.getTitle());
         s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44), 0, s.length(), 0);
         tools.setTitle(s);*/
-      //  nv.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) MainActivity.this);
+        //  nv.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) MainActivity.this);
 
     }
     //tab tittle`
@@ -154,7 +166,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FF0000"));
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#ffffff"));
-      //  tabLayout.getTabAt(0).setIcon(R.drawable.person);
+        //  tabLayout.getTabAt(0).setIcon(R.drawable.person);
         tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
         tabLayout.getTabAt(0).setIcon(R.drawable.ads);
         tabLayout.getTabAt(2).setIcon(R.drawable.trending1);
@@ -232,16 +244,50 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     @Override
     public void NavigateToCreateAdvertisment() {
-        Intent CreateADS=new Intent(MainActivity.this,Create_Advertisment_Activity.class);
+        Intent CreateADS = new Intent(MainActivity.this, Create_Advertisment_Activity.class);
         startActivity(CreateADS);
         finish();
     }
 
     @Override
     public void NavigteToProfile() {
-        Intent profile=new Intent(MainActivity.this,ProfileActivity.class);
-        startActivity(profile);
-        finish();
+        if (flag != null) {
+            if (flag.equals("true")) {
+                //in case of visitor go to login activity
+                Intent Login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(Login);
+                finish();
+            } else {
+                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(profile);
+                finish();
+            }
+
+        }
+    }
+
+    @Override
+    public void checkVisitor() {
+        if (flag != null) {
+
+            if (flag.equals("true")) {
+                getSupportActionBar().setTitle(newestads);
+                tabLayout.setVisibility(View.GONE);
+                // Add Newest Fragment only to adapter in case of visitor
+                NavigateToNewestADS();
+                viewPager.setAdapter(adapter);
+
+            } else {
+                // Add Fragments to adapter one by one
+                NavigateToMyADS();
+                NavigateToFavorites();
+                NavigateToNewestADS();
+                viewPager.setAdapter(adapter);
+
+                //customize Tabs Tittles ,texts and icons
+                TabTittle();
+            }
+        }
     }
 
 }
