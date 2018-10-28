@@ -1,25 +1,22 @@
 package com.example.asherif.sahlapp.Region.Main;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -27,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.CreateAdvertisment.Create_Advertisment_Activity;
+import com.example.asherif.sahlapp.Region.Main.NewestADS.Fragment_NewestADS;
 import com.example.asherif.sahlapp.Region.Network.Model.File;
 import com.example.asherif.sahlapp.Region.Network.Model.FileContent;
 import com.example.asherif.sahlapp.Region.Network.Model.User;
@@ -163,13 +161,8 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @Override
     public void TabTittle() {
         tabLayout.setupWithViewPager(viewPager);
-
-
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#fffff8"));
-
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
-
-
         tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
         tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
         tabLayout.getTabAt(0).setIcon(R.drawable.ads);
@@ -261,17 +254,24 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     @Override
     public void ChangeTabSelectedColor() {
+
         //switch text colors from normal color to selected color
         tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#fffff8"));
-       //switch icon colors from normal color to selected color
+
+        //switch icon colors from normal color to selected color
         if (Build.VERSION.SDK_INT >= 23) {
             colors = getResources().getColorStateList(R.color.tab_icon, getTheme());
+            Log.i("TAG", "Build.VERSION.SDK_INT >= 23: ");
+
         }
         else {
+            Log.i("TAG", "ChangeTabSelectedColor: ");
             colors = getResources().getColorStateList(R.color.tab_icon);
         }
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            Log.i("TAG", "tabLayout.getTabCount: ");
+
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             Drawable icon = tab.getIcon();
 
