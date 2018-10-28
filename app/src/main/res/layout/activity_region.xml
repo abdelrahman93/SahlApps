@@ -4,35 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#ffff"
+    android:orientation="vertical"
     tools:context=".Region.Region.RegionActivity">
 
     <ImageView
+        android:id="@+id/countrylogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/countrylogo"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        />
+        android:layout_marginTop="50dp" />
 
     <TextView
+        android:id="@+id/tregion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tregion"
+        android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:text="@string/region"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-                />
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="vertical"
         android:layout_marginTop="20dp"
-        >
+        android:orientation="vertical"
+        android:padding="5dp">
+
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/sp_country"
             android:layout_width="match_parent"
@@ -40,7 +38,8 @@
             android:hint="@string/Country"
             app:met_floatingLabel="normal"
 
-             />
+            />
+
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/sp_city"
             android:layout_width="match_parent"
@@ -48,6 +47,7 @@
             android:hint="@string/City"
             android:textColorHint="#05ab9a"
             app:met_floatingLabel="normal" />
+
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/sp_district"
             android:layout_width="match_parent"
@@ -59,19 +59,14 @@
     </LinearLayout>
 
 
-
-
     <Button
+        android:id="@+id/btnsearch"
+        style="@style/Button_Style"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btnsearch"
-        android:text="@string/search"
-        android:textColor="#ffff"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button_style_ogin"
-        android:textSize="20dp"
-        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="@string/search"
 
         />
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Region.profile.ProfileActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,8 +21,8 @@
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="150dp"
                 android:id="@+id/ivprofilepicture"
+                android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45dp"
@@ -33,8 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:text="@string/name"
                 android:drawableStart="@drawable/edit"
+                android:text="@string/name"
                 android:textColor="#f1ecec"
                 android:textSize="21sp"
                 android:textStyle="bold" />
@@ -135,8 +136,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:inputType="phone"
                 android:hint="@string/phonenumber"
+                android:inputType="phone"
                 android:paddingLeft="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -169,7 +170,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -195,14 +195,12 @@
         </LinearLayout>
 
         <Button
+            style="@style/Button_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="35dp"
-            android:background="@drawable/buttonstyle"
-
-            android:text="@string/save"
-            android:textColor="#fff" />
+            android:text="@string/save" />
 
         <LinearLayout
             android:layout_width="match_parent"

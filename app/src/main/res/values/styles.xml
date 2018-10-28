@@ -9,7 +9,15 @@
     </style>
 
 
+    <style name="Button_Style">
+        <item name="android:background">@drawable/button_click</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ffffffff</item>
 
+
+
+    </style>
     <style name="AppTheme.NavigationView">
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">"Roboto-Black italic"</item>

@@ -4,8 +4,9 @@
 
             <item android:bottom="2dp" android:left="2dp">
                 <shape>
-                    <gradient android:angle="270"
-                        android:endColor="@color/colorPrimaryDark" android:startColor="#ca4444" />
+
+                    <gradient android:angle="0"
+                        android:endColor="#000000" android:startColor="#716b6b" />
                     <stroke android:width="1dp" android:color="#BABABA" />
                     <corners android:radius="30dp" />
                     <padding android:bottom="10dp" android:left="10dp"
