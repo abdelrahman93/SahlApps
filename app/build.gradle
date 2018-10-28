@@ -41,10 +41,11 @@ dependencies {
     implementation 'com.github.joielechong:countrycodepicker:2.1.8'
     //library for splash
     implementation 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
+   // implementation 'com.antonzorin:dottedprogressbar:0.2.3'
+    implementation 'com.github.igortrncic.dotted-progress-bar:library:1.0.0'
     // retrofit, gson
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
-    // RecyclerView
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
+
 }

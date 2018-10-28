@@ -9,6 +9,7 @@ public interface RegionView {
  void showProgressBar();
  void showFlag(int img);
  void showSnackBar(String s);
+ void changeHint();
  void hideProgressBar();
 void navigateToNewestAds();
 

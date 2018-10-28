@@ -26,8 +26,8 @@
     <string name="Enter_your_mobile_number_to_create_an_account">"من فضلك أدخل رقم هاتفك لإنشاء حساب "</string>
     <string name="Login">تسجيل دخول</string>
     <string name="Country">الدولة</string>
-    <string name="City">المدينة</string>
-    <string name="District">المنطقة</string>
+    <string name="City">المدينة/الإماره</string>
+    <string name="District">المنطقة/الحى</string>
     <string name="Verification_code">رمز التفعيل</string>
     <string name="Please_type_the_verification_code">من فضلك أدخل رمز التفعيل</string>
     <string name="didnt_receive">لم تستلم الرمز؟</string>

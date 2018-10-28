@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash"
     android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
     tools:context=".Region.Splash.SplashActivity">
+    <com.trncic.library.DottedProgressBar
+        android:id="@+id/progress"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="100dp"
+        app:activeDot="@drawable/active_dot"
+        app:dotSize="20dp"
+        app:inactiveDot="@drawable/inactive_dot"
+        android:layout_marginTop="400dp"
+        app:jumpingSpeed="300"
+        app:spacing="15dp" />
 
 
 
 
 
-
-</LinearLayout>
+</RelativeLayout>

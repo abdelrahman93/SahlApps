@@ -85,7 +85,7 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
                 mPresenter.AddAdapterPresenterCity(country, citySpinner);
 
                 //reset district,city  spinners to default
-                citySpinner.setText("");
+               citySpinner.setText("");
                 districtSpinner.setText("");
             }
         });
@@ -146,6 +146,13 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
                 })
                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
                 .show();
+    }
+
+    @Override
+    public void changeHint() {
+        citySpinner.setHint("الإمارة");
+        districtSpinner.setHint("الحى");
+
     }
 
     //When click to Search button

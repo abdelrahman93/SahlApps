@@ -2,6 +2,7 @@ package com.example.asherif.sahlapp.Region.Main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 
@@ -19,11 +20,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.CreateAdvertisment.Create_Advertisment_Activity;
+import com.example.asherif.sahlapp.Region.Login.LoginActivity;
 import com.example.asherif.sahlapp.Region.Main.NewestADS.Fragment_NewestADS;
 import com.example.asherif.sahlapp.Region.Network.Model.File;
 import com.example.asherif.sahlapp.Region.Network.Model.FileContent;
@@ -55,14 +58,16 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @BindString(R.string.profile) String profile;
     @BindString(R.string.newestads) String newestads;
     private ColorStateList colors;
-
+    //Get Shared Preferences visitor flag;
+    SharedPreferences prefs;
+    String flag;
+    MainActivityPresenter presenter;
 
 
     @NonNull
     @Override
     protected MainActivityPresenter createPresenter(@NonNull Context context) {
-        return new MainActivityPresenter (this, new File(), new FileContent(), new User());
-
+        return presenter =new MainActivityPresenter(this, new File(), new FileContent(), new User());
     }
 
     @Override
@@ -106,15 +111,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
         });
 
 
-        // Add Fragments to adapter one by one
-       // NavigateToProfile();
-        NavigateToMyADS();
-        NavigateToFavorites();
-        NavigateToNewestADS();
-        viewPager.setAdapter(adapter);
 
-        //customize Tabs Tittles ,texts and icons
-        TabTittle();
         ChangeTabSelectedColor();
 
 
@@ -124,7 +121,14 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.option_menu,menu);
+        getMenuInflater().inflate(R.menu.option_menu, menu);
+        //in case of visitor hide create icon
+        if (flag != null) {
+            if (flag.equals("true")) {
+                MenuItem createAd = menu.findItem(R.id.createadd);
+                createAd.setVisible(false);
+            }
+        }
         return true;
     }
 
@@ -147,7 +151,9 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     private void init() {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         t = new ActionBarDrawerToggle(this, dl,R.string.navigation_drawer_open ,R.string.closeDrawer);
-
+        prefs = getSharedPreferences("MyPREFERENCES", MODE_PRIVATE);
+        flag = prefs.getString("visitor_key", null);
+        presenter.checkVisitor();
         /*Menu menu = nv.getMenu();
         MenuItem tools= menu.findItem(R.id.menu_top);
         SpannableString s = new SpannableString(tools.getTitle());
@@ -220,6 +226,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
 
 
+
     @Override
     public void NavigateToMyADS() {
         adapter.addFragment(new fragment_myADS(), myads);
@@ -247,11 +254,40 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     @Override
     public void NavigteToProfile() {
-        Intent profile=new Intent(MainActivity.this,ProfileActivity.class);
-        startActivity(profile);
-        finish();
-    }
 
+        if (flag != null) {
+            if (flag.equals("true")) {
+                //in case of visitor go to login activity
+                Intent Login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(Login);
+                finish();
+            } else {
+                Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(profile);
+                finish();
+            }
+        }
+    }
+    @Override
+    public void checkVisitor() {
+        if (flag != null) {
+            if (flag.equals("true")) {
+                getSupportActionBar().setTitle(newestads);
+                tabLayout.setVisibility(View.GONE);
+                // Add Newest Fragment only to adapter in case of visitor
+                NavigateToNewestADS();
+                viewPager.setAdapter(adapter);
+            } else {
+                // Add Fragments to adapter one by one
+                NavigateToMyADS();
+                NavigateToFavorites();
+                NavigateToNewestADS();
+                viewPager.setAdapter(adapter);
+                //customize Tabs Tittles ,texts and icons
+                TabTittle();
+            }
+        }
+    }
     @Override
     public void ChangeTabSelectedColor() {
 
