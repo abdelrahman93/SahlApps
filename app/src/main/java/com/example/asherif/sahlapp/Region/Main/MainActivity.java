@@ -1,5 +1,6 @@
 package com.example.asherif.sahlapp.Region.Main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
@@ -20,6 +21,10 @@ import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.CreateAdvertisment.Create_Advertisment_Activity;
+import com.example.asherif.sahlapp.Region.Network.Model.File;
+import com.example.asherif.sahlapp.Region.Network.Model.FileContent;
+import com.example.asherif.sahlapp.Region.Network.Model.User;
+import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.example.asherif.sahlapp.Region.profile.ProfileActivity;
 
 import butterknife.BindString;
@@ -29,7 +34,7 @@ import butterknife.ButterKnife;
 //updated version 2nd edition feshar
 //updated version 3rd edition Abdelrahman
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends BaseActivity<MainActivityPresenter> implements MainView {
 
     @BindView((R.id.pager))
     ViewPager viewPager;
@@ -45,6 +50,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @BindString(R.string.favorites) String favorite;
     @BindString(R.string.profile) String profile;
     @BindString(R.string.newestads) String newestads;
+
+
+    @NonNull
+    @Override
+    protected MainActivityPresenter createPresenter(@NonNull Context context) {
+        return new MainActivityPresenter (this, new File(), new FileContent(), new User());
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
