@@ -19,7 +19,6 @@ public class SplashActivity extends AppCompatActivity{
    // private ProgressBar progressBar;
     private int i=0;
     private ImageView imglogo;
-    DottedProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
