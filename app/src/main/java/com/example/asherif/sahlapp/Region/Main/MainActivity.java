@@ -169,9 +169,8 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#fffff8"));
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
-        tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
-        tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
         tabLayout.getTabAt(0).setIcon(R.drawable.ads);
+        tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
         tabLayout.getTabAt(2).setIcon(R.drawable.trending1);
         getSupportActionBar().setTitle(myads);
 

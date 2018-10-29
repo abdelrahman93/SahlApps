@@ -18,11 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Region.Region.RegionActivity" />
-        <activity android:name=".Region.Main.MainActivity" />
-        <activity android:name=".Region.Login.LoginActivity" />
-        <activity android:name=".Region.Login.VerificationActivity" />
-        <activity android:name=".Region.CreateAdvertisment.Create_Advertisment_Activity" />
+        <activity android:name=".Region.Region.RegionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Region.Main.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Region.Login.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Region.Login.VerificationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Region.CreateAdvertisment.Create_Advertisment_Activity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"
