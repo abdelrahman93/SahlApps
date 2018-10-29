@@ -3,6 +3,7 @@ package com.example.asherif.sahlapp.Region.Splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,11 +26,10 @@ public class SplashActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-      //  imglogo =findViewById(R.id.imgLogo);
-        //imglogo.startAnimation(AnimationUtils.loadAnimation(SplashActivity.this, R.anim.splash_animation));
-        //progressBar=(ProgressBar)findViewById(R.id.progressBar);
-        //progressBar.setProgress(0);
-         progressBar = (DottedProgressBar) findViewById(R.id.progress);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+         progressBar = findViewById(R.id.progress);
         progressBar.startProgress();
         final long period = 30;
         timer=new Timer();

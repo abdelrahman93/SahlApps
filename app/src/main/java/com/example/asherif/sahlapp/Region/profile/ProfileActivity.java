@@ -1,9 +1,11 @@
 package com.example.asherif.sahlapp.Region.profile;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -17,6 +19,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity implements profileview{
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        presenter = new ProfilePresenter(this);
+        presenter = new ProfilePresenter(this,ProfileActivity.this);
     }
 
     @Override
@@ -59,6 +63,12 @@ public class ProfileActivity extends AppCompatActivity implements profileview{
         imageView.setImageBitmap(bitmapImage);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+      presenter.onActivityResult(requestCode,resultCode,data);
+
+    }
 
     //click listener for Image View
     @OnClick(R.id.ivprofilepicture)
