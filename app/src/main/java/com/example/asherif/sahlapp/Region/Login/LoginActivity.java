@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.MainActivity;
+import com.example.asherif.sahlapp.Region.Splash.SplashActivity;
 import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.rilixtech.CountryCodePicker;
+
+import java.util.Locale;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -120,6 +123,9 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         Intent Verificationintent = new Intent(LoginActivity.this, VerificationActivity.class);
         startActivity(Verificationintent);
         finish();
+
+
+
                /* if(!etPhoneNumber.getText().toString().isEmpty()&&  (etPhoneNumber.getText().toString().length() >= 9)){
                    // presenter.updatePhone(getPhoneNumber());
                     Intent Verificationintent=new Intent(LoginActivity.this,VerificationActivity.class);
@@ -153,7 +159,19 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         startActivity(i);
         finish();
     }
+    public  void changeLang(Context context, String lang) {
+        Locale myLocale = new Locale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+        Toast.makeText(context, "language changed", Toast.LENGTH_SHORT).show();
+        Intent i=new Intent(LoginActivity.this, SplashActivity.class);
+        startActivity(i);
+        finish();
     }
+    }
+
 
 
 

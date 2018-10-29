@@ -8,20 +8,23 @@
     android:orientation="vertical"
     android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
     tools:context=".Region.Splash.SplashActivity">
-    <com.trncic.library.DottedProgressBar
+
+    <com.antonzorin.dottedprogressbar.DottedProgressBar
         android:id="@+id/progress"
-        android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="100dp"
-        app:activeDot="@drawable/active_dot"
-        app:dotSize="20dp"
-        app:inactiveDot="@drawable/inactive_dot"
-        android:layout_marginTop="400dp"
-        app:jumpingSpeed="300"
-        app:spacing="15dp" />
-
-
-
-
-
+        android:layout_width="61dp"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="94dp"
+        app:dpClockwiseDots="true"
+        app:dpBaseColor="@color/Wheat"
+        app:dpDotsCount="10"
+        app:dpHideArrows="true"
+        app:dpMaxDotsSizePercent="10"
+        app:dpMinDotsSizePercent="5"
+        app:dpRotationSpeed="5" />
 </RelativeLayout>
+
+
+
+

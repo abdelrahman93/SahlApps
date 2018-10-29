@@ -29,9 +29,10 @@ public class SplashActivity extends AppCompatActivity{
         //imglogo.startAnimation(AnimationUtils.loadAnimation(SplashActivity.this, R.anim.splash_animation));
         //progressBar=(ProgressBar)findViewById(R.id.progressBar);
         //progressBar.setProgress(0);
-         progressBar = (DottedProgressBar) findViewById(R.id.progress);
+       /*  progressBar = (DottedProgressBar) findViewById(R.id.progress);
         progressBar.startProgress();
-        final long period = 30;
+*/
+       final long period = 30;
         timer=new Timer();
         timer.schedule(new TimerTask() {
             @Override
