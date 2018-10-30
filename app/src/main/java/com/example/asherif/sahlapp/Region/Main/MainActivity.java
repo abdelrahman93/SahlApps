@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -42,32 +43,34 @@ import butterknife.ButterKnife;
 //updated version 3rd edition Abdelrahman
 
 public class MainActivity extends BaseActivity<MainActivityPresenter> implements MainView {
-
     @BindView((R.id.pager))
     ViewPager viewPager;
     @BindView(R.id.tabs)
-     TabLayout tabLayout;
+    TabLayout tabLayout;
     @BindView(R.id.activity_main)
-     DrawerLayout dl;
+    DrawerLayout dl;
     private ActionBarDrawerToggle t;
     @BindView(R.id.nv)
-     NavigationView nv;
+    NavigationView nv;
     private ViewPagerAdapter adapter;
-    @BindString(R.string.myads) String myads;
-    @BindString(R.string.favorites) String favorite;
-    @BindString(R.string.profile) String profile;
-    @BindString(R.string.newestads) String newestads;
+    @BindString(R.string.myads)
+    String myads;
+    @BindString(R.string.favorites)
+    String favorite;
+    @BindString(R.string.profile)
+    String profile;
+    @BindString(R.string.newestads)
+    String newestads;
     private ColorStateList colors;
     //Get Shared Preferences visitor flag;
     SharedPreferences prefs;
     String flag;
-    MainActivityPresenter presenter;
 
 
     @NonNull
     @Override
     protected MainActivityPresenter createPresenter(@NonNull Context context) {
-        return presenter =new MainActivityPresenter(this, new File(), new FileContent(), new User());
+        return new MainActivityPresenter(this, MainActivity.this);
     }
 
     @Override
@@ -87,33 +90,20 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch(id)
-                {
-                    case R.id.cars:
 
-                        Toast.makeText(MainActivity.this, "cars",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.buildings:
-                        Toast.makeText(MainActivity.this, "buildings",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.hospitals:
-                        Toast.makeText(MainActivity.this, "Hospitals",Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        return true;
-                }
-                return true;
-            }
-        });
+        //listeners for items in the navigation menu
+        SetNavigationMenu(nv);
 
+        // Add Fragments to adapter one by one
+        NavigateToMyADS();
+        NavigateToFavorites();
+        NavigateToNewestADS();
+        viewPager.setAdapter(adapter);
+        //to set the icons in the Tabs and the default color
+        TabIcons(tabLayout, viewPager, myads);
 
-
-        ChangeTabSelectedColor();
-
+        //change Tabs Tittles and icons colors
+        ChangeTabColor( tabLayout,  viewPager,  myads,  favorite,  newestads);
 
 
 
@@ -135,7 +125,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.createadd:
                 NavigateToCreateAdvertisment();
                 break;
@@ -143,87 +133,29 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
                 NavigteToProfile();
 
         }
-        if(t.onOptionsItemSelected(item))
+        if (t.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
     }
+
     private void init() {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        t = new ActionBarDrawerToggle(this, dl,R.string.navigation_drawer_open ,R.string.closeDrawer);
+        t = new ActionBarDrawerToggle(this, dl, R.string.navigation_drawer_open, R.string.closeDrawer);
         prefs = getSharedPreferences("MyPREFERENCES", MODE_PRIVATE);
         flag = prefs.getString("visitor_key", null);
-        presenter.checkVisitor();
-        /*Menu menu = nv.getMenu();
-        MenuItem tools= menu.findItem(R.id.menu_top);
-        SpannableString s = new SpannableString(tools.getTitle());
-        s.setSpan(new TextAppearanceSpan(this, R.style.TextAppearance44), 0, s.length(), 0);
-        tools.setTitle(s);*/
-      //  nv.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) MainActivity.this);
+        // mPresenter.checkVisitor();
 
     }
 
-    //Display The Tab Tittle and Icons
+    //change  The Tab Tittle and Icons colors
     @Override
-    public void TabTittle() {
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#fffff8"));
-        tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
-        tabLayout.getTabAt(0).setIcon(R.drawable.ads);
-        tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
-        tabLayout.getTabAt(2).setIcon(R.drawable.trending1);
-        getSupportActionBar().setTitle(myads);
+    public void ChangeTabColor(TabLayout tabLayout, ViewPager viewPager, String myads, String favorite, String newestads) {
 
+        mPresenter.ChangeTabColor(tabLayout, viewPager, myads, favorite, newestads);
 
-        //change toolbar tittle depending on the fragment type
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-
-             /*       case 0:
-                        viewPager.setCurrentItem(0);
-                        getSupportActionBar().setTitle(profile);
-                        break;*/
-
-                    case 0:
-                        viewPager.setCurrentItem(0);
-                        getSupportActionBar().setTitle(myads);
-                        break;
-
-                    case 1:
-                        viewPager.setCurrentItem(1);
-                        getSupportActionBar().setTitle(favorite);
-                        break;
-
-                    case 2:
-                        viewPager.setCurrentItem(2);
-                        getSupportActionBar().setTitle(newestads);
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-           //     tab.getIcon().setColorFilter(Color.parseColor("#727272"), PorterDuff.Mode.SRC_ATOP);
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-
-
-
-      /*  for (int i = 0; i < tabLayout.getTabCount(); i++) {
-
-        }*/
 
     }
-
-
 
 
     @Override
@@ -246,13 +178,14 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     @Override
     public void NavigateToCreateAdvertisment() {
-        Intent CreateADS=new Intent(MainActivity.this,Create_Advertisment_Activity.class);
+        Intent CreateADS = new Intent(MainActivity.this, Create_Advertisment_Activity.class);
         startActivity(CreateADS);
         finish();
     }
 
     @Override
     public void NavigteToProfile() {
+        mPresenter.NavigteToProfile();
 
         if (flag != null) {
             if (flag.equals("true")) {
@@ -267,6 +200,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
             }
         }
     }
+
     @Override
     public void checkVisitor() {
         if (flag != null) {
@@ -283,39 +217,22 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
                 NavigateToNewestADS();
                 viewPager.setAdapter(adapter);
                 //customize Tabs Tittles ,texts and icons
-                TabTittle();
+               // TabTittle();
             }
         }
     }
+
     @Override
-    public void ChangeTabSelectedColor() {
-
-        //switch text colors from normal color to selected color
-        tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#fffff8"));
-
-        //switch icon colors from normal color to selected color
-        if (Build.VERSION.SDK_INT >= 23) {
-            colors = getResources().getColorStateList(R.color.tab_icon, getTheme());
-            Log.i("TAG", "Build.VERSION.SDK_INT >= 23: ");
-
-        }
-        else {
-            Log.i("TAG", "ChangeTabSelectedColor: ");
-            colors = getResources().getColorStateList(R.color.tab_icon);
-        }
-
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            Log.i("TAG", "tabLayout.getTabCount: ");
-
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            Drawable icon = tab.getIcon();
-
-            if (icon != null) {
-                icon = DrawableCompat.wrap(icon);
-                DrawableCompat.setTintList(icon, colors);
-            }
-        }
-
+    public void SetNavigationMenu(NavigationView nv) {
+        mPresenter.NavigationMenu(nv);
     }
+
+    @Override
+    public void TabIcons(TabLayout tabLayout, ViewPager viewPager, String myads) {
+        mPresenter.TabIcons(tabLayout, viewPager, myads);
+    }
+
+
+
 
 }
