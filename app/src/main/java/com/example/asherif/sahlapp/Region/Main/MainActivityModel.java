@@ -1,6 +1,5 @@
 package com.example.asherif.sahlapp.Region.Main;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import static android.content.Context.MODE_PRIVATE;

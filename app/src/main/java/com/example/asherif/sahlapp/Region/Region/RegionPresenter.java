@@ -1,7 +1,5 @@
 package com.example.asherif.sahlapp.Region.Region;
 
-import android.support.annotation.NonNull;
-
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.base.BasePresenter;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;

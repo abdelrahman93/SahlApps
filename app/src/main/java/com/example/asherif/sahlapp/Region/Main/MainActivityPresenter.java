@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,10 +30,19 @@ public class MainActivityPresenter extends BasePresenter {
     MainView view;
 
    MainActivity context;
+    TabLayout tabLayout;
+    public MainActivityPresenter(){
 
-    public MainActivityPresenter(MainView view,MainActivity context) {
+    }
+    public MainActivityPresenter(MainView view) {
         this.view = view;
 
+    }
+
+
+    public MainActivityPresenter(MainView view,MainActivity context,TabLayout tabLayout) {
+        this.view = view;
+this.tabLayout=tabLayout;
         this.context=context;
     }
 
@@ -54,7 +62,7 @@ public class MainActivityPresenter extends BasePresenter {
                 {
                     case R.id.cars:
 
-                        Toast.makeText(context ,"cars",Toast.LENGTH_SHORT).show();
+                        Toast.makeText((Context) view,"cars",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.buildings:
                         Toast.makeText(context, "buildings",Toast.LENGTH_SHORT).show();
@@ -73,6 +81,7 @@ public class MainActivityPresenter extends BasePresenter {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#B00020"));
         tabLayout.setSelectedTabIndicatorHeight((int) (5 * context.getResources().getDisplayMetrics().density));
+        if(tabLayout!=null){
         tabLayout.getTabAt(0).setIcon(R.drawable.ads);
         tabLayout.getTabAt(1).setIcon(R.drawable.favorites);
         tabLayout.getTabAt(2).setIcon(R.drawable.trending1);
@@ -81,7 +90,7 @@ public class MainActivityPresenter extends BasePresenter {
         tabLayout.getTabAt(1).getIcon().setColorFilter(Color.parseColor("#727272"), PorterDuff.Mode.SRC_IN);
         tabLayout.getTabAt(2).getIcon().setColorFilter(Color.parseColor("#727272"), PorterDuff.Mode.SRC_IN);
 
-        context.getSupportActionBar().setTitle(myads);
+        context.getSupportActionBar().setTitle(myads);}
 
 
     }
@@ -147,12 +156,12 @@ public class MainActivityPresenter extends BasePresenter {
         }
 
     }
-   public void checkVisitor(TabLayout tabLayout,ViewPager viewPager,ViewPagerAdapter adapter,Boolean visitor ){
+   public void checkVisitor(TabLayout tabLayout,ViewPager viewPager,ViewPagerAdapter adapter ){
         MainActivityModel mainActivityModel=new MainActivityModel(context);
        Toast.makeText(context, mainActivityModel.flag , Toast.LENGTH_SHORT).show();
 
                // context.getSupportActionBar().setTitle(newestads);
-                visitor=true;
+
                 tabLayout.setVisibility(View.GONE);
                 // Add Newest Fragment only to adapter in case of visitor
                 adapter.addFragment(new Fragment_NewestADS(), "New ADS");

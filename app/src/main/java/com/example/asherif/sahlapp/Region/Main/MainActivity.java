@@ -4,34 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.CreateAdvertisment.Create_Advertisment_Activity;
 import com.example.asherif.sahlapp.Region.Login.LoginActivity;
 import com.example.asherif.sahlapp.Region.Main.NewestADS.Fragment_NewestADS;
-import com.example.asherif.sahlapp.Region.Network.Model.File;
-import com.example.asherif.sahlapp.Region.Network.Model.FileContent;
-import com.example.asherif.sahlapp.Region.Network.Model.User;
 import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.example.asherif.sahlapp.Region.profile.ProfileActivity;
 
@@ -70,7 +59,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     @NonNull
     @Override
     protected MainActivityPresenter createPresenter(@NonNull Context context) {
-        return new MainActivityPresenter(this, MainActivity.this);
+        return new MainActivityPresenter(this, MainActivity.this,tabLayout);
     }
 
     @Override
@@ -84,26 +73,21 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
         //initialize the components
         init();
+        checkVisitor();
 
         dl.addDrawerListener(t);
         t.syncState();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if (getSupportActionBar() != null){ getSupportActionBar().setDisplayHomeAsUpEnabled(true);}
 
         //listeners for items in the navigation menu
         SetNavigationMenu(nv);
 
-        // Add Fragments to adapter one by one
+     /*   // Add Fragments to adapter one by one
         NavigateToMyADS();
         NavigateToFavorites();
         NavigateToNewestADS();
-        viewPager.setAdapter(adapter);
-        //to set the icons in the Tabs and the default color
-        TabIcons(tabLayout, viewPager, myads);
+        viewPager.setAdapter(adapter);*/
 
-        //change Tabs Tittles and icons colors
-        ChangeTabColor( tabLayout,  viewPager,  myads,  favorite,  newestads);
 
 
 
@@ -205,17 +189,23 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     public void checkVisitor() {
         if (flag != null) {
             if (flag.equals("true")) {
-                getSupportActionBar().setTitle(newestads);
+                /*getSupportActionBar().setTitle(newestads);
                 tabLayout.setVisibility(View.GONE);
                 // Add Newest Fragment only to adapter in case of visitor
                 NavigateToNewestADS();
-                viewPager.setAdapter(adapter);
+                viewPager.setAdapter(adapter);*/
+                mPresenter.checkVisitor(tabLayout,viewPager,adapter);
             } else {
                 // Add Fragments to adapter one by one
                 NavigateToMyADS();
                 NavigateToFavorites();
                 NavigateToNewestADS();
                 viewPager.setAdapter(adapter);
+                //to set the icons in the Tabs and the default color
+                TabIcons(tabLayout, viewPager, myads);
+
+                //change Tabs Tittles and icons colors
+                ChangeTabColor( tabLayout,  viewPager,  myads,  favorite,  newestads);
                 //customize Tabs Tittles ,texts and icons
                // TabTittle();
             }

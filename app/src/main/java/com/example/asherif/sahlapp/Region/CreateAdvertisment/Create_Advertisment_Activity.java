@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.MainActivity;
-import com.example.asherif.sahlapp.Region.profile.ProfileActivity;
 
 public class Create_Advertisment_Activity extends AppCompatActivity {
 

@@ -3,13 +3,10 @@ package com.example.asherif.sahlapp.Region.Splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Login.LoginActivity;
-import com.trncic.library.DottedProgressBar;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="#ffff"
     android:orientation="vertical"
-    tools:context=".Region.Region.RegionActivity">
+    tools:context=".Region.Region.RegionActivity"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:id="@+id/countrylogo"

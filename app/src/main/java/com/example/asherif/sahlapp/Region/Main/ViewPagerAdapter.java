@@ -1,11 +1,8 @@
 package com.example.asherif.sahlapp.Region.Main;
 
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;

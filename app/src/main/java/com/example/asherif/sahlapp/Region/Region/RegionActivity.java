@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.MainActivity;
