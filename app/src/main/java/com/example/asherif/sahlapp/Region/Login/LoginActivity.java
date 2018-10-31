@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         init();
-        // hideProgressBar();
+        // hideProgressBarnn();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
