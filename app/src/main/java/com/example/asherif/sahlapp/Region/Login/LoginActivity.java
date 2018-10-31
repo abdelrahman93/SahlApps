@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +24,7 @@ import com.example.asherif.sahlapp.Region.Network.Rest.ApiClient;
 import com.example.asherif.sahlapp.Region.Network.Rest.ApiInterface;
 import com.example.asherif.sahlapp.Region.Splash.SplashActivity;
 import com.example.asherif.sahlapp.Region.base.BaseActivity;
-import com.rilixtech.CountryCodePicker;
+import com.hbb20.CountryCodePicker;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -40,6 +41,8 @@ import retrofit2.Response;
 public class LoginActivity extends BaseActivity<LoginActivityPresenter> implements LoginView {
     @BindView(R.id.ccp)
     CountryCodePicker ccp;
+    CountryCodePicker ccp_lang;
+
     @BindView(R.id.etPhoneNumber)
     EditText etPhoneNumber;
     @BindView(R.id.btn_Login)
@@ -47,16 +50,22 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     @BindView(R.id.pgloading)
     ProgressBar progressBar;
     @BindView(R.id.visitor_tv)
-    TextView IamVistor;
+    TextView iamVistor;
     LoginActivityPresenter presenter;
-    @BindString(R.string.i_am_visitor) String mystring;
+    @BindString(R.string.i_am_visitor)
+    String mystring;
+    @BindString(R.string.Want_change_Lang)
+    String WantchangeLang;
+    @BindString(R.string.Done)
+    String Done;
+    @BindString(R.string.Cancel)
+    String Cancel;
+
 
     //Shared Preferences to set flag visitor
-    SharedPreferences sharedpreferences ;
-    SharedPreferences.Editor editor ;
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
     ApiInterface apiInterface;
-
-//comments
     // private PhoneAuthModel phoneAuthModel;
 
     @NonNull
@@ -72,112 +81,98 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         ButterKnife.bind(this);
         init();
         // hideProgressBar();
-        Country country=new Country();
-        Call<Country> callFile = apiInterface.Country(country);
-        callFile.enqueue(new Callback<Country>() {
-            @Override
-            public void onResponse(Call<Country> call, Response<Country> response) {
-
-              Log.i("TAG", "response.body: "+response.body().getCountries().get(0).getName());
-                Log.i("TAG", "responseresponseresponse "+response.body().getId());
-
-            }
-
-            @Override
-            public void onFailure(Call<Country> call, Throwable t) {
-                Log.i("TAG", "onFailure: "+t.getMessage());
-
-            }
-        });
-
-
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.lang:
+                showChangeLangDialog(ccp_lang,WantchangeLang,Done,Cancel);
+                break;
+        }
+        return true;
     }
 
     private void init() {
-         sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
-         editor = sharedpreferences.edit();
+        sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
         //Set underline to visitor text
         SpannableString content = new SpannableString(mystring);
         content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
-        IamVistor.setText(content);
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
-
+        iamVistor.setText(content);
         // presenter=new LoginActivityPresenter(this);
         // phoneAuthModel=new PhoneAuthModel();
     }
 
     //get the phone number with country code
     @Override
-    public String getPhoneNumber() {
-        //get values from phone edit text and pass to countryPicker
-        ccp.registerPhoneNumberTextView(etPhoneNumber);
-        String number = etPhoneNumber.getText().toString();
-        String phoneNumber = ccp.getSelectedCountryCodeWithPlus() + number;
-        return phoneNumber;
+    public String getPhoneNumber(CountryCodePicker ccp, EditText etPhoneNumber) {
+        return         mPresenter.getPhoneNumber(ccp,etPhoneNumber);
+
     }
 
 
     @Override
-    public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+    public void showProgressBar(ProgressBar progressBar) {
+        mPresenter.showProgressBar(progressBar);
     }
 
     @Override
-    public void hideProgressBar() {
-        progressBar.setVisibility(View.INVISIBLE);
+    public void hideProgressBar(ProgressBar progressBar) {
+mPresenter.hideProgressBar(progressBar);
     }
 
     //Set the hint depend on country
     @Override
-    public void hintCountryNumber() {
+    public void hintCountryNumber(CountryCodePicker ccp,EditText etPhoneNumber) {
+       mPresenter.hintCountryNumber(ccp,etPhoneNumber);
+    }
 
-        switch (ccp.getSelectedCountryCode()) {
-            case "20":
-                etPhoneNumber.setHint("100 739 8004");
-                break;
-            case "966":
-                etPhoneNumber.setHint("51 234 5678");
-                break;
-            case "971":
-                etPhoneNumber.setHint("50 123 5678");
-                break;
-            default:
-                etPhoneNumber.setHint("");
-        }
+    @Override
+    public void navigateToVerification() {
+        Intent i = new Intent(getApplicationContext(), VerificationActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void navigateToSplash() {
+        Intent i = new Intent(getApplicationContext(), SplashActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void navigateToMain() {
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void showChangeLangDialog(CountryCodePicker ccp_lang,String WantchangeLang,String Done,String Cancel ) {
+        mPresenter.showChangeLangDialog(ccp_lang,WantchangeLang,Done,Cancel);
     }
 
     //When click to Login button
     @OnClick(R.id.btn_Login)
-    void Loginbtn(View view){
-    /*    editor.putString("visitor_key", "false");
+    void Loginbtn(View view) {
+        editor.putString("visitor_key", "false");
         editor.commit();
-        Intent Verificationintent = new Intent(LoginActivity.this, VerificationActivity.class);
-        startActivity(Verificationintent);
-        finish();*/
-        User user=new User("123456789","966556717622");
-        Call<User> callFile = apiInterface.Login(user);
-        callFile.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-
-                Log.i("TAG", "onResponseonResponse: "+response.body().getStatus());
-               // Log.i("TAG", "response.body(): "+response.body().getStatus());
-                Log.i("TAG", "getPhone_error: "+response.body().getPhone_error());
+        navigateToVerification();
 
 
 
-            }
+               /* if(!etPhoneNumber.getText().toString().isEmpty()&&  (etPhoneNumber.getText().toString().length() >= 9)){
+                   // presenter.updatePhone(getPhoneNumber());
+                    Intent Verificationintent=new Intent(LoginActivity.this,VerificationActivity.class);
+                    startActivity(Verificationintent);
+                    finish();
+                }else{
+                    etPhoneNumber.setError("please Enter a Valid Number");
+                    etPhoneNumber.requestFocus();
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.i("TAG", "onFailure: "+t.getMessage());
-
-            }
-        });
-
-
-
-
+                }*/
 
     }
         /*});
@@ -188,31 +183,22 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
             }
         });*/
 
+
     //When click to I am a visitor
     @OnClick(R.id.visitor_tv)
-    void clickVisitorText(View v){
-         sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
-
-         editor = sharedpreferences.edit();
-
+    void clickVisitorText(View v) {
+        sharedpreferences = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
         editor.putString("visitor_key", "true");
         editor.commit();
-        Intent i =new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(i);
-        finish();
+        navigateToMain();
     }
-    public  void changeLang(Context context, String lang) {
-        Locale myLocale = new Locale(lang);
-        Locale.setDefault(myLocale);
-        android.content.res.Configuration config = new android.content.res.Configuration();
-        config.locale = myLocale;
-        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-        Toast.makeText(context, "language changed", Toast.LENGTH_SHORT).show();
-        Intent i=new Intent(LoginActivity.this, SplashActivity.class);
-        startActivity(i);
-        finish();
-    }
-    }
+
+
+
+
+
+}
 
 
 

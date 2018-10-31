@@ -9,9 +9,9 @@ public interface LoginView {
     String getPhoneNumber(CountryCodePicker ccp, EditText etPhoneNumber);
     void showProgressBar(ProgressBar progressBar);
     void hideProgressBar(ProgressBar progressBar);
-    void hintCountryNumber(CountryCodePicker ccp,EditText etPhoneNumber);
+    void hintCountryNumber(CountryCodePicker ccp, EditText etPhoneNumber);
     void navigateToVerification();
     void navigateToSplash();
     void navigateToMain();
-    void showChangeLangDialog(CountryCodePicker ccp_lang,String WantchangeLang,String Done,String Cancel );
+    void showChangeLangDialog(CountryCodePicker ccp_lang, String WantchangeLang, String Done, String Cancel);
 }
