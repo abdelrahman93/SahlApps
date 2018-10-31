@@ -13,4 +13,5 @@ public interface RegionView {
  void hideProgressBar();
 void navigateToNewestAds();
 
+
 }

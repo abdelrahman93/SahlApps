@@ -10,7 +10,6 @@
     tools:context=".Region.Splash.SplashActivity">
 
     <com.antonzorin.dottedprogressbar.DottedProgressBar
-        android:id="@+id/progress"
         android:layout_width="61dp"
         android:layout_height="55dp"
         android:layout_alignParentBottom="true"

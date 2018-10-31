@@ -3,7 +3,6 @@
     <string name="search">Search</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="phonenumber">Enter Your Contact Number</string>
     <string name="save">Save</string>
     <string name="address"> Your Address "</string>
@@ -25,27 +24,12 @@
     <string name="error_region_msg">Please choose valid region</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
 
     <!-- Navigation Drawer menu labels -->
-    <string name="nav_home">Home</string>
-    <string name="nav_photos">Photos</string>
-    <string name="nav_movies">Movies</string>
-
 
     <!-- Toolbar titles when navigation menu item is selected -->
-    <string-array name="nav_item_activity_titles">
-        <item>Home</item>
-        <item>Photos</item>
-        <item>Movies</item>
-        <item>Notifications</item>
-        <item>Settings</item>
-    </string-array>
 
-
-    <string name="privacy_policy">Privacy Policy</string>
     <string name="cars">Cars</string>
     <string name="buildings">Buildings</string>
     <string name="Hospitals">Hospitals</string>
@@ -59,9 +43,15 @@
     <string name="adstext">You Didn\'t sell anything until now</string>
     <string name="no_ads_found">No ADS Found</string>
     <string name="No_Saved_Items">No Saved Items</string>
-    <string name="notrending">No ADS up to date</string>
     <string name="name">Name</string>
     <string name="CATEGORIES">CATEGORIES</string>
+    <string name="change_lang">Change Language</string>
+    <string name="Please_choose_lang">Please choose language</string>
+    <string name="Want_change_Lang">Do you want to change language</string>
+    <string name="Done">Done</string>
+    <string name="Cancel">Cancel</string>
+
+
 
 
 </resources>

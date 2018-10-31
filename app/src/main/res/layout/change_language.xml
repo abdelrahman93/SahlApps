@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/Please_choose_lang"
+        android:textColor="#000000"
+        android:layout_marginBottom="20dp"
+        android:textSize="15dp" />
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp_lang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ccp_defaultNameCode="US"
+            app:ccp_showFullName="true"
+            app:ccp_showPhoneCode="false"
+            />
+
+
+    </LinearLayout>
+
+
