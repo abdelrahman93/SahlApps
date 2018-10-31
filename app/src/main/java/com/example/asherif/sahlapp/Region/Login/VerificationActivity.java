@@ -23,10 +23,10 @@ import com.goodiebag.pinview.Pinview;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
-public class VerificationActivity extends BaseActivity implements VerificationView {
-    VerificationActivityPresenter presenter;
+public class VerificationActivity extends BaseActivity<VerificationActivityPresenter> implements VerificationView {
     public static final String TAG = "VerificationActivity";
     @BindView(R.id.btn_signin)
     Button btn_signin;
@@ -38,17 +38,15 @@ public class VerificationActivity extends BaseActivity implements VerificationVi
     Pinview pin;
     @BindView(R.id.pgloadingVerification)
     ProgressBar progressBar;
-    @BindString(R.string.resend) String mystring;
-
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+    @BindString(R.string.resend) String resendString;
 
 
     @NonNull
     @Override
-    protected BasePresenter createPresenter(@NonNull Context context) {
-        return new VerificationActivityPresenter();
+    protected VerificationActivityPresenter createPresenter(@NonNull Context context) {
+        return new VerificationActivityPresenter(VerificationActivity.this,this);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,95 +54,50 @@ public class VerificationActivity extends BaseActivity implements VerificationVi
         setContentView(R.layout.activity_verification);
         ButterKnife.bind(this);
         init();
+        pinCode();
 //        hideProgressBar();
-        pincode();
-
-
-        btn_signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  String code = pin.getValue().toString();
-                Intent i = new Intent(VerificationActivity.this, RegionActivity.class);
-                startActivity(i);
-                finish();
-               /* if (!code.isEmpty() && code.length() == 6) {
-                    //  presenter.verifyCode(code);
-
-                    return;
-                }*/
-            }
-        });
-
 
     }
 
     private void init() {
 
         pin = new Pinview(this);
+        pin = (Pinview) findViewById(R.id.pinview);
 
-        SpannableString content = new SpannableString(mystring);
-        content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
-        resend.setText(content);
         /*mAuth = FirebaseAuth.getInstance();
         presenter=new VerificationActivityPresenter(this);
         phoneAuthModel=new PhoneAuthModel();
         pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);*/
         // editor = pref.edit();
 
-
+    }
+    @OnClick(R.id.btn_signin)
+    void Signinbtn(View view ){
+        mPresenter.btnSignin(pin);
     }
 
     @Override
-    public void pincode() {
-
-     /*   pin.setPinViewEventListener(new Pinview.PinViewEventListener() {
-            @Override
-            public void onDataEntered(Pinview pinview, boolean fromUser) {
-                //Make api calls here or what not
-            }
-        });
-*/
-       /* resend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              *//*  firebaseAuth = FirebaseAuth.getInstance();
-                user = firebaseAuth.getCurrentUser();
-                presenter.resend(user.getPhoneNumber());*//*
-             //   showProgressBar();
-
-            }
-        });
-*/
-
-        //time to show retry button
-        new CountDownTimer(60000, 1000) {
-            @Override
-            public void onTick(long l) {
-                timer.setText("0:" + l / 1000 + " s");
-                resend.setVisibility(View.GONE);
-
-            }
-
-            @Override
-            public void onFinish() {
-                timer.setText(0 + " s");
-                resend.startAnimation(AnimationUtils.loadAnimation(VerificationActivity.this, R.anim.slide_from_right));
-                resend.setVisibility(View.VISIBLE);
-            }
-        }.start();
-        //timer ends here
-
-
+    public void pinCode() {
+        mPresenter.pinCode(timer, resend,pin,resendString);
     }
 
     @Override
     public void showProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
+        mPresenter.showProgressBar(progressBar);
     }
 
     @Override
     public void hideProgressBar() {
-        progressBar.setVisibility(View.INVISIBLE);
+        mPresenter.hideProgressBar(progressBar);
+    }
+
+
+    @Override
+    public void navigateToMain() {
+        Intent i = new Intent(VerificationActivity.this, RegionActivity.class);
+        startActivity(i);
+        finish();
+
     }
 
 

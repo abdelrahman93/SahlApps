@@ -4,9 +4,7 @@
 
     >
 
-    <group
-        android:id="@+id/menu_top"
-        android:checkableBehavior="single"
+    <group android:checkableBehavior="single"
         >
     <item
         android:id="@+id/cars"
@@ -16,9 +14,7 @@
         />
     </group>
 
-    <group
-        android:id="@+id/menu_mid"
-        android:checkableBehavior="single"
+    <group android:checkableBehavior="single"
         >
     <item
         android:id="@+id/buildings"
@@ -26,9 +22,7 @@
         android:title="@string/buildings" />
     </group>
 
-    <group
-        android:id="@+id/menu_bottom"
-        android:checkableBehavior="single"
+    <group android:checkableBehavior="single"
         >
     <item
         android:id="@+id/hospitals"

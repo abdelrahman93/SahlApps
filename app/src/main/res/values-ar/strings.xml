@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">سهل</string>
     <string name="search">ابحث</string>
-    <string name="hello_blank_fragment">اهلا وسهلا</string>
     <string name="phonenumber">رقم الهاتف</string>
     <string name="save">حفظ</string>
     <string name="address">العنوان</string>
@@ -10,8 +9,6 @@
     <string name="email">البريد الالكتروني</string>
     <string name="region">المنطقه</string>
     <string name="navigation_drawer_open">فتح</string>
-    <string name="navigation_drawer_close">غلق</string>
-    <string name="openDrawer">فتح</string>
     <string name="closeDrawer">غلق</string>
     <string name="newestads">احدث الاعلانات</string>
     <string name="favorites">الاعلانات المفضله</string>
@@ -20,7 +17,6 @@
     <string name="buildings">العقارات</string>
     <string name="cars">السيارات</string>
     <string name="profile">حسابي</string>
-    <string name="privacy_policy">التعليمات</string>
     <string name="i_am_visitor">أنا زائر</string>
     <string name="Enter_your_mobile_number">"من فضلك أدخل رقم هاتفك "</string>
     <string name="Enter_your_mobile_number_to_create_an_account">"من فضلك أدخل رقم هاتفك لإنشاء حساب "</string>
@@ -34,16 +30,17 @@
     <string name="Please_wait">من فضلك أنتظر</string>
     <string name="resend">إعادة إرسال</string>
     <string name="error_region_msg">من فضلك إختار المنطقة</string>
-    <string name="nav_home">الرئيسية</string>
-    <string name="nav_photos">الصور</string>
-    <string name="nav_movies">الافلام</string>
     <string name="create_add">إنشاء إعلان</string>
     <string name="no_ads_found">لا يوجد إعلانات</string>
     <string name="adstext">لم تبيع أي شيء حتى الآن</string>
     <string name="favoritetext">لا يوجد إعلانات محفوظة</string>
     <string name="No_Saved_Items">لا يوجد إعلانات</string>
-    <string name="notrending">لا توجد إعلانات حديثة</string>
     <string name="sign_in">تسجيل دخول</string>
     <string name="name">الأسم</string>
     <string name="CATEGORIES">الأقسام</string>
+    <string name="Want_change_Lang">هل تريد تغيير اللغة</string>
+    <string name="Done">تم</string>
+    <string name="Please_choose_lang">من فضلك إختار اللغة</string>
+    <string name="Cancel">إلغاء</string>
+
 </resources>
