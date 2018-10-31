@@ -1,5 +1,6 @@
 package com.example.asherif.sahlapp.Region.Network.Rest;
 
+import com.example.asherif.sahlapp.Region.Network.Model.Country;
 import com.example.asherif.sahlapp.Region.Network.Model.File;
 import com.example.asherif.sahlapp.Region.Network.Model.FileContent;
 import com.example.asherif.sahlapp.Region.Network.Model.User;
@@ -8,6 +9,7 @@ import com.example.asherif.sahlapp.Region.Network.Model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -21,4 +23,15 @@ public interface ApiInterface {
 
     @POST ("AddEditBarCodeFileContent/TQAwAGIAQABQAGEAJAAkADQAVwBlAGIAJABzAGUAcgB2AGkAYwBlAA==/104.46.55.15/osama_demo")
     Call<FileContent>AddFileContent(@Body FileContent fileContent);
+
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+    @POST ("login/")
+    Call<User>Login(@Body User User);
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+    @POST ("countries/")
+    Call<Country>Country(@Body Country country);
 }

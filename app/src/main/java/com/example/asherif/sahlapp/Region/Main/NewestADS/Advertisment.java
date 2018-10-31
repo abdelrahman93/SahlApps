@@ -2,6 +2,8 @@ package com.example.asherif.sahlapp.Region.Main.NewestADS;
 
 public class Advertisment {
     private String title, genre, year;
+    private int thumbnail;
+
     public Advertisment(){
 
     }
@@ -9,8 +11,19 @@ public class Advertisment {
         this.title = title;
         this.genre = genre;
         this.year = year;
+     //   this.thumbnail = thumbnail;
 
     }
+
+
+    public int getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(int thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     public String getTitle() {
         return title;
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,16 +17,24 @@ import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.MainActivity;
+import com.example.asherif.sahlapp.Region.Network.Model.Country;
+import com.example.asherif.sahlapp.Region.Network.Model.User;
+import com.example.asherif.sahlapp.Region.Network.Rest.ApiClient;
+import com.example.asherif.sahlapp.Region.Network.Rest.ApiInterface;
 import com.example.asherif.sahlapp.Region.Splash.SplashActivity;
 import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.rilixtech.CountryCodePicker;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginActivity extends BaseActivity<LoginActivityPresenter> implements LoginView {
@@ -45,6 +54,8 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     //Shared Preferences to set flag visitor
     SharedPreferences sharedpreferences ;
     SharedPreferences.Editor editor ;
+    ApiInterface apiInterface;
+
 
     // private PhoneAuthModel phoneAuthModel;
 
@@ -61,6 +72,24 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         ButterKnife.bind(this);
         init();
         // hideProgressBar();
+        Country country=new Country();
+        Call<Country> callFile = apiInterface.Country(country);
+        callFile.enqueue(new Callback<Country>() {
+            @Override
+            public void onResponse(Call<Country> call, Response<Country> response) {
+
+              Log.i("TAG", "response.body: "+response.body().getCountries().get(0).getName());
+                Log.i("TAG", "responseresponseresponse "+response.body().getId());
+
+            }
+
+            @Override
+            public void onFailure(Call<Country> call, Throwable t) {
+                Log.i("TAG", "onFailure: "+t.getMessage());
+
+            }
+        });
+
 
     }
 
@@ -71,6 +100,8 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         SpannableString content = new SpannableString(mystring);
         content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
         IamVistor.setText(content);
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
         // presenter=new LoginActivityPresenter(this);
         // phoneAuthModel=new PhoneAuthModel();
     }
@@ -118,24 +149,35 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     //When click to Login button
     @OnClick(R.id.btn_Login)
     void Loginbtn(View view){
-        editor.putString("visitor_key", "false");
+    /*    editor.putString("visitor_key", "false");
         editor.commit();
         Intent Verificationintent = new Intent(LoginActivity.this, VerificationActivity.class);
         startActivity(Verificationintent);
-        finish();
+        finish();*/
+        User user=new User("123456789","966556717622");
+        Call<User> callFile = apiInterface.Login(user);
+        callFile.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                Log.i("TAG", "onResponseonResponse: "+response.body().getStatus());
+               // Log.i("TAG", "response.body(): "+response.body().getStatus());
+                Log.i("TAG", "getPhone_error: "+response.body().getPhone_error());
 
 
 
-               /* if(!etPhoneNumber.getText().toString().isEmpty()&&  (etPhoneNumber.getText().toString().length() >= 9)){
-                   // presenter.updatePhone(getPhoneNumber());
-                    Intent Verificationintent=new Intent(LoginActivity.this,VerificationActivity.class);
-                    startActivity(Verificationintent);
-                    finish();
-                }else{
-                    etPhoneNumber.setError("please Enter a Valid Number");
-                    etPhoneNumber.requestFocus();
+            }
 
-                }*/
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.i("TAG", "onFailure: "+t.getMessage());
+
+            }
+        });
+
+
+
+
 
     }
         /*});
