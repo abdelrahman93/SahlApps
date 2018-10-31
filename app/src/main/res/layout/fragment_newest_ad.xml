@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:orientation="vertical"
-    tools:context=".Region.Main.NewestADS.Fragment_NewestADS">
+    tools:context=".App.Main.NewestADS.Fragment_NewestADS">
 
 
   <!--  <TextView

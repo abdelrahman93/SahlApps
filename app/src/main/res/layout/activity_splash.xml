@@ -7,7 +7,7 @@
     android:background="@drawable/splash"
     android:orientation="vertical"
     android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-    tools:context=".Region.Splash.SplashActivity">
+    tools:context=".App.Splash.SplashActivity">
 
     <com.antonzorin.dottedprogressbar.DottedProgressBar
         android:layout_width="61dp"

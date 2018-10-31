@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffff"
     android:orientation="vertical"
-    tools:context=".Region.Region.RegionActivity"
+    tools:context=".App.Region.RegionActivity"
     tools:ignore="Overdraw">
 
     <ImageView

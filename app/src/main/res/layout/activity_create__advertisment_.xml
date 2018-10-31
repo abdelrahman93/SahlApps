@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Region.CreateAdvertisment.Create_Advertisment_Activity">
+    tools:context=".App.CreateAdvertisment.Create_Advertisment_Activity">
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

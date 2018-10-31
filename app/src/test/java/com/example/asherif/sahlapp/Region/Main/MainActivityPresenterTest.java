@@ -4,6 +4,9 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import com.example.asherif.sahlapp.App.Main.MainActivityPresenter;
+import com.example.asherif.sahlapp.App.Main.MainView;
+
 import org.junit.Assert;
 import org.junit.Test;
 
