@@ -2,9 +2,12 @@ package com.example.asherif.sahlapp.Region.Region;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -71,41 +74,43 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
             }
         });
 */
-        //Set Country Data to country spinner
-        setAdapter(mPresenter.addCountryData(), countrySpinner);
-        mPresenter.AddAdapterPresenterCity("", citySpinner);
-        mPresenter.AddAdapterPresenterDistrict("", districtSpinner);
+
+
+//Set Country Data to country spinner
+                setAdapter(mPresenter.addCountryData(), countrySpinner);
+                mPresenter.AddAdapterPresenterCity("", citySpinner);
+                mPresenter.AddAdapterPresenterDistrict("", districtSpinner);
 
 //on click spinners , set adapter depend on choosen country
-        countrySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                country = adapterView.getItemAtPosition(position).toString();
-                mPresenter.AddAdapterPresenterCity(country, citySpinner);
+                countrySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                //reset district,city  spinners to default
-               citySpinner.setText("");
-                districtSpinner.setText("");
+                        country = adapterView.getItemAtPosition(position).toString();
+                        mPresenter.AddAdapterPresenterCity(country, citySpinner);
+
+                        //reset district,city  spinners to default
+                        citySpinner.setText("");
+                        districtSpinner.setText("");
+                    }
+                });
+
+
+                citySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        String city = adapterView.getItemAtPosition(i).toString();
+                        mPresenter.AddAdapterPresenterDistrict(city, districtSpinner);
+                        //reset district spinner to default
+                        districtSpinner.setText("");
+
+
+                    }
+                });
+
             }
-        });
-
-
-        citySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                String city = adapterView.getItemAtPosition(i).toString();
-                mPresenter.AddAdapterPresenterDistrict(city, districtSpinner);
-                //reset district spinner to default
-                districtSpinner.setText("");
-
-
-            }
-        });
-
-
-    }
 
     //Initialization
     public void init() {

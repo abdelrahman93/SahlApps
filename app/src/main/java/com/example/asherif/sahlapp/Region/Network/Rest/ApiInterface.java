@@ -33,6 +33,6 @@ public interface ApiInterface {
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
             "Content-Type: application/x-www-form-urlencoded"})
     @POST ("countries/")
-    Call<Country>Country(@Body Country country);
+    Call<Country>CountryRegion(@Body Country country);
     //yex
 }

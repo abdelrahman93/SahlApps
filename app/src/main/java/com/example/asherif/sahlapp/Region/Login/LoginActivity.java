@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.MainActivity;
+import com.example.asherif.sahlapp.Region.Network.Rest.ApiInterface;
+import com.example.asherif.sahlapp.Region.Region.Country;
 import com.example.asherif.sahlapp.Region.Splash.SplashActivity;
 import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.hbb20.CountryCodePicker;
@@ -56,6 +58,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     String Cancel;
 
 
+
     //Shared Preferences to set flag visitor
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
@@ -65,7 +68,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     @NonNull
     @Override
     protected LoginActivityPresenter createPresenter(@NonNull Context context) {
-        return new LoginActivityPresenter(LoginActivity.this,this);
+        return new LoginActivityPresenter(LoginActivity.this,this,new Country());
     }
 
     @Override
@@ -74,6 +77,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         init();
+        mPresenter.RegionData();
 
     }
 
@@ -164,7 +168,7 @@ mPresenter.hideProgressBar(progressBar);
         editor.putString("visitor_key", "false");
         editor.commit();
         navigateToVerification();
-
+   //  mPresenter.sendretrfoit();
 
 
                /* if(!etPhoneNumber.getText().toString().isEmpty()&&  (etPhoneNumber.getText().toString().length() >= 9)){

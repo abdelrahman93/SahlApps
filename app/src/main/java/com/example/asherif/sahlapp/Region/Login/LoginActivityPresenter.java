@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -12,19 +13,31 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
+import com.example.asherif.sahlapp.Region.Network.Model.User;
+import com.example.asherif.sahlapp.Region.Network.Rest.ApiClient;
+import com.example.asherif.sahlapp.Region.Network.Rest.ApiInterface;
+import com.example.asherif.sahlapp.Region.Region.Country;
 import com.example.asherif.sahlapp.Region.Splash.SplashActivity;
 import com.example.asherif.sahlapp.Region.base.BasePresenter;
 import com.hbb20.CountryCodePicker;
 
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivityPresenter extends BasePresenter {
     LoginActivity context;
     LoginView view;
+    ApiInterface apiInterface;
+    private Country country;
 
-    public LoginActivityPresenter(LoginActivity context, LoginView view) {
+
+    public LoginActivityPresenter(LoginActivity context, LoginView view,Country country) {
         this.context = context;
         this.view = view;
+        this.country=country;
     }
 
     public LoginActivityPresenter() {
@@ -124,6 +137,31 @@ public class LoginActivityPresenter extends BasePresenter {
         }
 
     }
+    public void sendretrfoit(){
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        User user=new User("966556717622","123456789");
+        Call<User> callFile = apiInterface.Login(user);
+        callFile.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                Log.i("Resopns_notNill", "statusresponse"+String.valueOf(response.body().getStatus()));
+                Log.i("Resopns_notNill", "phoneerrorresponse"+String.valueOf(response.body().getPhoneError()));
 
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.i("TAG", "onFailure: "+t.getMessage());
+            }
+        });
+
+
+
+    }
+    public void RegionData(){
+        country.setCOUNTRYLIST();
+
+    }
 
 }
