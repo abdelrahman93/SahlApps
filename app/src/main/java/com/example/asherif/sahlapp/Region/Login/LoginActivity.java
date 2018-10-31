@@ -1,13 +1,16 @@
 package com.example.asherif.sahlapp.Region.Login;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,31 +21,22 @@ import android.widget.Toast;
 
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.Region.Main.MainActivity;
-import com.example.asherif.sahlapp.Region.Network.Model.Country;
-import com.example.asherif.sahlapp.Region.Network.Model.User;
-import com.example.asherif.sahlapp.Region.Network.Rest.ApiClient;
-import com.example.asherif.sahlapp.Region.Network.Rest.ApiInterface;
 import com.example.asherif.sahlapp.Region.Splash.SplashActivity;
 import com.example.asherif.sahlapp.Region.base.BaseActivity;
 import com.hbb20.CountryCodePicker;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class LoginActivity extends BaseActivity<LoginActivityPresenter> implements LoginView {
     @BindView(R.id.ccp)
     CountryCodePicker ccp;
     CountryCodePicker ccp_lang;
-
     @BindView(R.id.etPhoneNumber)
     EditText etPhoneNumber;
     @BindView(R.id.btn_Login)
@@ -65,13 +59,13 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     //Shared Preferences to set flag visitor
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
-    ApiInterface apiInterface;
+
     // private PhoneAuthModel phoneAuthModel;
 
     @NonNull
     @Override
     protected LoginActivityPresenter createPresenter(@NonNull Context context) {
-        return new LoginActivityPresenter();
+        return new LoginActivityPresenter(LoginActivity.this,this);
     }
 
     @Override
@@ -80,8 +74,18 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         init();
-        // hideProgressBarnn();
+
     }
+
+    // hideProgressBar();
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.language_menu, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
