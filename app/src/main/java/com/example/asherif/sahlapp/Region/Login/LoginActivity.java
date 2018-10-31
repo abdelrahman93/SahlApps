@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     SharedPreferences.Editor editor ;
     ApiInterface apiInterface;
 
-//comment
+//comments
     // private PhoneAuthModel phoneAuthModel;
 
     @NonNull
