@@ -1,34 +1,96 @@
 package com.example.asherif.sahlapp.App.Region;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class City {
 
-    private ArrayList<String> EGYPT_CITYLIST ;
-    private ArrayList<String> KSA_CITYLIST;
+    public ArrayList<String> CITYLIST = new ArrayList<String>();
+    @SerializedName("country_id")
+    @Expose
+    public String country_id;
+    @SerializedName("id")
+    @Expose
+    private String id;
 
-    public ArrayList<String> getEGYPT_CITYLIST() {
-        EGYPT_CITYLIST = new ArrayList<String>();
-        EGYPT_CITYLIST.add("Cairo");
-        EGYPT_CITYLIST.add("Alex");
-        EGYPT_CITYLIST.add("Giza");
-        return EGYPT_CITYLIST;
+    @SerializedName("country_id_error")
+    @Expose
+    private String country_id_error;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("status")
+    @Expose
+    private Boolean status;
+    @SerializedName("cities")
+    @Expose
+    private List<City> cities = null;
+
+    public City() {
     }
 
-    public void setEGYPT_CITYLIST() {
-        this.EGYPT_CITYLIST = EGYPT_CITYLIST;
+    public City(String country_id) {
+        this.country_id = country_id;
     }
 
-    public ArrayList<String> getKSA_CITYLIST() {
-        KSA_CITYLIST = new ArrayList<String>();
-        KSA_CITYLIST.add("Jeddah");
-        KSA_CITYLIST.add("Dammam");
-        KSA_CITYLIST.add("Riyadh");
-        return KSA_CITYLIST;
+    public String getCountry_id_error() {
+        return country_id_error;
     }
 
-    public void setKSA_CITYLIST() {
-        this.KSA_CITYLIST = KSA_CITYLIST;
+    public void setCountry_id_error(String country_id_error) {
+        this.country_id_error = country_id_error;
+    }
+
+    public String getCountry_id() {
+        return country_id;
+    }
+
+    public void setCountry_id(String country_id) {
+        this.country_id = country_id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public ArrayList<String> getCITYLIST() {
+        return CITYLIST;
+    }
+
+    public void setCITYLIST(ArrayList<String> CITYLIST) {
+        this.CITYLIST = CITYLIST;
     }
 }
+
+
+
+
+
 

@@ -13,10 +13,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.App.Main.MainActivity;
+import com.example.asherif.sahlapp.App.Network.Model.User;
+import com.example.asherif.sahlapp.App.Network.Rest.ApiClient;
+import com.example.asherif.sahlapp.App.Network.Rest.ApiInterface;
+import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.App.base.BaseActivity;
+
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
@@ -24,6 +29,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegionActivity extends BaseActivity<RegionPresenter> implements RegionView {
 
@@ -44,7 +52,7 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
     @NonNull
     @Override
     protected RegionPresenter createPresenter(@NonNull Context context) {
-        return new RegionPresenter(this, new Country(), new City(), new District());
+        return new RegionPresenter(RegionActivity.this,RegionActivity.this, new Country(), new City(), new District());
 
     }
 
@@ -53,62 +61,47 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region);
         ButterKnife.bind(this);
-
+        mPresenter.AddAdapterPresenterCity(countrySpinner,citySpinner,districtSpinner);
+        mPresenter.countryAPI(countrySpinner);
         init();
 
-        //When click to Search button go to main activity with choosen region
-        /*btnsearch.setOnClickListener(new View.OnClickListener() {
+
+        //Set Country Data to country spinner
+
+//on click spinners , set adapter depend on choosen country
+        countrySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onClick(View view) {
-                //Validation to Search button to check choose all region spinners
-                if (!countrySpinner.getText().toString().equals("") && !citySpinner.getText().toString().equals("") && !districtSpinner.getText().toString().equals("")) {
-                    Intent i = new Intent(RegionActivity.this, MainActivity.class);
-                    startActivity(i);
-                } else {
-                    showSnackBar("Please choose valid region");
-                }
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                country = adapterView.getItemAtPosition(position).toString();
+               mPresenter.cityAPI(citySpinner,country);
+
+                //reset district,city  spinners to default
+               citySpinner.setText("");
+                districtSpinner.setText("");
+            }
+        });
+
+
+        citySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String city = adapterView.getItemAtPosition(i).toString();
+                mPresenter.AddAdapterPresenterDistrict(city, districtSpinner);
+                //reset district spinner to default
+                districtSpinner.setText("");
 
 
             }
         });
-*/
 
 
-//Set Country Data to country spinner
-                setAdapter(mPresenter.addCountryData(), countrySpinner);
-                mPresenter.AddAdapterPresenterCity("", citySpinner);
-                mPresenter.AddAdapterPresenterDistrict("", districtSpinner);
-
-//on click spinners , set adapter depend on choosen country
-                countrySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                        country = adapterView.getItemAtPosition(position).toString();
-                        mPresenter.AddAdapterPresenterCity(country, citySpinner);
-
-                        //reset district,city  spinners to default
-                        citySpinner.setText("");
-                        districtSpinner.setText("");
-                    }
-                });
+    }
 
 
-                citySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                        String city = adapterView.getItemAtPosition(i).toString();
-                        mPresenter.AddAdapterPresenterDistrict(city, districtSpinner);
-                        //reset district spinner to default
-                        districtSpinner.setText("");
-
-
-                    }
-                });
-
-            }
 
     //Initialization
     public void init() {
@@ -150,12 +143,7 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
                 .show();
     }
 
-    @Override
-    public void changeHint() {
-        citySpinner.setHint("الإمارة");
-        districtSpinner.setHint("الحى");
 
-    }
 
     //When click to Search button
     @OnClick(R.id.btnsearch)
