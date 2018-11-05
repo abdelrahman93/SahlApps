@@ -30,6 +30,7 @@
                 android:src="@drawable/accountcircle" />
 
             <EditText
+                android:id="@+id/etusername"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -134,6 +135,7 @@
 
             <EditText
                 android:layout_width="match_parent"
+                android:id="@+id/et_phone"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:hint="@string/phonenumber"
@@ -163,6 +165,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/et_email"
                     android:layout_gravity="center_vertical"
                     android:hint="@string/email"
                     android:paddingLeft="20dp"
@@ -183,8 +186,8 @@
                     android:src="@drawable/address" />
 
                 <EditText
+                    android:id="@+id/etaddress"
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:hint="@string/address"
@@ -198,6 +201,7 @@
             style="@style/Button_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/btn_save"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="35dp"
             android:text="@string/save" />
