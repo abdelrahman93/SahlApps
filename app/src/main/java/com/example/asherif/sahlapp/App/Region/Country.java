@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Country {
-    public ArrayList<String> COUNTRYLIST= null;
+    public static  ArrayList<String> COUNTRYLIST= null;
     @SerializedName("id")
     @Expose
     private String id;
@@ -20,6 +20,7 @@ public class Country {
     @SerializedName("countries")
     @Expose
     private List<Country> countries = null;
+
 
 
     public String getId() {
@@ -60,5 +61,7 @@ public class Country {
         return COUNTRYLIST;
     }
 
-
+    public static void setCOUNTRYLIST(ArrayList<String> COUNTRYLIST) {
+        Country.COUNTRYLIST = COUNTRYLIST;
+    }
 }

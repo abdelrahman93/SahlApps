@@ -15,6 +15,7 @@ import com.example.asherif.sahlapp.App.Network.Model.User;
 import com.example.asherif.sahlapp.App.Network.Rest.ApiClient;
 import com.example.asherif.sahlapp.App.Network.Rest.ApiInterface;
 import com.example.asherif.sahlapp.App.Region.Country;
+import com.example.asherif.sahlapp.App.Region.RegionActivity;
 import com.example.asherif.sahlapp.App.base.BasePresenter;
 import com.example.asherif.sahlapp.R;
 import com.hbb20.CountryCodePicker;
@@ -29,17 +30,17 @@ public class LoginActivityPresenter extends BasePresenter {
     LoginActivity context;
     LoginView view;
     ApiInterface apiInterface;
+    ApiClient apiClient;
     private Country country;
 
 
-    public LoginActivityPresenter(LoginActivity context, LoginView view,Country country) {
+    public LoginActivityPresenter(LoginActivity context, LoginView view, Country country) {
         this.context = context;
         this.view = view;
         this.country=country;
     }
 
-    public LoginActivityPresenter() {
-    }
+
     //get values from phone edit text and pass to countryPicker
     public String getPhoneNumber(CountryCodePicker ccp, EditText etPhoneNumber) {
        ccp.registerCarrierNumberEditText(etPhoneNumber);
@@ -55,6 +56,8 @@ public class LoginActivityPresenter extends BasePresenter {
     public void hideProgressBar(ProgressBar progressBar) {
         progressBar.setVisibility(View.INVISIBLE);
     }
+
+
 
     //change the hint of spinner choose country code
     public void hintCountryNumber(CountryCodePicker ccp,EditText etPhoneNumber) {

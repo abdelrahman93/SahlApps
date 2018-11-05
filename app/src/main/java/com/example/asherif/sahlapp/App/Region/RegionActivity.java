@@ -6,12 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,23 +38,25 @@ import retrofit2.Response;
 public class RegionActivity extends BaseActivity<RegionPresenter> implements RegionView {
 
     @BindView(R.id.sp_country)
-     MaterialBetterSpinner countrySpinner;
+    MaterialBetterSpinner countrySpinner;
     @BindView(R.id.sp_city)
-     MaterialBetterSpinner citySpinner;
+    MaterialBetterSpinner citySpinner;
     @BindView(R.id.sp_district)
-     MaterialBetterSpinner districtSpinner;
+    MaterialBetterSpinner districtSpinner;
     @BindView(R.id.btnsearch)
-     Button btnsearch;
+    Button btnsearch;
     @BindView(R.id.tregion)
-     TextView t_region;
+    TextView t_region;
     @BindView(R.id.countrylogo)
-     ImageView countryImage;
+    ImageView countryImage;
+    @BindView(R.id.pgloadingRegion)
+    ProgressBar progressBar;
     private String country = "";
 
     @NonNull
     @Override
     protected RegionPresenter createPresenter(@NonNull Context context) {
-        return new RegionPresenter(RegionActivity.this,RegionActivity.this, new Country(), new City(), new District());
+        return new RegionPresenter(RegionActivity.this, RegionActivity.this, new Country(), new City(), new District());
 
     }
 
@@ -61,24 +65,42 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region);
         ButterKnife.bind(this);
-        mPresenter.AddAdapterPresenterCity(countrySpinner,citySpinner,districtSpinner);
+        showProgressBar();
+        //Set default adapter before API
+        mPresenter.AddAdapterPresenterDefault(countrySpinner, citySpinner, districtSpinner);
+        //Set country Data to country spinner
         mPresenter.countryAPI(countrySpinner);
         init();
 
 
-        //Set Country Data to country spinner
+//Incase connection down when choose set adapter again
+countrySpinner.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        if(mPresenter.arrayCountry==null){
+            Log.i("TAG", "testspinnercountry"+"hello");
+            mPresenter.countryAPI(countrySpinner);
+        }
+    }
+});
 
 //on click spinners , set adapter depend on choosen country
         countrySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                ArrayList<String> arr=new ArrayList <String>();
+                setAdapter(arr,citySpinner);
+                setAdapter(arr,districtSpinner);
                 country = adapterView.getItemAtPosition(position).toString();
-               mPresenter.cityAPI(citySpinner,country);
+                showProgressBar();
+                mPresenter.cityAPI(citySpinner, country);
 
                 //reset district,city  spinners to default
-               citySpinner.setText("");
+                citySpinner.setText("");
                 districtSpinner.setText("");
+
+
             }
         });
 
@@ -87,7 +109,6 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 String city = adapterView.getItemAtPosition(i).toString();
                 mPresenter.AddAdapterPresenterDistrict(city, districtSpinner);
                 //reset district spinner to default
@@ -99,8 +120,6 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
 
 
     }
-
-
 
 
     //Initialization
@@ -116,10 +135,6 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
         spinner.setAdapter(arrayAdapterCountry);
     }
 
-    @Override
-    public void showProgressBar() {
-
-    }
 
     //show flag when choose country
     @Override
@@ -144,27 +159,33 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
     }
 
 
-
     //When click to Search button
     @OnClick(R.id.btnsearch)
     void searchButton(View view) {
         //Validation to Search button to check choose all region spinners
-        if (!countrySpinner.getText().toString().equals("") && !citySpinner.getText().toString().equals("") && !districtSpinner.getText().toString().equals("")) {
-            Intent i = new Intent(RegionActivity.this, MainActivity.class);
-            startActivity(i);
+        if (!countrySpinner.getText().toString().equals("") && !citySpinner.getText().toString().equals("")) {
+            navigateToMainmenu();
         } else {
             //set msg of snackbar for error region
             showSnackBar(getString(R.string.error_region_msg));
         }
     }
+
+    @Override
+    public void showProgressBar() {
+        mPresenter.showProgressBar(progressBar);
+    }
+
     @Override
     public void hideProgressBar() {
+        mPresenter.hideProgressBar(progressBar);
 
     }
 
     @Override
-    public void navigateToNewestAds() {
-
+    public void navigateToMainmenu() {
+        Intent i = new Intent(RegionActivity.this, MainActivity.class);
+        startActivity(i);
     }
 
     @Override

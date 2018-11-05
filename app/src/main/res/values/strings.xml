@@ -9,7 +9,7 @@
     <string name="logout">Log out</string>
     <string name="email"> your Email "</string>
     <string name="region">Please choose your region</string>
-    <string name="i_am_visitor">I am a Visitor</string>
+    <string name="i_am_visitor">I am a visitor</string>
     <string name="Enter_your_mobile_number">Enter your mobile number</string>
     <string name="Enter_your_mobile_number_to_create_an_account">Enter your mobile number to create an account</string>
     <string name="Login">Login</string>
@@ -18,7 +18,7 @@
     <string name="District">District</string>
     <string name="Verification_code">Verification code</string>
     <string name="Please_type_the_verification_code">Please type the verification code sent to your phone.</string>
-    <string name="didnt_receive">Didin\'t receive the code?</string>
+    <string name="didnt_receive">Didn\'t receive the code?</string>
     <string name="Please_wait">Please wait</string>
     <string name="resend">resend</string>
     <string name="error_region_msg">Please choose valid region</string>
