@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.asherif.sahlapp.App.Login.LoginActivity;
 import com.example.asherif.sahlapp.App.Login.LoginActivityPresenter;
 import com.example.asherif.sahlapp.App.Main.MainActivity;
 import com.example.asherif.sahlapp.App.base.BaseActivity;
@@ -24,6 +26,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,8 +47,6 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     EditText etphone;
 
 
-
-
     @NonNull
     @Override
     protected ProfilePresenter createPresenter(@NonNull Context context) {
@@ -58,6 +60,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         presenter = new ProfilePresenter(this, ProfileActivity.this);
+        mPresenter.displaydataoncreate();
     }
 
     @Override
@@ -86,10 +89,9 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     @Override
     public void sendprofiledatanetwork() {
         String username = etusername.getText().toString();
-        String address=etaddress.getText().toString();
-        String email=etemail.getText().toString();
-        mPresenter.senddatatosave( username, address, email);
-
+        String address = etaddress.getText().toString();
+        String email = etemail.getText().toString();
+        mPresenter.senddatatosave(username, address, email);
 
 
     }
@@ -100,19 +102,36 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     }
 
     @Override
-    public void DisplayProfileDataIfExist(String name,String address,String email,String phone) {
-    etusername.setText(name);
-    etaddress.setText(address);
-    etemail.setText(email);
-    etphone.setText(phone);
-      //.  mPresenter.displaydataoncreate();
+    public void DisplayProfileDataIfExist(String name,String phone,String address,String email) {
+        etusername.setText(name);
+        etaddress.setText(address);
+        etemail.setText(email);
+        etphone.setText(phone);
 
+
+    }
+
+    @Override
+    public void Logout() {
+       mPresenter.logoutpresenter("966556717755","123456789");
+    }
+
+    @Override
+    public void NavigateToLogin() {
+        Intent LoginIntent=new Intent(ProfileActivity.this,LoginActivity.class);
+        startActivity(LoginIntent);
+        finish();
+    }
+
+    @Override
+    public void ShowMessage() {
+        Toast.makeText(this, "Logout Failed Please Check Your Internet Connection", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        presenter.onActivityResult(requestCode, resultCode, data);
+        mPresenter.onActivityResult(requestCode, resultCode, data);
 
     }
 
@@ -126,7 +145,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         // permission is granted, open the Gallery
-                        presenter.startGallery();
+                        mPresenter.startGallery();
                     }
 
                     @Override
@@ -148,9 +167,14 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
                     }
                 }).check();
     }
+
     @OnClick(R.id.btn_save)
-    public void savebtn(){
+    public void savebtn() {
         sendprofiledatanetwork();
     }
 
+    @OnClick(R.id.btn_logout)
+    public void log_out() {
+        Logout();
+    }
 }

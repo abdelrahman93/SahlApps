@@ -4,7 +4,9 @@ import com.example.asherif.sahlapp.App.Network.Model.File;
 import com.example.asherif.sahlapp.App.Network.Model.FileContent;
 import com.example.asherif.sahlapp.App.Network.Model.User;
 import com.example.asherif.sahlapp.App.Region.City;
+import com.example.asherif.sahlapp.App.profile.ConfirmLoginModel;
 import com.example.asherif.sahlapp.App.profile.CustomerInfo;
+import com.example.asherif.sahlapp.App.profile.LogOutModel;
 import com.example.asherif.sahlapp.App.profile.ProfileModel;
 
 
@@ -18,16 +20,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
-    @GET("MCLoginMobiledocs/JAAwAGYAVABAAHgAVgBsAEYAeABfAHMAYwBTACEANQBNADIAeABTAA==/{ServerIP}/{DBName}/{UserName}/{Password}")
-    Call<User>getLoginProcess(@Path("ServerIP") String ServerIP, @Path("DBName") String DBName, @Path("UserName") String UserName, @Path("Password") String Password);
 
-
-    @POST ("AddEditBarCodeFile/TQAwAGIAQABQAGEAJAAkADQAVwBlAGIAJABzAGUAcgB2AGkAYwBlAA==/104.46.55.15/osama_demo")
-    Call<File>createFile(@Body File file);
-
-    @POST ("AddEditBarCodeFileContent/TQAwAGIAQABQAGEAJAAkADQAVwBlAGIAJABzAGUAcgB2AGkAYwBlAA==/104.46.55.15/osama_demo")
-    Call<FileContent>AddFileContent(@Body FileContent fileContent);
-
+    //used for LogIn
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
             "Content-Type: application/x-www-form-urlencoded"})
@@ -47,6 +41,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<City>CityRegion(@Field("country_id") String country_id);
 
+    //edit the info of the profile
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
             "Content-Type: application/x-www-form-urlencoded"})
@@ -54,4 +49,17 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ProfileModel>Profile(@Field("name") String name, @Field("address") String address, @Field("email") String email);
 
+    //logout from the account
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+    @POST ("logout/")
+    @FormUrlEncoded
+    Call<LogOutModel>Logout(@Field("phone") String phone, @Field("device_id") String device_id);
+    //display data oncreate the profile screen
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+    @POST ("profile/")
+    Call<ProfileModel>displayprofile();
 }

@@ -50,7 +50,11 @@ dependencies {
     // CardView
     implementation 'com.android.support:cardview-v7:27.1.1'
 
-    // Glide
+    // Glide Image Library
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+
+
+    // volley http library
+    implementation 'com.android.volley:volley:1.1.0'
 
 }

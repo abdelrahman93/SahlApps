@@ -42,5 +42,8 @@
     <string name="Done">تم</string>
     <string name="Please_choose_lang">من فضلك إختار اللغة</string>
     <string name="Cancel">إلغاء</string>
+    <string name="change_lang">تغيير اللغه</string>
+    <string name="delete">حذف</string>
+    <string name="my_cart">متجري</string>
 
 </resources>

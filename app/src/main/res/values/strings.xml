@@ -50,8 +50,8 @@
     <string name="Want_change_Lang">Do you want to change language</string>
     <string name="Done">Done</string>
     <string name="Cancel">Cancel</string>
-
-
+    <string name="delete">Delete</string>
+    <string name="my_cart">My Cart</string>
 
 
 </resources>

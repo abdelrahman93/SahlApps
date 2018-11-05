@@ -3,6 +3,7 @@ package com.example.asherif.sahlapp.App.Splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class SplashActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        Log.i("TAG", "SPLASHSPLASHSPLASH: "+Locale.getDefault().getDisplayLanguage());
         if (Locale.getDefault().getDisplayLanguage().equals("English")){
             Toast.makeText(this, "testEnglish", Toast.LENGTH_SHORT).show();
             apiClient.setBASE_URL("http://sahl-app.com/api/user/");

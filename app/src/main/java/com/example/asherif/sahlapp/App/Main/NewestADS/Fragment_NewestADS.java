@@ -2,28 +2,49 @@ package com.example.asherif.sahlapp.App.Main.NewestADS;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.asherif.sahlapp.App.Main.MainActivity;
 import com.example.asherif.sahlapp.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Fragment_NewestADS extends Fragment {
-    private List<Advertisment> advertismentList = new ArrayList<>();
+public class Fragment_NewestADS extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+    private static final String TAG = Fragment_NewestADS.class.getSimpleName();
     private RecyclerView recyclerView;
-    private AdvertismentAdapter mAdapter;
+    private List<Item> cartList;
+    private CartListAdapter mAdapter;
+    private CoordinatorLayout coordinatorLayout;
+
+    // url to fetch menu json
+    private static final String URL = "https://api.androidhive.info/json/menu.json";
     private View view;
     public Fragment_NewestADS(){
 
@@ -42,87 +63,103 @@ public class Fragment_NewestADS extends Fragment {
         recyclerView =  view.findViewById(R.id.recycler_view);
         final FragmentActivity c = getActivity();
         Context context = view.getContext();
-        mAdapter = new AdvertismentAdapter(advertismentList);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
 
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+       /* ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.my_cart));
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        coordinatorLayout = view.findViewById(R.id.coordinator_layout);
+        cartList = new ArrayList<>();
+        mAdapter = new CartListAdapter(context, cartList);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context.getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
-        mAdapter.setOnBottomReachedListener(new OnBottomReachedListener() {
-            @Override
-            public void onBottomReached(int position) {
-                //your code goes here
-            }
-        });
-        // row click listener
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Advertisment movie = advertismentList.get(position);
-                Toast.makeText(getActivity(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
+        // adding item touch helper
+        // only ItemTouchHelper.LEFT added to detect Right to Left swipe
+        // if you want both Right -> Left and Left -> Right
+        // add pass ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT as param
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
         prepareMovieData();
 
         return view;
     }
     private void prepareMovieData() {
-        Advertisment advertisment = new Advertisment("Mad Max: Fury Road", "Action & Adventure", "2015");
-        advertismentList.add(advertisment);
+        JsonArrayRequest request = new JsonArrayRequest(URL,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        if (response == null) {
+                            Toast.makeText(getContext(), "Couldn't fetch the menu! Pleas try again.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
 
-        advertisment = new Advertisment("Inside Out", "Animation, Kids & Family", "2015");
-        advertismentList.add(advertisment);
+                        List<Item> items = new Gson().fromJson(response.toString(), new TypeToken<List<Item>>() {
+                        }.getType());
 
-        advertisment = new Advertisment("Star Wars: Episode VII - The Force Awakens", "Action", "2015");
-        advertismentList.add(advertisment);
+                        // adding items to cart list
+                        cartList.clear();
+                        cartList.addAll(items);
 
-        advertisment = new Advertisment("Shaun the Sheep", "Animation", "2015");
-        advertismentList.add(advertisment);
+                        // refreshing recycler view
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // error in getting json
+                Log.d(TAG, "Error: " + error.getMessage());
+                Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        advertisment = new Advertisment("The Martian", "Science Fiction & Fantasy", "2015");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Mission: Impossible Rogue Nation", "Action", "2015");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Up", "Animation", "2009");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Star Trek", "Science Fiction", "2009");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("The LEGO Movie", "Animation", "2014");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Iron Man", "Action & Adventure", "2008");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Aliens", "Science Fiction", "1986");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Chicken Run", "Animation", "2000");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Back to the Future", "Science Fiction", "1985");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Raiders of the Lost Ark", "Action & Adventure", "1981");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Goldfinger", "Action & Adventure", "1965");
-        advertismentList.add(advertisment);
-
-        advertisment = new Advertisment("Guardians of the Galaxy", "Science Fiction & Fantasy", "2014");
-        advertismentList.add(advertisment);
-
-        mAdapter.notifyDataSetChanged();
+        MyApplication.getInstance().addToRequestQueue(request);
     }
 
+    /**
+     * callback when recycler view is swiped
+     * item will be removed on swiped
+     * undo option will be provided in snackbar to restore the item
+     */
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof CartListAdapter.MyViewHolder) {
+            // get the removed item name to display it in snack bar
+            String name = cartList.get(viewHolder.getAdapterPosition()).getName();
+
+            // backup of removed item for undo purpose
+            final Item deletedItem = cartList.get(viewHolder.getAdapterPosition());
+            final int deletedIndex = viewHolder.getAdapterPosition();
+
+            // remove the item from recycler view
+            mAdapter.removeItem(viewHolder.getAdapterPosition());
+
+            // showing snack bar with Undo option
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, name + " removed from cart!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // undo is selected, restore the deleted item
+                    mAdapter.restoreItem(deletedItem, deletedIndex);
+                }
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
+        }
+    }
+
+/*    @Override
+    public boolean onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds cartList to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }*/
 }
