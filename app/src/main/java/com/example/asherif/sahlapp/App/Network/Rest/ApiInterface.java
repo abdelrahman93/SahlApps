@@ -3,7 +3,6 @@ package com.example.asherif.sahlapp.App.Network.Rest;
 import com.example.asherif.sahlapp.App.Network.Model.File;
 import com.example.asherif.sahlapp.App.Network.Model.FileContent;
 import com.example.asherif.sahlapp.App.Network.Model.User;
-import com.example.asherif.sahlapp.App.Network.Model.Country;
 import com.example.asherif.sahlapp.App.Region.City;
 
 

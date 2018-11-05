@@ -10,7 +10,7 @@ public interface RegionView {
  void showFlag(int img);
  void showSnackBar(String s);
  void hideProgressBar();
-void navigateToNewestAds();
+void navigateToMainmenu();
 
 
 }

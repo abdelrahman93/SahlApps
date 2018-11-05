@@ -2,7 +2,9 @@ package com.example.asherif.sahlapp.App.Region;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.asherif.sahlapp.App.Network.Rest.ApiClient;
@@ -20,9 +22,15 @@ import retrofit2.Response;
 public class RegionPresenter extends BasePresenter {
     RegionActivity context;
     private RegionView view;
-    private  Country country;
+    public  Country country;
     private City city;
     private District district;
+    public static ArrayList<String> arrayCountry;
+    public static ArrayList<String> arrayCity;
+
+
+
+
 
     public RegionPresenter() {
     }
@@ -35,23 +43,11 @@ public class RegionPresenter extends BasePresenter {
         this.district = district;
     }
 
-    public ArrayList<String> addDistrictData(String city){
-        ArrayList<String> arr=new ArrayList <String>();
-        switch (city){
-            case "Cairo":        arr= district.getDISTRICTLIST_Cairo();
-                break;
-            case "Alex": arr= district.getDISTRICTLIST_Alex();
-                break;
-                default:
 
-
-        }
-        return arr;
-    }
     //Set default adapter to all spinner before get from API
-    public void AddAdapterPresenterCity(MaterialBetterSpinner countrySpinner,MaterialBetterSpinner citySpinner,MaterialBetterSpinner districtSpinner){
+    public void AddAdapterPresenterDefault(MaterialBetterSpinner countrySpinner,MaterialBetterSpinner citySpinner,MaterialBetterSpinner districtSpinner){
         ArrayList<String> arr=new ArrayList <String>();
-        view.setAdapter(arr,countrySpinner);
+       view.setAdapter(arr,countrySpinner);
         view.setAdapter(arr,citySpinner);
         view.setAdapter(arr,districtSpinner);
 
@@ -61,46 +57,85 @@ public class RegionPresenter extends BasePresenter {
         view.setAdapter(addDistrictData(city),spinner);
 
     }
-    public  void countryAPI(final MaterialBetterSpinner countrySpiner) {
 
-    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-    Country user = new Country();
-    Call<com.example.asherif.sahlapp.App.Region.Country> callFile = apiInterface.CountryRegion(user);
+    public  void countryAPI(final MaterialBetterSpinner countrySpinner) {
+        //Log.i("Resopns_notNill", "testt" +country.getCOUNTRYLIST().get(1));
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Country user = new Country();
+        Call<com.example.asherif.sahlapp.App.Region.Country> callFile = apiInterface.CountryRegion(user);
 
         callFile.enqueue(new Callback<Country>() {
-        @Override
-        public void onResponse(Call<Country> call, Response<Country> response) {
-            Log.i("Resopns_notNill", "statusresponse" + String.valueOf(response.body().getStatus()));
-            Log.i("Resopns_notNill", "" + String.valueOf(response.body().getCountries().get(0).getId()));
-            country.COUNTRYLIST= new ArrayList<String>();
-            for (int i = 0; i < response.body().getCountries().size(); i++) {
-                country.COUNTRYLIST.add(response.body().getCountries().get(i).getName());
-                        }
-                      view.setAdapter(country.getCOUNTRYLIST(),countrySpiner);
-        }
+            @Override
+            public void onResponse(Call<Country> call, Response<Country> response) {
+                if (response.body() != null && String.valueOf(response.body().getStatus()) == "true") {
+                    Log.i("Resopns_notNill", "statusresponse" + String.valueOf(response.body().getStatus()));
+                    Log.i("Resopns_notNill", "" + String.valueOf(response.body().getCountries().get(0).getId()));
+                    //country.COUNTRYLIST = new ArrayList<String>();
+                    arrayCountry= new ArrayList<String>();
 
-        @Override
-        public void onFailure(Call<Country> call, Throwable t) {
-            Log.i("TAG", "onFailure: " + t.getMessage());
-            Toast.makeText(context, "Check connection", Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < response.body().getCountries().size(); i++) {
+                       // country.COUNTRYLIST.add(response.body().getCountries().get(i).getName());
+                        arrayCountry.add(response.body().getCountries().get(i).getName());
+                    }
+                    if (arrayCountry != null) {
+                        //view.setAdapter(country.getCOUNTRYLIST(), countrySpinner);
+                        view.setAdapter(arrayCountry, countrySpinner);
+                        view.hideProgressBar();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Country> call, Throwable t) {
+                Log.i("TAG", "onFailure: " + t.getMessage());
+                Toast.makeText(context, "Check connection", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+              /*  Log.i("Resopns_notNill", "statusresponse" + String.valueOf(response.body().getStatus()));
+                Log.i("Resopns_notNill", "" + String.valueOf(response.body().getCountries().get(0).getId()));
+                country=new Country();
+                // country.COUNTRYLIST= new ArrayList<String>();
+                for (int i = 0; i < response.body().getCountries().size(); i++) {
+                    testarray.add(response.body().getCountries().get(i).getName());
+                }
+                country.setCOUNTRYLIST(testarray);
+            }
+
+            @Override
+            public void onFailure(Call<Country> call, Throwable t) {
+                Log.i("TAG", "onFailure: " + t.getMessage());
+                // Toast.makeText(context, "Check connection", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        if(country.getCOUNTRYLIST()!=null){
+            view.setAdapter(country.getCOUNTRYLIST() ,countrySpinner);
+            view.hideProgressBar();
         }
-    });
+*/
 
     }
+
     public  void   cityAPI(final MaterialBetterSpinner citySpinner,String country) {
         String country_id=null;
         switch (country) {
             case "Egypt":
+            case"مصر":
                 country_id = "1";
                 view.showFlag(R.drawable.egypt_flag);
                 break;
             case "Saudi Arabia":
+            case"السعودية":
+
                 country_id = "2";
                 view.showFlag(R.drawable.ksa_flag);
                 break;
 
             default: country_id = "0";
+            view.showFlag(R.drawable.flag_uae);
         }
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<City> callFile = apiInterface.CityRegion(country_id);
@@ -108,13 +143,26 @@ public class RegionPresenter extends BasePresenter {
         callFile.enqueue(new Callback<City>() {
             @Override
             public void onResponse(Call<City> call, Response<City> response) {
-                //Log.i("Resopns_notNill", "statusresponsecity:  " + String.valueOf(response.body().getCities().get(1).getName()));
                 if(response.body()!=null&&String.valueOf(response.body().getStatus())=="true"){
-                    city.CITYLIST= new ArrayList<String>();
+                    arrayCity= new ArrayList<String>();
+                    //city.CITYLIST= new ArrayList<String>();
                     for (int i = 0; i < response.body().getCities().size(); i++) {
-                        city.CITYLIST.add(response.body().getCities().get(i).getName());
+                        //city.CITYLIST.add(response.body().getCities().get(i).getName());
+                        arrayCity.add(response.body().getCities().get(i).getName());
                     }
-                    view.setAdapter(city.getCITYLIST(),citySpinner);
+                 //   Log.i("Resopns_notNill", "statussecity:  " + arrayCity.get(0));
+
+                    // view.setAdapter(city.getCITYLIST(),citySpinner);
+                    if (arrayCity != null) {
+                        view.setAdapter(arrayCity,citySpinner);
+                        view.hideProgressBar();
+                    }
+
+                }
+                else{
+                    arrayCity= new ArrayList<String>();
+                    view.setAdapter(arrayCity,citySpinner);
+                    Toast.makeText(context, "No cites found", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -128,6 +176,26 @@ public class RegionPresenter extends BasePresenter {
         });
 
 
+    }
+    public ArrayList<String> addDistrictData(String city){
+        ArrayList<String> arr=new ArrayList <String>();
+        switch (city){
+            case "Cairo":        arr= district.getDISTRICTLIST_Cairo();
+                break;
+            case "Alex": arr= district.getDISTRICTLIST_Alex();
+                break;
+            default:
+
+
+        }
+        return arr;
+    }
+    public void showProgressBar(ProgressBar progressBar) {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar(ProgressBar progressBar) {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     public void RegionData(){

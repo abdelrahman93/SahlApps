@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.asherif.sahlapp.App.Main.MainActivity;
 import com.example.asherif.sahlapp.App.Region.Country;
+import com.example.asherif.sahlapp.App.Region.RegionActivity;
+import com.example.asherif.sahlapp.App.Region.RegionPresenter;
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.App.Splash.SplashActivity;
 import com.example.asherif.sahlapp.App.base.BaseActivity;
@@ -40,7 +42,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     ProgressBar progressBar;
     @BindView(R.id.visitor_tv)
     TextView iamVistor;
-    LoginActivityPresenter presenter;
+    RegionPresenter regionPresenter;
     @BindString(R.string.i_am_visitor)
     String mystring;
     @BindString(R.string.Want_change_Lang)
@@ -101,6 +103,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         SpannableString content = new SpannableString(mystring);
         content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
         iamVistor.setText(content);
+
         // presenter=new LoginActivityPresenter(this);
         // phoneAuthModel=new PhoneAuthModel();
     }
@@ -162,8 +165,6 @@ mPresenter.hideProgressBar(progressBar);
         editor.commit();
         navigateToVerification();
    //  mPresenter.sendretrfoit();
-
-
                /* if(!etPhoneNumber.getText().toString().isEmpty()&&  (etPhoneNumber.getText().toString().length() >= 9)){
                    // presenter.updatePhone(getPhoneNumber());
                     Intent Verificationintent=new Intent(LoginActivity.this,VerificationActivity.class);
