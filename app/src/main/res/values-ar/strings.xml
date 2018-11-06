@@ -44,5 +44,8 @@
     <string name="Cancel">إلغاء</string>
     <string name="error_wrong_number">من فضلك إدخل رقم صحيح</string>
     <string name="error_wrong_verification">رمز خطأ</string>
+    <string name="change_lang">تغيير اللغه</string>
+    <string name="delete">حذف</string>
+    <string name="my_cart">متجري</string>
 
 </resources>

@@ -30,13 +30,14 @@
                 android:src="@drawable/accountcircle" />
 
             <EditText
+                android:id="@+id/etusername"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:drawableStart="@drawable/edit"
-                android:text="@string/name"
-                android:textColor="#f1ecec"
+                android:hint="@string/name"
+                android:textColorHint="#f1ecec"
                 android:textSize="21sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -133,6 +134,7 @@
                 android:src="@drawable/phoneicon" />
 
             <EditText
+                android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -161,6 +163,7 @@
                     android:src="@drawable/email2" />
 
                 <EditText
+                    android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -183,8 +186,8 @@
                     android:src="@drawable/address" />
 
                 <EditText
+                    android:id="@+id/etaddress"
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:hint="@string/address"
@@ -195,6 +198,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_save"
             style="@style/Button_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -213,9 +217,9 @@
                     android:layout_height="36dp"
                     android:src="@drawable/email"/>-->
             <Button
+                android:id="@+id/btn_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="center_vertical"
                 android:background="#ff0000"
                 android:paddingLeft="20dp"
