@@ -26,7 +26,7 @@ public class LoginActivityPresenter extends BasePresenter {
     LoginView view;
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
-
+//push again
 
     public LoginActivityPresenter(LoginActivity context, LoginView view) {
         this.context = context;
