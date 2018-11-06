@@ -50,7 +50,7 @@
             app:inputType="number"
             app:password="false"
             app:pinHeight="30dp"
-            app:pinLength="6"
+            app:pinLength="4"
             app:pinWidth="30dp" />
 
         <TextView

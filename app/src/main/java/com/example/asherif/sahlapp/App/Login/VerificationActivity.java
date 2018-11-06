@@ -21,7 +21,6 @@ import butterknife.OnClick;
 
 
 public class VerificationActivity extends BaseActivity<VerificationActivityPresenter> implements VerificationView {
-    public static final String TAG = "VerificationActivity";
     @BindView(R.id.btn_signin)
     Button btn_signin;
     @BindView(R.id.timer)
@@ -32,13 +31,14 @@ public class VerificationActivity extends BaseActivity<VerificationActivityPrese
     Pinview pin;
     @BindView(R.id.pgloadingVerification)
     ProgressBar progressBar;
-    @BindString(R.string.resend) String resendString;
+    @BindString(R.string.resend)
+    String resendString;
 
 
     @NonNull
     @Override
     protected VerificationActivityPresenter createPresenter(@NonNull Context context) {
-        return new VerificationActivityPresenter(VerificationActivity.this,this);
+        return new VerificationActivityPresenter(VerificationActivity.this, this);
     }
 
 
@@ -49,30 +49,22 @@ public class VerificationActivity extends BaseActivity<VerificationActivityPrese
         ButterKnife.bind(this);
         init();
         pinCode();
-//        hideProgressBar();
 
     }
 
     private void init() {
-
         pin = new Pinview(this);
         pin = (Pinview) findViewById(R.id.pinview);
-
-        /*mAuth = FirebaseAuth.getInstance();
-        presenter=new VerificationActivityPresenter(this);
-        phoneAuthModel=new PhoneAuthModel();
-        pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);*/
-        // editor = pref.edit();
-
     }
+
     @OnClick(R.id.btn_signin)
-    void Signinbtn(View view ){
+    void Signinbtn(View view) {
         mPresenter.btnSignin(pin);
     }
 
     @Override
     public void pinCode() {
-        mPresenter.pinCode(timer, resend,pin,resendString);
+        mPresenter.pinCode(timer, resend, pin, resendString);
     }
 
     @Override

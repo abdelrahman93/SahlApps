@@ -7,29 +7,36 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".App.Splash.SplashActivity">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".App.Splash.SplashActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".App.Region.RegionActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".App.Main.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".App.Login.LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".App.Login.VerificationActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".App.CreateAdvertisment.Create_Advertisment_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".App.Region.RegionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".App.Main.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".App.Login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".App.Login.VerificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".App.CreateAdvertisment.Create_Advertisment_Activity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"

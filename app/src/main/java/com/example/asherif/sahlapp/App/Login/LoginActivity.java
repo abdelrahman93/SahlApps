@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asherif.sahlapp.App.Main.MainActivity;
 import com.example.asherif.sahlapp.App.Region.Country;
@@ -42,7 +45,6 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     ProgressBar progressBar;
     @BindView(R.id.visitor_tv)
     TextView iamVistor;
-    RegionPresenter regionPresenter;
     @BindString(R.string.i_am_visitor)
     String mystring;
     @BindString(R.string.Want_change_Lang)
@@ -51,19 +53,16 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
     String Done;
     @BindString(R.string.Cancel)
     String Cancel;
-
-
-
-    //Shared Preferences to set flag visitor
+    @BindString(R.string.error_wrong_number)
+    String wrongNumber;
+    //Shared Preferences
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
-
-    // private PhoneAuthModel phoneAuthModel;
 
     @NonNull
     @Override
     protected LoginActivityPresenter createPresenter(@NonNull Context context) {
-        return new LoginActivityPresenter(LoginActivity.this,this,new Country());
+        return new LoginActivityPresenter(LoginActivity.this, this);
     }
 
     @Override
@@ -72,11 +71,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         init();
-
-
     }
-
-    // hideProgressBar();
 
 
     @Override
@@ -90,7 +85,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         int id = item.getItemId();
         switch (id) {
             case R.id.lang:
-                showChangeLangDialog(ccp_lang,WantchangeLang,Done,Cancel);
+                showChangeLangDialog(ccp_lang, WantchangeLang, Done, Cancel);
                 break;
         }
         return true;
@@ -103,33 +98,43 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         SpannableString content = new SpannableString(mystring);
         content.setSpan(new UnderlineSpan(), 0, mystring.length(), 0);
         iamVistor.setText(content);
+        //Change hint when change country code
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                hintCountryNumber(ccp, etPhoneNumber);
+            }
+        });
 
-        // presenter=new LoginActivityPresenter(this);
-        // phoneAuthModel=new PhoneAuthModel();
+
     }
 
     //get the phone number with country code
     @Override
     public String getPhoneNumber(CountryCodePicker ccp, EditText etPhoneNumber) {
-        return         mPresenter.getPhoneNumber(ccp,etPhoneNumber);
-
+        return mPresenter.getPhoneNumber(ccp, etPhoneNumber);
     }
 
-
     @Override
-    public void showProgressBar(ProgressBar progressBar) {
+    public void showProgressBar() {
         mPresenter.showProgressBar(progressBar);
     }
 
     @Override
-    public void hideProgressBar(ProgressBar progressBar) {
-mPresenter.hideProgressBar(progressBar);
+    public void hideProgressBar() {
+        mPresenter.hideProgressBar(progressBar);
+    }
+
+    @Override
+    public void showErrorNumber() {
+        etPhoneNumber.setError(wrongNumber);
+        etPhoneNumber.requestFocus();
     }
 
     //Set the hint depend on country
     @Override
-    public void hintCountryNumber(CountryCodePicker ccp,EditText etPhoneNumber) {
-       mPresenter.hintCountryNumber(ccp,etPhoneNumber);
+    public void hintCountryNumber(CountryCodePicker ccp, EditText etPhoneNumber) {
+        mPresenter.hintCountryNumber(ccp, etPhoneNumber);
     }
 
     @Override
@@ -153,9 +158,10 @@ mPresenter.hideProgressBar(progressBar);
         finish();
     }
 
+    //Alert Dialog for change language
     @Override
-    public void showChangeLangDialog(CountryCodePicker ccp_lang,String WantchangeLang,String Done,String Cancel ) {
-        mPresenter.showChangeLangDialog(ccp_lang,WantchangeLang,Done,Cancel);
+    public void showChangeLangDialog(CountryCodePicker ccp_lang, String WantchangeLang, String Done, String Cancel) {
+        mPresenter.showChangeLangDialog(ccp_lang, WantchangeLang, Done, Cancel);
     }
 
     //When click to Login button
@@ -163,27 +169,17 @@ mPresenter.hideProgressBar(progressBar);
     void Loginbtn(View view) {
         editor.putString("visitor_key", "false");
         editor.commit();
-        navigateToVerification();
-   //  mPresenter.sendretrfoit();
-               /* if(!etPhoneNumber.getText().toString().isEmpty()&&  (etPhoneNumber.getText().toString().length() >= 9)){
-                   // presenter.updatePhone(getPhoneNumber());
-                    Intent Verificationintent=new Intent(LoginActivity.this,VerificationActivity.class);
-                    startActivity(Verificationintent);
-                    finish();
-                }else{
-                    etPhoneNumber.setError("please Enter a Valid Number");
-                    etPhoneNumber.requestFocus();
-
-                }*/
+        String phone = getPhoneNumber(ccp, etPhoneNumber);
+        //Device token
+        String device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        if (!etPhoneNumber.getText().toString().isEmpty() && (etPhoneNumber.getText().toString().length() >= 9)) {
+            mPresenter.sendVerificationCode(phone, device_id);
+        } else {
+            showErrorNumber();
+        }
 
     }
-        /*});
-        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
-            @Override
-            public void onCountrySelected(Country selectedCountry) {
-                //  hintCountryNumber();
-            }
-        });*/
 
 
     //When click to I am a visitor
@@ -195,9 +191,6 @@ mPresenter.hideProgressBar(progressBar);
         editor.commit();
         navigateToMain();
     }
-
-
-
 
 
 }

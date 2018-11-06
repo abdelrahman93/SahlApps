@@ -8,14 +8,12 @@ import java.util.List;
 
 public class City {
 
-    public ArrayList<String> CITYLIST = new ArrayList<String>();
     @SerializedName("country_id")
     @Expose
     public String country_id;
     @SerializedName("id")
     @Expose
     private String id;
-
     @SerializedName("country_id_error")
     @Expose
     private String country_id_error;
@@ -80,13 +78,7 @@ public class City {
         return cities;
     }
 
-    public ArrayList<String> getCITYLIST() {
-        return CITYLIST;
-    }
 
-    public void setCITYLIST(ArrayList<String> CITYLIST) {
-        this.CITYLIST = CITYLIST;
-    }
 }
 
 
