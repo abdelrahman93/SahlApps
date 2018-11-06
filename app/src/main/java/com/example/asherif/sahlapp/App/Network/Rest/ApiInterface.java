@@ -5,6 +5,8 @@ import com.example.asherif.sahlapp.App.Network.Model.File;
 import com.example.asherif.sahlapp.App.Network.Model.FileContent;
 import com.example.asherif.sahlapp.App.Network.Model.User;
 import com.example.asherif.sahlapp.App.Region.City;
+import com.example.asherif.sahlapp.App.profile.LogOutModel;
+import com.example.asherif.sahlapp.App.profile.ProfileModel;
 
 
 import java.util.Map;
@@ -51,5 +53,28 @@ public interface ApiInterface {
     @POST ("cities/")
     @FormUrlEncoded
     Call<City>CityRegion(@Field("country_id") String country_id);
+
+    ///////////////Feshar
+
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+    @POST ("profile/")
+    @FormUrlEncoded
+    Call<ProfileModel>Profile(@Field("name") String name, @Field("address") String address, @Field("email") String email, @Field("image") String img);
+
+    //logout from the account
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+    @POST ("logout/")
+    @FormUrlEncoded
+    Call<LogOutModel>Logout(@Field("phone") String phone, @Field("device_id") String device_id);
+    //display data oncreate the profile screen
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+    @POST ("profile/")
+    Call<ProfileModel>displayprofile();
 
 }
