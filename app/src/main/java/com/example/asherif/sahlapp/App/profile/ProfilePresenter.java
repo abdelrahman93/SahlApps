@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.Observable;
 import android.graphics.Bitmap;
@@ -37,6 +38,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -46,9 +49,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ProfilePresenter extends BasePresenter {
     private profileview view;
     private ProfileActivity context;
+    SharedPreferences sharedpreferences ;
+    SharedPreferences.Editor editor;
+    String verification_code = "";
 
     public ProfilePresenter() {
 
@@ -57,6 +65,8 @@ public class ProfilePresenter extends BasePresenter {
     public ProfilePresenter(profileview view, ProfileActivity context) {
         this.view = view;
         this.context = context;
+        sharedpreferences = context.getSharedPreferences("MyPREFERENCES", MODE_PRIVATE);
+
 
     }
 
@@ -124,13 +134,17 @@ public class ProfilePresenter extends BasePresenter {
     public void senddatatosave(String username, String address, String email, File img) {
         view.ShowProgressBar();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProfileModel> callFile = apiInterface.Profile(username, address, email,img);
+        //get Header api key
+        Map<String, String> header = new HashMap<>();
+       String api_key = sharedpreferences.getString("Api_key", null);
+        Log.i("TAG", "onResponseResendheader: " + api_key);
+        header.put("X-API-Key", String.valueOf(api_key));
+        Call<ProfileModel> callFile = apiInterface.Profile(username, address, email,img,header);
         callFile.enqueue(new Callback<ProfileModel>() {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
                 view.HideProgressBar();
                 Log.i("TAG", "response.body(): " + response.body());
-
                 Log.i("TAG", "CustomerInfoonResponse: " + response.body().getCustomerInfo().getName());
                 Log.i("TAG", "ProfileModelResponse: " + response.body().getCustomerInfo().getImage());
                 view.showmessage("success");
@@ -153,7 +167,12 @@ public class ProfilePresenter extends BasePresenter {
 
     public void displaydataoncreate() {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProfileModel> callFile = apiInterface.displayprofile();
+        //get Header api key
+        Map<String, String> header = new HashMap<>();
+        String api_key = sharedpreferences.getString("Api_key", null);
+        Log.i("TAG", "onResponseResendheader: " + api_key);
+        header.put("X-API-Key", String.valueOf(api_key));
+        Call<ProfileModel> callFile = apiInterface.displayprofile(header);
         callFile.enqueue(new Callback<ProfileModel>() {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
@@ -178,12 +197,17 @@ public class ProfilePresenter extends BasePresenter {
     }
 
     public void logoutpresenter(String phone, String deviceID) {
+        editor = sharedpreferences.edit();
+        editor.putString("verified_user_flag", "false");
+        editor.commit();
+        view.ShowProgressBar();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<LogOutModel> callFile = apiInterface.Logout(phone, deviceID);
         callFile.enqueue(new Callback<LogOutModel>() {
             @Override
             public void onResponse(Call<LogOutModel> call, Response<LogOutModel> response) {
                 Log.i("TAG", "onResponse: " + response.body().getStatus());
+                view.HideProgressBar();
                 if (response.body().getStatus()) {
                     view.NavigateToLogin();
                 }
@@ -192,6 +216,8 @@ public class ProfilePresenter extends BasePresenter {
             @Override
             public void onFailure(Call<LogOutModel> call, Throwable t) {
                 view.ShowMessage();
+                view.HideProgressBar();
+
             }
         });
     }

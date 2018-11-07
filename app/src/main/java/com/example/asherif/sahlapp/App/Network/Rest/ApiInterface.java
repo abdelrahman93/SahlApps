@@ -30,12 +30,28 @@ import retrofit2.http.Path;
 
 public interface ApiInterface {
 
-    //used for LogIn
+    //Function to send sms code to the mobile number
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
             "Content-Type: application/x-www-form-urlencoded"})
     @POST ("login/")
-    Call<User>Login(@Body User User);
+    @FormUrlEncoded
+    Call<LoginModel>Login(@Field("phone") String phone,@Field("device_id") String device_id);
+    //Function to resend
+    //Dynamic header
+    @POST ("resend_code/")
+    @FormUrlEncoded
+    Call<LoginModel>Resend(@Field("phone") String phone,@HeaderMap Map<String, String> apiKey);
+
+    //to confirm login
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+
+    @POST ("confirm_login/")
+    @FormUrlEncoded
+    Call<LoginModel>ConfirmLogin(@Field("phone") String phone,@Field("verification_status") String verification_status);
+    //to Get list of countries
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
             "Content-Type: application/x-www-form-urlencoded"})
@@ -46,18 +62,16 @@ public interface ApiInterface {
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
             "Content-Type: application/x-www-form-urlencoded"})
+
     @POST ("cities/")
     @FormUrlEncoded
     Call<City>CityRegion(@Field("country_id") String country_id);
 
     ///////////////Feshar
 
-    @Headers({
-            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
-            "Content-Type: application/x-www-form-urlencoded"})
     @POST ("profile/")
     @FormUrlEncoded
-    Call<ProfileModel>Profile(@Field("name") String name, @Field("address") String address, @Field("email") String email,@Field("image") java.io.File image);
+    Call<ProfileModel>Profile(@Field("name") String name, @Field("address") String address, @Field("email") String email,@Field("image") java.io.File image,@HeaderMap Map<String, String> apiKey);
 
     //logout from the account
     @Headers({
@@ -67,11 +81,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<LogOutModel>Logout(@Field("phone") String phone, @Field("device_id") String device_id);
     //display data oncreate the profile screen
-    @Headers({
-            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
-            "Content-Type: application/x-www-form-urlencoded"})
+
     @POST ("profile/")
-    Call<ProfileModel>displayprofile();
+    Call<ProfileModel>displayprofile(@HeaderMap Map<String, String> apiKey);
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
             "Content-Type: application/x-www-form-urlencoded"})
