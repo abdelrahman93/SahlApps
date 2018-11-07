@@ -76,6 +76,7 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
         //Set country Data to country spinner
         mPresenter.countryAPI(countrySpinner);
         init();
+        //
 
 
 //Incase connection down when choose set adapter again
