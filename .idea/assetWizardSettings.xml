@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="56" />
+                                                <entry key="scalingPercent" value="39" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,10 +34,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="backgroundColor" value="f0f0f0" />
                                       <entry key="backgroundLayerName" value="logo_splash2" />
-                                      <entry key="foregroundImage" value="C:\Users\A.Sherif\Desktop\page1.png" />
-                                      <entry key="foregroundLayerName" value="logo_splash1" />
+                                      <entry key="foregroundImage" value="C:\Users\A.Sherif\Desktop\icon.png" />
+                                      <entry key="foregroundLayerName" value="icon-app" />
                                       <entry key="outputName" value="logo_splash" />
                                     </map>
                                   </option>

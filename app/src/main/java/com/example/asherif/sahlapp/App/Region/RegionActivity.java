@@ -2,6 +2,7 @@ package com.example.asherif.sahlapp.App.Region;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.asherif.sahlapp.App.Login.LoginActivity;
 import com.example.asherif.sahlapp.App.Main.MainActivity;
 import com.example.asherif.sahlapp.App.Network.Model.User;
 import com.example.asherif.sahlapp.App.Network.Rest.ApiClient;
@@ -52,7 +54,9 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
     @BindView(R.id.pgloadingRegion)
     ProgressBar progressBar;
     private String country = "";
-
+    //Shared Preferences
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
     @NonNull
     @Override
     protected RegionPresenter createPresenter(@NonNull Context context) {
@@ -65,6 +69,7 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region);
         ButterKnife.bind(this);
+        checkOTP();
         showProgressBar();
         //Set default adapter before API
         mPresenter.AddAdapterPresenterDefault(countrySpinner, citySpinner, districtSpinner);
@@ -99,8 +104,6 @@ countrySpinner.setOnClickListener(new View.OnClickListener() {
                 //reset district,city  spinners to default
                 citySpinner.setText("");
                 districtSpinner.setText("");
-
-
             }
         });
 
@@ -127,6 +130,16 @@ countrySpinner.setOnClickListener(new View.OnClickListener() {
         mPresenter.RegionData();
     }
 
+    public void checkOTP() {
+        sharedpreferences = getApplicationContext().getSharedPreferences("MyPREFERENCES", MODE_PRIVATE);
+        String keyOTP = sharedpreferences.getString("verified_user_flag", "false");
+        if (!keyOTP.equals("true")) {
+            Intent loginintent = new Intent(RegionActivity.this, LoginActivity.class);
+            startActivity(loginintent);
+            finish();
+        }
+    }
+
     //init the adapter in general
     @Override
     public void setAdapter(ArrayList<String> list, MaterialBetterSpinner spinner) {
@@ -139,9 +152,15 @@ countrySpinner.setOnClickListener(new View.OnClickListener() {
     //show flag when choose country
     @Override
     public void showFlag(int image) {
-        countryImage.setImageResource(image);
-        t_region.setVisibility(View.GONE);
-        countryImage.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_animation));
+        if(image==0){
+          countryImage.setVisibility(View.GONE);
+        }
+        else{
+            countryImage.setImageResource(image);
+            t_region.setVisibility(View.GONE);
+            countryImage.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_animation));
+        }
+
     }
 
     @Override

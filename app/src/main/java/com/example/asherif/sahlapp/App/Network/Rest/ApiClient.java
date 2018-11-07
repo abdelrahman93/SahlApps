@@ -5,7 +5,6 @@ import android.util.Log;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.asherif.sahlapp.App.Login.VerificationActivity.TAG;
 
 public class ApiClient {
     public static String BASE_URL;
@@ -20,16 +19,20 @@ public class ApiClient {
 
     private static Retrofit retrofit = null;
 
-    public static Retrofit getClient(){
+    public static Retrofit getClient() {
+        if (getBASE_URL() != null) {
+            Log.i("TAG", "getClient: " + getBASE_URL());
 
-        Log.i(TAG, "getClient: "+getBASE_URL());
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(getBASE_URL())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        return retrofit;
         }
+
+        return retrofit;
+
     }
+}
 
 

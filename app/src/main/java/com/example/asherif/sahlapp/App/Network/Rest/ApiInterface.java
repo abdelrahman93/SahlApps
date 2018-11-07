@@ -1,8 +1,8 @@
 package com.example.asherif.sahlapp.App.Network.Rest;
 
-
-import android.database.Observable;
-
+import com.example.asherif.sahlapp.App.Login.LoginModel;
+import com.example.asherif.sahlapp.App.Network.Model.File;
+import com.example.asherif.sahlapp.App.Network.Model.FileContent;
 import com.example.asherif.sahlapp.App.Network.Model.User;
 import com.example.asherif.sahlapp.App.Region.City;
 import com.example.asherif.sahlapp.App.profile.LogOutModel;
@@ -14,15 +14,19 @@ import java.io.File;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import java.util.Map;
+
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
 
@@ -46,7 +50,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<City>CityRegion(@Field("country_id") String country_id);
 
-    //edit the info of the profile
+    ///////////////Feshar
+
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
             "Content-Type: application/x-www-form-urlencoded"})

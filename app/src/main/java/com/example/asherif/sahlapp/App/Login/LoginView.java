@@ -7,8 +7,9 @@ import com.hbb20.CountryCodePicker;
 
 public interface LoginView {
     String getPhoneNumber(CountryCodePicker ccp, EditText etPhoneNumber);
-    void showProgressBar(ProgressBar progressBar);
-    void hideProgressBar(ProgressBar progressBar);
+    void showProgressBar();
+    void hideProgressBar();
+    void showErrorNumber();
     void hintCountryNumber(CountryCodePicker ccp, EditText etPhoneNumber);
     void navigateToVerification();
     void navigateToSplash();

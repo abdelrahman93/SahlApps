@@ -17,7 +17,7 @@
     <string name="buildings">العقارات</string>
     <string name="cars">السيارات</string>
     <string name="profile">حسابي</string>
-    <string name="i_am_visitor">أنا زائر</string>
+    <string name="i_am_visitor">زائر</string>
     <string name="Enter_your_mobile_number">"من فضلك أدخل رقم هاتفك "</string>
     <string name="Enter_your_mobile_number_to_create_an_account">"من فضلك أدخل رقم هاتفك لإنشاء حساب "</string>
     <string name="Login">تسجيل دخول</string>
@@ -42,6 +42,8 @@
     <string name="Done">تم</string>
     <string name="Please_choose_lang">من فضلك إختار اللغة</string>
     <string name="Cancel">إلغاء</string>
+    <string name="error_wrong_number">من فضلك إدخل رقم صحيح</string>
+    <string name="error_wrong_verification">رمز خطأ</string>
     <string name="change_lang">تغيير اللغه</string>
     <string name="delete">حذف</string>
     <string name="my_cart">متجري</string>

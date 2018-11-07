@@ -51,6 +51,7 @@ dependencies {
     implementation 'io.michaelrocks:libphonenumber-android:8.8.5'
     implementation 'com.github.GoodieBag:Pinview:v1.3'
     implementation 'com.hbb20:ccp:2.2.3'
+
     //library for splash
     //implementation 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     implementation 'com.antonzorin:dottedprogressbar:0.2.3'
