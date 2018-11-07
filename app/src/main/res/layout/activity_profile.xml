@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".App.profile.ProfileActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,6 +42,9 @@
                 android:textSize="21sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+
+
         <!--<android.support.v7.widget.CardView
             android:layout_width="400dp"
             android:layout_height="120dp"
@@ -121,6 +125,24 @@
 
         </android.support.v7.widget.CardView>-->
         <!-- </RelativeLayout>-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.antonzorin.dottedprogressbar.DottedProgressBar
+                android:layout_width="61dp"
+                android:layout_height="55dp"
+                android:id="@+id/dottedpg"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:dpClockwiseDots="true"
+                app:dpBaseColor="@color/icon_light"
+                android:layout_gravity="center_horizontal"
+                app:dpDotsCount="10"
+                app:dpHideArrows="true"
+                app:dpMaxDotsSizePercent="10"
+                app:dpMinDotsSizePercent="5"
+                app:dpRotationSpeed="5" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,7 +155,7 @@
                 android:layout_height="36dp"
                 android:src="@drawable/phoneicon" />
 
-            <EditText
+            <TextView
                 android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,7 +165,7 @@
                 android:paddingLeft="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
-
+        </FrameLayout>
         <LinearLayout
             android:layout_width="360dp"
             android:layout_height="wrap_content"

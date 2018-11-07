@@ -4,14 +4,19 @@ import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.Observable;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.CursorLoader;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -21,133 +26,206 @@ import com.example.asherif.sahlapp.App.Network.Rest.ApiClient;
 import com.example.asherif.sahlapp.App.Network.Rest.ApiInterface;
 import com.example.asherif.sahlapp.App.Region.City;
 import com.example.asherif.sahlapp.App.base.BasePresenter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ProfilePresenter extends BasePresenter {
     private profileview view;
     private ProfileActivity context;
+    SharedPreferences sharedpreferences ;
+    SharedPreferences.Editor editor;
+    String verification_code = "";
 
-    public  ProfilePresenter(){
+    public ProfilePresenter() {
 
     }
-    public  ProfilePresenter(profileview view, ProfileActivity context){
-        this.view=view;
-        this.context=context;
+
+    public ProfilePresenter(profileview view, ProfileActivity context) {
+        this.view = view;
+        this.context = context;
+        sharedpreferences = context.getSharedPreferences("MyPREFERENCES", MODE_PRIVATE);
+
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==Activity.RESULT_OK){
-            if(requestCode==1000){
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1000) {
                 Uri u = data.getData();
-                Log.i("TAG", "Uriu: "+u);
+                Log.i("TAG", "Uriu: " + u);
 
 
-                Bitmap bm=null;
+                Bitmap bm = null;
                 if (data != null) {
                     try {
-                        bm = MediaStore.Images.Media.getBitmap(context.getContentResolver(), data.getData());
-                    String path=    getFilePath(context,u);
-                        URI_Image.setImage(path);
+                  bm = MediaStore.Images.Media.getBitmap(context.getContentResolver(), data.getData());
+                        String path = getFilePath(context, u);
+                        File imageFile = new File(path);
+                        Log.i("TAG", "filefilefile: "+imageFile);
+
+              /*          // URI_Image.setImage(path);
+                        Log.i("TAG", "pathya basha: " + path);
+
+
+
+                  //     File file = FileUtils.getFile(context, u);
+                        //pass it like this
+                        *//*RequestBody requestFile =
+                                RequestBody.create(MediaType.parse("image/*"), imageFile);*//*
+                        RequestBody requestFile =
+                                RequestBody.create(MediaType.parse(context.getContentResolver().getType(u)), imageFile);
+                        Log.i("TAG", "requestFilerequestFile: "+requestFile);
+
+
+
+                        // MultipartBody.Part is used to send also the actual file name
+                        MultipartBody.Part body =
+                                MultipartBody.Part.createFormData("image.png", "nnnnnnnnnnnn.png", requestFile);*/
+
+
+                        URI_Image.setImage(imageFile);
 
                         view.setimageprofile(bm);
 
 
-                            view.showmessage("push ya pacha");
+                        view.showmessage("push ya pacha");
 
-                    } catch (IOException e) {
+                    }  catch (URISyntaxException e) {
                         e.printStackTrace();
-                    } catch (URISyntaxException e) {
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                }}
-    }}
-
-  public   void startGallery() {
-       view.uploadimage();
+                }
+            }
+        }
     }
-   public void senddatatosave(String username, String address, String email, String img){
-       ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-       Call<ProfileModel> callFile = apiInterface.Profile(username,address,email,img);
+
+    public void startGallery() {
+        view.uploadimage();
+    }
+
+    public void senddatatosave(String username, String address, String email, File img) {
+        view.ShowProgressBar();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        //get Header api key
+        Map<String, String> header = new HashMap<>();
+       String api_key = sharedpreferences.getString("Api_key", null);
+        Log.i("TAG", "onResponseResendheader: " + api_key);
+        header.put("X-API-Key", String.valueOf(api_key));
+        Call<ProfileModel> callFile = apiInterface.Profile(username, address, email,img,header);
         callFile.enqueue(new Callback<ProfileModel>() {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
-                Log.i("TAG", "CustomerInfoonResponse: "+response.body().getCustomerInfo().getName());
-                Log.i("TAG", "ProfileModelResponse: "+response.body().getCustomerInfo().getPhone());
-                Log.i("TAG", "response.body(): "+response.body());
+                view.HideProgressBar();
+                Log.i("TAG", "response.body(): " + response.body());
+                Log.i("TAG", "CustomerInfoonResponse: " + response.body().getCustomerInfo().getName());
+                Log.i("TAG", "ProfileModelResponse: " + response.body().getCustomerInfo().getImage());
+                view.showmessage("success");
+                view.NavigateToMain();
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModel> call, Throwable t) {
+                view.HideProgressBar();
+
+                Log.i("TAG", " t.getMessage().body(): " + t.getMessage());
+            }
+        });
+    }
+
+    public void showmeasage(String msg) {
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+
+    }
+
+    public void displaydataoncreate() {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        //get Header api key
+        Map<String, String> header = new HashMap<>();
+        String api_key = sharedpreferences.getString("Api_key", null);
+        Log.i("TAG", "onResponseResendheader: " + api_key);
+        header.put("X-API-Key", String.valueOf(api_key));
+        Call<ProfileModel> callFile = apiInterface.displayprofile(header);
+        callFile.enqueue(new Callback<ProfileModel>() {
+            @Override
+            public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
+                view.HideProgressBar();
+                Log.i("TAG", "CustomerInfoonResponse: " + response.body().getStatus());
+                Log.i("TAG", "ProfileModelResponse: " + response.body().getCustomerInfo().getPhone());
+                String name = response.body().getCustomerInfo().getName();
+                String phone = response.body().getCustomerInfo().getPhone();
+                String address = response.body().getCustomerInfo().getAddress();
+                String email = response.body().getCustomerInfo().getEmail();
+                String image = response.body().getCustomerInfo().getImage();
+                view.DisplayProfileDataIfExist(name, phone, address, email, image);
 
                 view.showmessage("success");
             }
 
             @Override
             public void onFailure(Call<ProfileModel> call, Throwable t) {
+                view.HideProgressBar();
+            }
+        });
+    }
+
+    public void logoutpresenter(String phone, String deviceID) {
+        editor = sharedpreferences.edit();
+        editor.putString("verified_user_flag", "false");
+        editor.commit();
+        view.ShowProgressBar();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<LogOutModel> callFile = apiInterface.Logout(phone, deviceID);
+        callFile.enqueue(new Callback<LogOutModel>() {
+            @Override
+            public void onResponse(Call<LogOutModel> call, Response<LogOutModel> response) {
+                Log.i("TAG", "onResponse: " + response.body().getStatus());
+                view.HideProgressBar();
+                if (response.body().getStatus()) {
+                    view.NavigateToLogin();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LogOutModel> call, Throwable t) {
+                view.ShowMessage();
+                view.HideProgressBar();
 
             }
         });
-   }
-   public void showmeasage(String msg){
-       Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+    }
 
-   }
-   public void displaydataoncreate(){
-       ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-       Call<ProfileModel> callFile = apiInterface.displayprofile();
-       callFile.enqueue(new Callback<ProfileModel>() {
-           @Override
-           public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
-               Log.i("TAG", "CustomerInfoonResponse: "+response.body().getStatus());
-               Log.i("TAG", "ProfileModelResponse: "+response.body().getCustomerInfo().getPhone());
-              String name=response.body().getCustomerInfo().getName();
-              String phone=response.body().getCustomerInfo().getPhone();
-              String address=response.body().getCustomerInfo().getAddress();
-              String email=response.body().getCustomerInfo().getEmail();
-               String image=response.body().getCustomerInfo().getImage();
-               view.DisplayProfileDataIfExist(name,phone,address,email,image);
-
-                view.showmessage("success");
-           }
-
-           @Override
-           public void onFailure(Call<ProfileModel> call, Throwable t) {
-
-           }
-       });
-   }
-   public void logoutpresenter(String phone ,String deviceID){
-       ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-       Call<LogOutModel> callFile = apiInterface.Logout(phone,deviceID);
-       callFile.enqueue(new Callback<LogOutModel>() {
-           @Override
-           public void onResponse(Call<LogOutModel> call, Response<LogOutModel> response) {
-               Log.i("TAG", "onResponse: "+response.body().getStatus());
-               if(response.body().getStatus()){
-                   view.NavigateToLogin();
-               }
-           }
-
-           @Override
-           public void onFailure(Call<LogOutModel> call, Throwable t) {
-            view.ShowMessage();
-           }
-       });
-   }
     public void showProgressBar(ProgressBar progressBar) {
         progressBar.setVisibility(View.VISIBLE);
     }
+
     public static String getFilePath(Context context, Uri uri) throws URISyntaxException {
         String selection = null;
         String[] selectionArgs = null;
@@ -209,4 +287,33 @@ public class ProfilePresenter extends BasePresenter {
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
+
+  /*  public void sendimagetoserver() {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Log.i("TAG", "sendimagetoserver: "+URI_Image.getImage());
+        // finally, execute the request
+        Call<ProfileModel> call = apiInterface.UpdateImageProfile(URI_Image.getImage());
+        call.enqueue(new Callback<ProfileModel>() {
+            @Override
+            public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
+                Log.v("Upload", "success");
+
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModel> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }*/
+   private String getRealPathFromURI(Uri contentUri) {
+       String[] proj = {MediaStore.Images.Media.DATA};
+       CursorLoader loader = new CursorLoader(context, contentUri, proj, null, null, null);
+       Cursor cursor = loader.loadInBackground();
+       int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+       cursor.moveToFirst();
+       String result = cursor.getString(column_index);
+       cursor.close();
+       return result;
+   }
 }
