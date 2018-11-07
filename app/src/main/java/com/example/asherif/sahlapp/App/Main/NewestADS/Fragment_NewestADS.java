@@ -115,7 +115,7 @@ public class Fragment_NewestADS extends Fragment implements RecyclerItemTouchHel
             public void onErrorResponse(VolleyError error) {
                 // error in getting json
                 Log.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

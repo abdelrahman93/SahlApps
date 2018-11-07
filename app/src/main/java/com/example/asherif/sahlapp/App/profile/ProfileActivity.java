@@ -4,17 +4,25 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.antonzorin.dottedprogressbar.DottedProgressBar;
 import com.example.asherif.sahlapp.App.Login.LoginActivity;
 import com.example.asherif.sahlapp.App.Login.LoginActivityPresenter;
 import com.example.asherif.sahlapp.App.Main.MainActivity;
@@ -26,8 +34,13 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.squareup.picasso.Picasso;
 
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +57,11 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     @BindView(R.id.et_email)
     EditText etemail;
     @BindView(R.id.et_phone)
-    EditText etphone;
+    TextView etphone;
+    @BindView(R.id.dottedpg)
+    DottedProgressBar progressBar;
+
+
 
 
     @NonNull
@@ -84,6 +101,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     @Override
     public void setimageprofile(Bitmap bitmapImage) {
         imageView.setImageBitmap(bitmapImage);
+
     }
 
     @Override
@@ -91,7 +109,11 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         String username = etusername.getText().toString();
         String address = etaddress.getText().toString();
         String email = etemail.getText().toString();
-        mPresenter.senddatatosave(username, address, email);
+       // String img = URI_Image.getImage();
+       // Toast.makeText(this,  URI_Image.getImage().toString(), Toast.LENGTH_SHORT).show();
+        File img = URI_Image.getImage();
+
+        mPresenter.senddatatosave(username, address, email, img);
 
 
     }
@@ -102,23 +124,26 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     }
 
     @Override
-    public void DisplayProfileDataIfExist(String name,String phone,String address,String email) {
+    public void DisplayProfileDataIfExist(String name, String phone, String address, String email, String image) {
         etusername.setText(name);
         etaddress.setText(address);
         etemail.setText(email);
         etphone.setText(phone);
+        Log.i("TAG", "inputinput: " + image);
+
+        Picasso.get().load(image).into(imageView);
 
 
     }
 
     @Override
     public void Logout() {
-       mPresenter.logoutpresenter("966556717755","123456789");
+        mPresenter.logoutpresenter("966556717755", "123456789");
     }
 
     @Override
     public void NavigateToLogin() {
-        Intent LoginIntent=new Intent(ProfileActivity.this,LoginActivity.class);
+        Intent LoginIntent = new Intent(ProfileActivity.this, LoginActivity.class);
         startActivity(LoginIntent);
         finish();
     }
@@ -127,6 +152,25 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     public void ShowMessage() {
         Toast.makeText(this, "Logout Failed Please Check Your Internet Connection", Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void HideProgressBar() {
+        // mCircleProgressBarYellow
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void ShowProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void NavigateToMain() {
+        Intent mainintent=new Intent(ProfileActivity.this,MainActivity.class);
+        startActivity(mainintent);
+        finish();
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,7 +214,8 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
 
     @OnClick(R.id.btn_save)
     public void savebtn() {
-        sendprofiledatanetwork();
+      sendprofiledatanetwork();
+       // mPresenter.sendimagetoserver();
     }
 
     @OnClick(R.id.btn_logout)

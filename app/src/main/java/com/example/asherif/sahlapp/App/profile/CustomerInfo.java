@@ -3,6 +3,9 @@ package com.example.asherif.sahlapp.App.profile;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.File;
+import java.net.URL;
+
 public class CustomerInfo {
     @SerializedName("id")
     @Expose
@@ -78,7 +81,7 @@ public class CustomerInfo {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(String  image) {
         this.image = image;
     }
 
