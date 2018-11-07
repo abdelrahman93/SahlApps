@@ -9,7 +9,7 @@ import com.example.asherif.sahlapp.App.profile.LogOutModel;
 import com.example.asherif.sahlapp.App.profile.ProfileModel;
 
 
-import java.io.File;
+
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -57,7 +57,7 @@ public interface ApiInterface {
             "Content-Type: application/x-www-form-urlencoded"})
     @POST ("profile/")
     @FormUrlEncoded
-    Call<ProfileModel>Profile(@Field("name") String name, @Field("address") String address, @Field("email") String email,@Field("image") File image);
+    Call<ProfileModel>Profile(@Field("name") String name, @Field("address") String address, @Field("email") String email,@Field("image") java.io.File image);
 
     //logout from the account
     @Headers({
