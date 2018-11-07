@@ -38,6 +38,16 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<LoginModel>Resend(@Field("phone") String phone,@HeaderMap Map<String, String> apiKey);
 
+    //to confirm login
+    @Headers({
+            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
+            "Content-Type: application/x-www-form-urlencoded"})
+
+    @POST ("confirm_login/")
+    @FormUrlEncoded
+    Call<LoginModel>ConfirmLogin(@Field("phone") String phone,@Field("verification_status") String verification_status);
+
+
     //to Get list of countries
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
@@ -54,7 +64,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<City>CityRegion(@Field("country_id") String country_id);
 
-    ///////////////Feshar
+
+
 
     @Headers({
             "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",

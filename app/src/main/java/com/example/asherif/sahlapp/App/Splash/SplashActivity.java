@@ -1,9 +1,13 @@
 package com.example.asherif.sahlapp.App.Splash;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -26,6 +30,7 @@ public class SplashActivity extends AppCompatActivity {
     ApiClient apiClient;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,15 +40,17 @@ public class SplashActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_splash);
 
-
         apiClient.setBASE_URL("http://sahl-app.com/api/user/");
         //get phone language then change the Base URL
-        String phoneLang = Locale.getDefault().getDisplayLanguage();
+       // String phoneLang = Locale.getDefault().getDisplayLanguage();
+        String phoneLang = getResources().getString(R.string.lang);
+        Log.i("TAG", "language: "+ phoneLang);
+
         switch (phoneLang) {
-            case "English":
+            case "eng":
                 apiClient.setBASE_URL("http://sahl-app.com/api/user/");
                 break;
-            case "العربية":
+            case "ar":
                 apiClient.setBASE_URL("http://sahl-app.com/ar/api/user/");
                 break;
             default:

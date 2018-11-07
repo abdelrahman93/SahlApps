@@ -26,6 +26,24 @@
     <string name="error_wrong_verification">Wrong code</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="closeDrawer">close_drawer</string>
+    <string name="lang">eng</string>
+    <string name="alrawdah">Al Rawdah</string>
+    <string name="albawadi">AL Bawadi</string>
+    <string name="almunsiyah">Al Munsiya</string>
+    <string name="adiriyah">Ad Diriyah</string>
+
+    <string name="Maadi">Maadi</string>
+    <string name="Nasr_city">Nasr city</string>
+
+    <string name="Fesal">Fesel</string>
+    <string name="Zamalek">Zamalek</string>
+
+
+
+
+
+
+
 
     <!-- Navigation Drawer menu labels -->
 

@@ -11,13 +11,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.asherif.sahlapp.App.Network.Rest.ApiClient;
 import com.example.asherif.sahlapp.App.Network.Rest.ApiInterface;
 import com.example.asherif.sahlapp.App.base.BasePresenter;
 import com.example.asherif.sahlapp.R;
 import com.goodiebag.pinview.Pinview;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class VerificationActivityPresenter extends BasePresenter {
     VerificationActivity context;
     VerificationView view;
-    SharedPreferences sharedpreferences ;
+    SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
     String verification_code = "";
     String api_key = "";
@@ -72,6 +75,9 @@ public class VerificationActivityPresenter extends BasePresenter {
     public void showProgressBar(ProgressBar progressBar) {
         progressBar.setVisibility(View.VISIBLE);
     }
+    public void hideProgressBar(ProgressBar progressBar) {
+        progressBar.setVisibility(View.GONE);
+    }
 
     //function to count timer
     public void showTimer(final TextView timer, final TextView resend) {
@@ -103,27 +109,27 @@ public class VerificationActivityPresenter extends BasePresenter {
         phone = sharedpreferences.getString("phone_key", null);
         Log.i("TAG", "onResponseResendheader: " + api_key);
         header.put("X-API-Key", String.valueOf(api_key));
-        Call<LoginModel> callFile = apiInterface.Resend(phone,header);
+        Call<LoginModel> callFile = apiInterface.Resend(phone, header);
         callFile.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                 if (response.body() != null) {
-                if (String.valueOf(response.body().getStatus()) == "true") {
-                    Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    //Shared Preferences to set verification code and api key
-                    editor = sharedpreferences.edit();
-                    editor.putString("verificationCode_key", String.valueOf(response.body().getVerificationCode()));
-                    editor.putString("Api_key", String.valueOf(response.body().getApiKey()));
-                    editor.commit();
+                    if (String.valueOf(response.body().getStatus()) == "true") {
+                        Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        //Shared Preferences to set verification code and api key
+                        editor = sharedpreferences.edit();
+                        editor.putString("verificationCode_key", String.valueOf(response.body().getVerificationCode()));
+                        editor.putString("Api_key", String.valueOf(response.body().getApiKey()));
+                        editor.commit();
 
-                    Log.i("TAG", "onResponseResend: " + response.body().getVerificationCode());
-                    Log.i("TAG", "onResponseResend: " + response.body().getMessage());
-                    Log.i("TAG", "onResponseResend: " + response.body().getPhone());
-                    view.hideProgressBar();
-                } else {
-                    Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.i("TAG", "onResponseResend: " + response.body().getVerificationCode());
+                        Log.i("TAG", "onResponseResend: " + response.body().getMessage());
+                        Log.i("TAG", "onResponseResend: " + response.body().getPhone());
+                        view.hideProgressBar();
+                    } else {
+                        Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
             }
 
             @Override
@@ -134,8 +140,33 @@ public class VerificationActivityPresenter extends BasePresenter {
         });
     }
 
-    public void hideProgressBar(ProgressBar progressBar) {
-        progressBar.setVisibility(View.GONE);
+    //Confirm Login API
+    public void confirmLogin() {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        phone = sharedpreferences.getString("phone_key", null);
+        Log.i("TAG", "onResponseResendheader: " + phone);
+        Call<LoginModel> callFile = apiInterface.ConfirmLogin(phone, "1");
+        view.showProgressBar();
+        callFile.enqueue(new Callback<LoginModel>() {
+            @Override
+            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                if (response.body() != null) {
+                    if (String.valueOf(response.body().getStatus()) == "true") {
+                        Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        view.hideProgressBar();
+                    } else {
+                        Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginModel> call, Throwable t) {
+                Log.i("TAG", "onFailure: " + t.getMessage());
+                Toast.makeText(context, "Check connection", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -151,10 +182,11 @@ public class VerificationActivityPresenter extends BasePresenter {
                 editor = sharedpreferences.edit();
                 editor.putString("verified_user_flag", "true");
                 editor.commit();
-                Toast.makeText(context, "Verified Successfully", Toast.LENGTH_SHORT).show();
+                confirmLogin();
+               // Toast.makeText(context, "Verified Successfully", Toast.LENGTH_SHORT).show();
                 view.navigateToMain();
             } else {
-                Toast.makeText(context, ""+R.string.error_wrong_verification, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "" + R.string.error_wrong_verification, Toast.LENGTH_SHORT).show();
             }
         }
     }

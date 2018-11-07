@@ -47,5 +47,17 @@
     <string name="change_lang">تغيير اللغه</string>
     <string name="delete">حذف</string>
     <string name="my_cart">متجري</string>
+    <string name="lang">ar</string>
+    <string name="alrawdah">الروضة</string>
+    <string name="albawadi">البوادى</string>
+    <string name="almunsiyah">المونسية</string>
+    <string name="adiriyah">الدرعية</string>
+
+    <string name="Maadi">المعادى</string>
+    <string name="Nasr_city">مدينة نصر</string>
+
+    <string name="Fesal">فيصل</string>
+    <string name="Zamalek">الزمالك</string>
+
 
 </resources>

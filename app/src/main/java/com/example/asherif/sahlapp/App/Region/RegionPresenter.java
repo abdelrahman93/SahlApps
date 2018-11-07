@@ -55,7 +55,6 @@ public class RegionPresenter extends BasePresenter {
 
     public void AddAdapterPresenterDistrict(String city, MaterialBetterSpinner spinner) {
         view.setAdapter(addDistrictData(city), spinner);
-
     }
 
     public void countryAPI(final MaterialBetterSpinner countrySpinner) {
@@ -151,10 +150,24 @@ public class RegionPresenter extends BasePresenter {
         ArrayList<String> arr = new ArrayList<String>();
         switch (city) {
             case "Cairo":
-                arr = district.getDISTRICTLIST_Cairo();
+            case "القاهرة":
+                arr.add(context.getResources().getString(R.string.Maadi));
+                arr.add(context.getResources().getString(R.string.Nasr_city));
                 break;
-            case "Alex":
-                arr = district.getDISTRICTLIST_Alex();
+            case "Giza":
+            case"الجيزة":
+                arr.add(context.getResources().getString(R.string.Zamalek));
+                arr.add(context.getResources().getString(R.string.Fesal));
+                break;
+            case "Geddah":
+            case"جدة":
+                arr.add(context.getResources().getString(R.string.alrawdah));
+                arr.add(context.getResources().getString(R.string.albawadi));
+                break;
+            case "Riadh":
+            case"الرياض":
+                arr.add(context.getResources().getString(R.string.almunsiyah));
+                arr.add(context.getResources().getString(R.string.adiriyah));
                 break;
             default:
 
