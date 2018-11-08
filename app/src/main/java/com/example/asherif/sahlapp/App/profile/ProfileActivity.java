@@ -102,7 +102,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
                     flag=false;
                 }
                 else if(etemail.getText().toString().isEmpty()){
-
+                     email="";
                         flag=false;
                     }
                    else if(!isEmailValid(etemail.getText().toString())){

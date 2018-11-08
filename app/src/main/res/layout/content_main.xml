@@ -8,6 +8,7 @@
     tools:showIn="@layout/fragment_newest_ad">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
+        android:layoutDirection="ltr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
