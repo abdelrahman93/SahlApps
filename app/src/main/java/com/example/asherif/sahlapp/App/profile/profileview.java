@@ -18,5 +18,7 @@ public interface profileview {
     void  HideProgressBar();
     void  ShowProgressBar();
     void  NavigateToMain();
+    void showSnackBar(String s);
+
 }
 ///

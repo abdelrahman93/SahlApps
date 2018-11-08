@@ -10,15 +10,20 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +84,35 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         presenter = new ProfilePresenter(this, ProfileActivity.this);
         mPresenter.displaydataoncreate();
+
+        etemail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isEmailValid(etemail.getText().toString())){
+                    email = etemail.getText().toString();
+                    flag=false;
+                }
+                else if(etemail.getText().toString().isEmpty()){
+
+                        flag=false;
+                    }
+                   else if(!isEmailValid(etemail.getText().toString())){
+                    etemail.setError("Enter valid mail");
+                        flag=true;
+
+
+                        }
+            }
+        });
     }
 
     @Override
@@ -110,11 +144,14 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+    String email = "";
+    boolean flag=false;
+
+
     @Override
     public void sendprofiledatanetwork() {
         String username = "";
         String address = "";
-        String email = "";
 
         if (!etusername.equals(null)) {
             username = etusername.getText().toString();
@@ -122,20 +159,17 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         if (!etaddress.equals(null)) {
             address = etaddress.getText().toString();
         }
-        if (!etemail.equals(null)) {
-                if(isEmailValid(etemail.getText().toString())){
-                    email = etemail.getText().toString();
-                }
-                else {
-                    etemail.setError("Enter valid mail");
-                }
-        }
+
+
+
+
 
 
         // String img = URI_Image.getImage();
         // Toast.makeText(this,  URI_Image.getImage().toString(), Toast.LENGTH_SHORT).show();
         File img = URI_Image.getImage();
-        mPresenter.senddatatosave(username, address, email, img);
+        if(!flag){
+        mPresenter.senddatatosave(username, address, email, img);}
 
     }
 
@@ -193,6 +227,20 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         Intent mainintent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(mainintent);
         finish();
+    }
+
+    @Override
+    public void showSnackBar(String s) {
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar.make(parentLayout, s, Snackbar.LENGTH_LONG)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                      mPresenter.RetryProfile();
+                    }
+                })
+                .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))
+                .show();
     }
 
 

@@ -93,6 +93,11 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option_menu, menu);
         //in case of visitor hide create icon

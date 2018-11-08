@@ -144,11 +144,12 @@ public class ProfilePresenter extends BasePresenter {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
                 view.HideProgressBar();
-                Log.i("TAG", "response.body(): " + response.body());
+                if(response.body()!=null){
+               /* Log.i("TAG", "response.body(): " + response.body());
                 Log.i("TAG", "CustomerInfoonResponse: " + response.body().getCustomerInfo().getName());
                 Log.i("TAG", "ProfileModelResponse: " + response.body().getCustomerInfo().getImage());
-                view.showmessage("success");
-                view.NavigateToMain();
+                view.showmessage("success");*/
+                view.NavigateToMain();}
             }
 
             @Override
@@ -177,6 +178,7 @@ public class ProfilePresenter extends BasePresenter {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
                 view.HideProgressBar();
+                Log.i("TAG", "onResponsedhelso2aal: "+response.body());
                 if(response.body()!=null) {
                     Log.i("TAG", "CustomerInfoonResponse: " + response.body().getStatus());
                     Log.i("TAG", "ProfileModelResponse: " + response.body().getCustomerInfo().getPhone());
@@ -193,6 +195,8 @@ public class ProfilePresenter extends BasePresenter {
                     editor.commit(); // commit changes
 
                     view.DisplayProfileDataIfExist(name, phone, address, email, image);
+                }else{
+                    view.showSnackBar("Bad Connection Please Try Again!");
                 }
             }
 
@@ -324,4 +328,8 @@ public class ProfilePresenter extends BasePresenter {
        cursor.close();
        return result;
    }
+
+    public void RetryProfile() {
+       view.NavigateToMain();
+    }
 }
