@@ -3,6 +3,7 @@ package com.example.asherif.sahlapp.App.profile;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -160,7 +161,10 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
 
     @Override
     public void Logout() {
-        mPresenter.logoutpresenter("966556717755", "123456789");
+        SharedPreferences sharedpreferences = getSharedPreferences("MyPREFERENCES", MODE_PRIVATE);
+       String device_id = sharedpreferences.getString("device_id", null);
+       String phone=sharedpreferences.getString("phone", null);         // getting String
+        mPresenter.logoutpresenter(phone, device_id);
     }
 
     @Override

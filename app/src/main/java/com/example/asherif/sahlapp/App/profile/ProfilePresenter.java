@@ -177,21 +177,29 @@ public class ProfilePresenter extends BasePresenter {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
                 view.HideProgressBar();
-                Log.i("TAG", "CustomerInfoonResponse: " + response.body().getStatus());
-                Log.i("TAG", "ProfileModelResponse: " + response.body().getCustomerInfo().getPhone());
-                String name = response.body().getCustomerInfo().getName();
-                String phone = response.body().getCustomerInfo().getPhone();
-                String address = response.body().getCustomerInfo().getAddress();
-                String email = response.body().getCustomerInfo().getEmail();
-                String image = response.body().getCustomerInfo().getImage();
-                view.DisplayProfileDataIfExist(name, phone, address, email, image);
+                if(response.body()!=null) {
+                    Log.i("TAG", "CustomerInfoonResponse: " + response.body().getStatus());
+                    Log.i("TAG", "ProfileModelResponse: " + response.body().getCustomerInfo().getPhone());
+                    String name = response.body().getCustomerInfo().getName();
+                    String phone = response.body().getCustomerInfo().getPhone();
+                    String address = response.body().getCustomerInfo().getAddress();
+                    String email = response.body().getCustomerInfo().getEmail();
+                    String image = response.body().getCustomerInfo().getImage();
 
-                view.showmessage("success");
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString("phone", phone);  // Saving string
+                    // Save the changes in SharedPreferences
+                    editor.commit(); // commit changes
+
+                    view.DisplayProfileDataIfExist(name, phone, address, email, image);
+                }
             }
 
             @Override
             public void onFailure(Call<ProfileModel> call, Throwable t) {
                 view.HideProgressBar();
+                view.showmessage("Check connection");
             }
         });
     }
