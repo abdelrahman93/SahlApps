@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.antonzorin.dottedprogressbar.DottedProgressBar;
 import com.example.asherif.sahlapp.App.Login.LoginActivity;
 import com.example.asherif.sahlapp.App.Main.MainActivity;
 import com.example.asherif.sahlapp.App.Network.Model.User;
@@ -52,7 +53,7 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
     @BindView(R.id.countrylogo)
     ImageView countryImage;
     @BindView(R.id.pgloadingRegion)
-    ProgressBar progressBar;
+    DottedProgressBar progressBar;
     private String country = "";
     //Shared Preferences
     SharedPreferences sharedpreferences;

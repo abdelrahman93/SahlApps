@@ -135,9 +135,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         // String img = URI_Image.getImage();
         // Toast.makeText(this,  URI_Image.getImage().toString(), Toast.LENGTH_SHORT).show();
         File img = URI_Image.getImage();
-
         mPresenter.senddatatosave(username, address, email, img);
-
 
     }
 

@@ -40,14 +40,31 @@
             app:met_floatingLabel="normal"
 
             />
-
-        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/sp_city"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/City"
-            android:textColorHint="#05ab9a"
-            app:met_floatingLabel="highlight" />
+            android:layout_height="wrap_content">
+            <com.antonzorin.dottedprogressbar.DottedProgressBar
+                android:id="@+id/pgloadingRegion"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="160dp"
+                android:layout_gravity="center_vertical"
+                app:dpBaseColor="@color/icon_light"
+                app:dpClockwiseDots="true"
+                app:dpDotsCount="8"
+                app:dpHideArrows="true"
+                app:dpMaxDotsSizePercent="10"
+                app:dpMinDotsSizePercent="5" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/sp_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/City"
+                android:textColorHint="#05ab9a"
+                app:met_floatingLabel="highlight" />
+        </FrameLayout>
+
 
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/sp_district"
@@ -70,13 +87,10 @@
         android:text="@string/search"
 
         />
-    <ProgressBar
-        android:id="@+id/pgloadingRegion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:visibility="gone" />
+
+
+
+
 
 
 </LinearLayout>
