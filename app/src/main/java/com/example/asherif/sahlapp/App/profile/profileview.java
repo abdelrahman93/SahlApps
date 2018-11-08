@@ -19,4 +19,4 @@ public interface profileview {
     void  ShowProgressBar();
     void  NavigateToMain();
 }
-//
+///
