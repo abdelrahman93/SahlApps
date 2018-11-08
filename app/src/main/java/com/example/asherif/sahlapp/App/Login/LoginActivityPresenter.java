@@ -149,7 +149,7 @@ public class LoginActivityPresenter extends BasePresenter {
     }
 
     //for Login API to send verification code
-    public void sendVerificationCode(String phone, String device_id) {
+    public void sendVerificationCode(String phone, final String device_id) {
         view.showProgressBar();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<LoginModel> callFile = apiInterface.Login(phone, device_id);
@@ -165,6 +165,8 @@ public class LoginActivityPresenter extends BasePresenter {
                         editor.putString("verificationCode_key", String.valueOf(response.body().getVerificationCode()));
                         editor.putString("Api_key", String.valueOf(response.body().getApiKey()));
                         editor.putString("phone_key", String.valueOf(response.body().getPhone()));
+                        editor.putString("device_id", device_id);
+
                         editor.commit();
 
                         Log.i("TAG", "onResponseLogin: " + response.body().getVerificationCode());

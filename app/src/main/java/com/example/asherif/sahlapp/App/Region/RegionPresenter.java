@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.antonzorin.dottedprogressbar.DottedProgressBar;
 import com.example.asherif.sahlapp.App.Network.Rest.ApiClient;
 import com.example.asherif.sahlapp.App.Network.Rest.ApiInterface;
 import com.example.asherif.sahlapp.R;
@@ -163,24 +164,29 @@ public class RegionPresenter extends BasePresenter {
             case"جدة":
                 arr.add(context.getResources().getString(R.string.alrawdah));
                 arr.add(context.getResources().getString(R.string.albawadi));
+                arr.add(context.getResources().getString(R.string.alharamen));
+                arr.add(context.getResources().getString(R.string.alfesalya));
+
                 break;
             case "Riadh":
             case"الرياض":
                 arr.add(context.getResources().getString(R.string.almunsiyah));
                 arr.add(context.getResources().getString(R.string.adiriyah));
+                arr.add(context.getResources().getString(R.string.almalaz));
+                arr.add(context.getResources().getString(R.string.hay_elsefarat));
+
                 break;
             default:
-
 
         }
         return arr;
     }
 
-    public void showProgressBar(ProgressBar progressBar) {
+    public void showProgressBar(DottedProgressBar progressBar) {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressBar(ProgressBar progressBar) {
+    public void hideProgressBar(DottedProgressBar progressBar) {
         progressBar.setVisibility(View.INVISIBLE);
     }
 

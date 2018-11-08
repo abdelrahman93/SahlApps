@@ -147,7 +147,7 @@ public class ProfilePresenter extends BasePresenter {
                 Log.i("TAG", "response.body(): " + response.body());
                 Log.i("TAG", "CustomerInfoonResponse: " + response.body().getCustomerInfo().getName());
                 Log.i("TAG", "ProfileModelResponse: " + response.body().getCustomerInfo().getImage());
-                view.showmessage("success");
+                //view.showmessage("success");
                 view.NavigateToMain();
             }
 
@@ -186,7 +186,7 @@ public class ProfilePresenter extends BasePresenter {
                 String image = response.body().getCustomerInfo().getImage();
                 view.DisplayProfileDataIfExist(name, phone, address, email, image);
 
-                view.showmessage("success");
+               // view.showmessage("success");
             }
 
             @Override
