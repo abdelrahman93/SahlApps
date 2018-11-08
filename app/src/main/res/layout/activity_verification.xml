@@ -44,6 +44,7 @@
             android:id="@+id/pinview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layoutDirection="ltr"
             app:cursorVisible="false"
             app:forceKeyboard="true"
             app:hint="-"
@@ -74,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Please_wait"
+                android:layout_marginLeft="10dp"
                 android:textSize="12sp" />
 
             <TextView

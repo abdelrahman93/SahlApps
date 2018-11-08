@@ -70,7 +70,7 @@ public class RegionPresenter extends BasePresenter {
                     Log.i("Resopns_notNill", "statusresponse" + String.valueOf(response.body().getStatus()));
                     Log.i("Resopns_notNill", "" + String.valueOf(response.body().getCountries().get(0).getId()));
                     arrayCountry = new ArrayList<String>();
-                    for (int i = 0; i < response.body().getCountries().size(); i++) {
+                    for (int i = 0; i < response.body().getCountries().size()-1; i++) {
                         arrayCountry.add(response.body().getCountries().get(i).getName());
                     }
                     if (arrayCountry != null) {

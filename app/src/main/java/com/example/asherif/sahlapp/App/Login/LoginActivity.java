@@ -173,7 +173,7 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         //Device token
         String device_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        if (!etPhoneNumber.getText().toString().isEmpty() && (etPhoneNumber.getText().toString().length() >=8||etPhoneNumber.getText().toString().length()<11)) {
+        if (!etPhoneNumber.getText().toString().isEmpty() && (etPhoneNumber.getText().toString().length() >=8&&etPhoneNumber.getText().toString().length()<11)) {
             mPresenter.sendVerificationCode(phone, device_id);
 
         } else {

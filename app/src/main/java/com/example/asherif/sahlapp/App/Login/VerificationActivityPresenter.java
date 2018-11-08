@@ -3,6 +3,7 @@ package com.example.asherif.sahlapp.App.Login;
 
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -107,7 +108,7 @@ public class VerificationActivityPresenter extends BasePresenter {
         Map<String, String> header = new HashMap<>();
         api_key = sharedpreferences.getString("Api_key", null);
         phone = sharedpreferences.getString("phone_key", null);
-        Log.i("TAG", "onResponseResendheader: " + api_key);
+        Log.i("Verficationresend", "onResponseResendheader: " + api_key);
         header.put("X-API-Key", String.valueOf(api_key));
         Call<LoginModel> callFile = apiInterface.Resend(phone, header);
         callFile.enqueue(new Callback<LoginModel>() {
@@ -119,7 +120,6 @@ public class VerificationActivityPresenter extends BasePresenter {
                         //Shared Preferences to set verification code and api key
                         editor = sharedpreferences.edit();
                         editor.putString("verificationCode_key", String.valueOf(response.body().getVerificationCode()));
-                        editor.putString("Api_key", String.valueOf(response.body().getApiKey()));
                         editor.commit();
 
                         Log.i("TAG", "onResponseResend: " + response.body().getVerificationCode());
@@ -145,7 +145,7 @@ public class VerificationActivityPresenter extends BasePresenter {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         phone = sharedpreferences.getString("phone_key", null);
-        Log.i("TAG", "onResponseResendheader: " + phone);
+        Log.i("TAG", "confirmLogin: " + phone);
         Call<LoginModel> callFile = apiInterface.ConfirmLogin(phone, "1");
         view.showProgressBar();
         callFile.enqueue(new Callback<LoginModel>() {
@@ -186,7 +186,7 @@ public class VerificationActivityPresenter extends BasePresenter {
                // Toast.makeText(context, "Verified Successfully", Toast.LENGTH_SHORT).show();
                 view.navigateToMain();
             } else {
-                Toast.makeText(context, "" + R.string.error_wrong_verification, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "" + context.getResources().getString(R.string.error_wrong_verification), Toast.LENGTH_SHORT).show();
             }
         }
     }

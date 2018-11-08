@@ -1,6 +1,7 @@
 package com.example.asherif.sahlapp.App.Login;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,8 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.asherif.sahlapp.R.color.black;
 
 public class LoginActivityPresenter extends BasePresenter {
     LoginActivity context;
@@ -78,6 +81,7 @@ public class LoginActivityPresenter extends BasePresenter {
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+
         view.navigateToSplash();
     }
 
@@ -91,6 +95,7 @@ public class LoginActivityPresenter extends BasePresenter {
         dialogBuilder.setTitle(WantchangeLang);
 
         final CountryCodePicker finalCcp_lang1 = ccp_lang;
+
         dialogBuilder.setPositiveButton(Done, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 getCountryLanguage(finalCcp_lang1);
@@ -103,7 +108,17 @@ public class LoginActivityPresenter extends BasePresenter {
             }
         });
 
-        AlertDialog b = dialogBuilder.create();
+        final AlertDialog b = dialogBuilder.create();
+       //2. now setup to change color of the button
+        b.setOnShowListener( new DialogInterface.OnShowListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onShow(DialogInterface arg0) {
+                b.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(black);
+                b.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(black);
+
+            }
+        });
         b.show();
 
     }

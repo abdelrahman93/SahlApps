@@ -14,9 +14,7 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".App.Splash.SplashActivity"
-            >
+        <activity android:name=".App.Splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +29,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".App.Login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+           />
         <activity
             android:name=".App.Login.VerificationActivity"
             android:screenOrientation="portrait" />
@@ -43,7 +42,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".App.profile.ProfileActivity" />
+        <activity
+            android:name=".App.profile.ProfileActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -137,7 +137,7 @@ public class ProfilePresenter extends BasePresenter {
         //get Header api key
         Map<String, String> header = new HashMap<>();
        String api_key = sharedpreferences.getString("Api_key", null);
-        Log.i("TAG", "onResponseResendheader: " + api_key);
+        Log.i("TAG", "senddatatosave: " + api_key);
         header.put("X-API-Key", String.valueOf(api_key));
         Call<ProfileModel> callFile = apiInterface.Profile(username, address, email,img,header);
         callFile.enqueue(new Callback<ProfileModel>() {

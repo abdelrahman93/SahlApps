@@ -41,6 +41,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,8 +62,6 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     TextView etphone;
     @BindView(R.id.dottedpg)
     DottedProgressBar progressBar;
-
-
 
 
     @NonNull
@@ -103,14 +103,36 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         imageView.setImageBitmap(bitmapImage);
 
     }
-
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
     @Override
     public void sendprofiledatanetwork() {
-        String username = etusername.getText().toString();
-        String address = etaddress.getText().toString();
-        String email = etemail.getText().toString();
-       // String img = URI_Image.getImage();
-       // Toast.makeText(this,  URI_Image.getImage().toString(), Toast.LENGTH_SHORT).show();
+        String username = "";
+        String address = "";
+        String email = "";
+
+        if (!etusername.equals(null)) {
+            username = etusername.getText().toString();
+        }
+        if (!etaddress.equals(null)) {
+            address = etaddress.getText().toString();
+        }
+        if (!etemail.equals(null)) {
+                if(isEmailValid(etemail.getText().toString())){
+                    email = etemail.getText().toString();
+                }
+                else {
+                    etemail.setError("Enter valid mail");
+                }
+        }
+
+
+        // String img = URI_Image.getImage();
+        // Toast.makeText(this,  URI_Image.getImage().toString(), Toast.LENGTH_SHORT).show();
         File img = URI_Image.getImage();
 
         mPresenter.senddatatosave(username, address, email, img);
@@ -166,7 +188,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
 
     @Override
     public void NavigateToMain() {
-        Intent mainintent=new Intent(ProfileActivity.this,MainActivity.class);
+        Intent mainintent = new Intent(ProfileActivity.this, MainActivity.class);
         startActivity(mainintent);
         finish();
     }
@@ -214,8 +236,8 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
 
     @OnClick(R.id.btn_save)
     public void savebtn() {
-      sendprofiledatanetwork();
-       // mPresenter.sendimagetoserver();
+        sendprofiledatanetwork();
+        // mPresenter.sendimagetoserver();
     }
 
     @OnClick(R.id.btn_logout)
