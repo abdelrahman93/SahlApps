@@ -35,7 +35,7 @@
             android:name=".App.Login.VerificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".App.CreateAdvertisment.Create_Advertisment_Activity"
+            android:name=".App.CreateAdvertisment.Create_AdvertismentActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

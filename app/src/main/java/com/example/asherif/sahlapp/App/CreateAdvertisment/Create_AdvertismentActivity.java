@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.App.Main.MainActivity;
 
-public class Create_Advertisment_Activity extends AppCompatActivity {
+public class Create_AdvertismentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class Create_Advertisment_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent=new Intent(Create_Advertisment_Activity.this,MainActivity.class);
+        Intent intent=new Intent(Create_AdvertismentActivity.this,MainActivity.class);
         startActivity(intent);
         finish();
     }

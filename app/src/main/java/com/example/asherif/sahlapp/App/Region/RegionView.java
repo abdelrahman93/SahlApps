@@ -11,6 +11,7 @@ public interface RegionView {
  void showSnackBar(String s);
  void hideProgressBar();
 void navigateToMainmenu();
+void changeSpinnerHint(String country);
 
 
 }

@@ -202,6 +202,8 @@ public class ProfilePresenter extends BasePresenter {
 
             @Override
             public void onFailure(Call<ProfileModel> call, Throwable t) {
+
+
                 view.HideProgressBar();
                 view.showmessage("Check connection");
             }

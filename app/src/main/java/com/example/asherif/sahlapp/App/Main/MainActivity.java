@@ -16,7 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.example.asherif.sahlapp.App.CreateAdvertisment.Create_Advertisment_Activity;
+import com.example.asherif.sahlapp.App.CreateAdvertisment.Create_AdvertismentActivity;
 import com.example.asherif.sahlapp.App.Main.NewestADS.Fragment_NewestADS;
 import com.example.asherif.sahlapp.R;
 import com.example.asherif.sahlapp.App.Login.LoginActivity;
@@ -80,6 +80,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
         //listeners for items in the navigation menu
         SetNavigationMenu(nv);
+
 
      /*   // Add Fragments to adapter one by one
         NavigateToMyADS();
@@ -166,7 +167,7 @@ public class MainActivity extends BaseActivity<MainActivityPresenter> implements
 
     @Override
     public void NavigateToCreateAdvertisment() {
-        Intent CreateADS = new Intent(MainActivity.this, Create_Advertisment_Activity.class);
+        Intent CreateADS = new Intent(MainActivity.this, Create_AdvertismentActivity.class);
         startActivity(CreateADS);
         finish();
     }
