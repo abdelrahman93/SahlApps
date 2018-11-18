@@ -5,32 +5,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.antonzorin.dottedprogressbar.DottedProgressBar;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.asherif.sahlapp.App.Login.LoginActivity;
-import com.example.asherif.sahlapp.App.Login.LoginActivityPresenter;
 import com.example.asherif.sahlapp.App.Main.MainActivity;
 import com.example.asherif.sahlapp.App.base.BaseActivity;
 import com.example.asherif.sahlapp.R;
@@ -43,20 +37,18 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.http.Url;
 
 public class ProfileActivity extends BaseActivity<ProfilePresenter> implements profileview {
     @BindView(R.id.ivprofilepicture)
-    ImageView imageView;
+    CircleImageView imageView;
     ProfilePresenter presenter;
     @BindView(R.id.etusername)
     EditText etusername;
@@ -97,20 +89,18 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(isEmailValid(etemail.getText().toString())){
+                if (isEmailValid(etemail.getText().toString())) {
                     email = etemail.getText().toString();
-                    flag=false;
-                }
-                else if(etemail.getText().toString().isEmpty()){
-                     email="";
-                        flag=false;
-                    }
-                   else if(!isEmailValid(etemail.getText().toString())){
+                    flag = false;
+                } else if (etemail.getText().toString().isEmpty()) {
+                    email = "";
+                    flag = false;
+                } else if (!isEmailValid(etemail.getText().toString())) {
                     etemail.setError("Enter valid mail");
-                        flag=true;
+                    flag = true;
 
 
-                        }
+                }
             }
         });
     }
@@ -138,14 +128,16 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         imageView.setImageBitmap(bitmapImage);
 
     }
+
     public static boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
     String email = "";
-    boolean flag=false;
+    boolean flag = false;
 
 
     @Override
@@ -155,21 +147,18 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
 
         if (!etusername.equals(null)) {
             username = etusername.getText().toString();
+            if (!etaddress.equals(null)) {
+                address = etaddress.getText().toString();
+            }
+
+
         }
-        if (!etaddress.equals(null)) {
-            address = etaddress.getText().toString();
+
+
+        if (!flag) {
+            mPresenter.SendImageMultiPart(URI_Image.getImage(), username, address, email);
+
         }
-
-
-
-
-
-
-        // String img = URI_Image.getImage();
-        // Toast.makeText(this,  URI_Image.getImage().toString(), Toast.LENGTH_SHORT).show();
-        File img = URI_Image.getImage();
-        if(!flag){
-        mPresenter.senddatatosave(username, address, email, img);}
 
     }
 
@@ -185,8 +174,14 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
         etemail.setText(email);
         etphone.setText(phone);
         Log.i("TAG", "inputinput: " + image);
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.flag_algeria)
+                .error(R.drawable.flag_angola);
 
-        Picasso.get().load(image).into(imageView);
+
+        Glide.with(this).load(image).apply(options).into(imageView);
+        //  Picasso.get().load(image).into(imageView);
 
 
     }
@@ -194,8 +189,8 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
     @Override
     public void Logout() {
         SharedPreferences sharedpreferences = getSharedPreferences("MyPREFERENCES", MODE_PRIVATE);
-       String device_id = sharedpreferences.getString("device_id", null);
-       String phone=sharedpreferences.getString("phone", null);         // getting String
+        String device_id = sharedpreferences.getString("device_id", null);
+        String phone = sharedpreferences.getString("phone", null);         // getting String
         mPresenter.logoutpresenter(phone, device_id);
     }
 
@@ -236,7 +231,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenter> implements p
                 .setAction("Retry", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                      mPresenter.RetryProfile();
+                        mPresenter.RetryProfile();
                     }
                 })
                 .setActionTextColor(getResources().getColor(android.R.color.holo_red_light))

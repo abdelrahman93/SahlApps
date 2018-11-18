@@ -1,10 +1,14 @@
 package com.example.asherif.sahlapp.App.profile;
 
+import android.net.Uri;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 import java.net.URL;
+
+import retrofit2.http.Url;
 
 public class CustomerInfo {
     @SerializedName("id")

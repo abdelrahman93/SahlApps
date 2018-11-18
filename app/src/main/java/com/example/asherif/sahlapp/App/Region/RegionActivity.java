@@ -207,6 +207,7 @@ countrySpinner.setOnClickListener(new View.OnClickListener() {
     public void navigateToMainmenu() {
         Intent i = new Intent(RegionActivity.this, MainActivity.class);
         startActivity(i);
+        finish();
     }
 
     @Override

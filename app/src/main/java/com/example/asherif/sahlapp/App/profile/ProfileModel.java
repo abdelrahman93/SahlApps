@@ -3,6 +3,9 @@ package com.example.asherif.sahlapp.App.profile;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 public class ProfileModel {
     @SerializedName("status")
     @Expose
@@ -10,6 +13,28 @@ public class ProfileModel {
     @SerializedName("customer_info")
     @Expose
     private CustomerInfo customerInfo;
+    @SerializedName("debuging")
+    @Expose
+    private List<Object> debuging = null;
+    @SerializedName("debuging_files")
+    @Expose
+    private List<Object> debugingFiles = null;
+
+    public List<Object> getDebuging() {
+        return debuging;
+    }
+
+    public void setDebuging(List<Object> debuging) {
+        this.debuging = debuging;
+    }
+
+    public List<Object> getDebugingFiles() {
+        return debugingFiles;
+    }
+
+    public void setDebugingFiles(List<Object> debugingFiles) {
+        this.debugingFiles = debugingFiles;
+    }
 
     public Boolean getStatus() {
         return status;

@@ -2,7 +2,9 @@ package com.example.asherif.sahlapp.App.Login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -71,6 +73,8 @@ public class LoginActivity extends BaseActivity<LoginActivityPresenter> implemen
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         init();
+String name="ahmed";
+        Log.i("TAG", "namename: "+name.length());
     }
 
 

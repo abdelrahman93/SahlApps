@@ -59,7 +59,8 @@ public class RegionPresenter extends BasePresenter {
     }
 
     public void countryAPI(final MaterialBetterSpinner countrySpinner) {
-        //Log.i("Resopns_notNill", "testt" +country.getCOUNTRYLIST().get(1));
+
+        Log.i("Resopns_notNill", "testt" +"70thaa foo2");
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Country user = new Country();
         Call<com.example.asherif.sahlapp.App.Region.Country> callFile = apiInterface.CountryRegion(user);

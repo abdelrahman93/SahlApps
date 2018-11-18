@@ -1,5 +1,8 @@
 package com.example.asherif.sahlapp.App.Network.Rest;
 
+import android.database.Observable;
+import android.net.Uri;
+
 import com.example.asherif.sahlapp.App.Login.LoginModel;
 import com.example.asherif.sahlapp.App.Network.Model.File;
 import com.example.asherif.sahlapp.App.Network.Model.FileContent;
@@ -17,15 +20,18 @@ import okhttp3.ResponseBody;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
@@ -69,9 +75,6 @@ public interface ApiInterface {
 
     ///////////////Feshar
 
-    @POST ("profile/")
-    @FormUrlEncoded
-    Call<ProfileModel>Profile(@Field("name") String name, @Field("address") String address, @Field("email") String email,@Field("image") java.io.File image,@HeaderMap Map<String, String> apiKey);
 
     //logout from the account
     @Headers({
@@ -81,19 +84,18 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<LogOutModel>Logout(@Field("phone") String phone, @Field("device_id") String device_id);
     //display data oncreate the profile screen
-
     @POST ("profile/")
     Call<ProfileModel>displayprofile(@HeaderMap Map<String, String> apiKey);
-    @Headers({
-            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
-            "Content-Type: application/x-www-form-urlencoded"})
-    @Multipart
+/*    @Headers({"x-api-key: ok8ogkgw884s8oswcogcggwgwskkosc88gkcgkwk","Accept: application/json"})
     @POST("profile/")
-    Call<ProfileModel> UpdateImageProfile(@Part MultipartBody.Part image);
-/*    @Headers({
-            "x-api-key: k4o8ocs8skg8os88o8k4kc0kcgosc8cwkkcc4gsc",
-            "Content-Type: application/x-www-form-urlencoded"})
     @Multipart
+    Call<ResponseBody> UpdateImageProfile(@Part MultipartBody.Part image, @Header("X-API-Key") String apiKey);*/
+
+
+    @Multipart
+    @Headers({"x-api-key:ok8ogkgw884s8oswcogcggwgwskkosc88gkcgkwk","Accept: application/json"})
     @POST("profile/")
-    Call<ProfileModel> UpdateImageProfile(@Part RequestBody image);*/
+    Call<ResponseBody> EditProfile(@Part MultipartBody.Part image, @Part("name") RequestBody name, @Part("address") RequestBody address, @Part("email") RequestBody email);
+
+
 }
