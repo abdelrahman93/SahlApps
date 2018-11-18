@@ -31,6 +31,7 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,6 +56,7 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
     @BindView(R.id.pgloadingRegion)
     DottedProgressBar progressBar;
     private String country = "";
+
     //Shared Preferences
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
@@ -77,7 +79,8 @@ public class RegionActivity extends BaseActivity<RegionPresenter> implements Reg
         //Set country Data to country spinner
         mPresenter.countryAPI(countrySpinner);
         init();
-        //
+
+
 
 
 //Incase connection down when choose set adapter again
@@ -130,6 +133,7 @@ countrySpinner.setOnClickListener(new View.OnClickListener() {
     //Initialization
     public void init() {
         mPresenter.RegionData();
+        changeSpinnerHint("ksa");
     }
 
     public void checkOTP() {
@@ -208,6 +212,20 @@ countrySpinner.setOnClickListener(new View.OnClickListener() {
         Intent i = new Intent(RegionActivity.this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    @Override
+    public void changeSpinnerHint(String country) {
+        if(country.equals("ksa")){
+            citySpinner.setHint(getResources().getString(R.string.CityKsa));
+            districtSpinner.setHint(getResources().getString(R.string.DistrictKsa));
+        }
+        else{
+            citySpinner.setHint(getResources().getString(R.string.City));
+            districtSpinner.setHint(getResources().getString(R.string.District));
+        }
+
+
     }
 
     @Override

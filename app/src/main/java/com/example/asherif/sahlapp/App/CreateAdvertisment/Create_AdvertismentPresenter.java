@@ -1,4 +1,4 @@
 package com.example.asherif.sahlapp.App.CreateAdvertisment;
 
-public class Create_Advertisment_Presenter {
+public class Create_AdvertismentPresenter {
 }

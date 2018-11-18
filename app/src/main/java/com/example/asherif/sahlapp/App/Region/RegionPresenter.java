@@ -99,12 +99,14 @@ public class RegionPresenter extends BasePresenter {
             case "مصر":
                 country_id = "1";
                 view.showFlag(R.drawable.egypt_flag);
+                view.changeSpinnerHint("egypt");
+
                 break;
             case "Saudi Arabia":
             case "السعودية":
-
                 country_id = "2";
                 view.showFlag(R.drawable.ksa_flag);
+                view.changeSpinnerHint("ksa");
                 break;
 
             default:
